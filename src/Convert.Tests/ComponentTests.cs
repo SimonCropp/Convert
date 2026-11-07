@@ -1,4 +1,3 @@
-using Convert.Components;
 using Index = Convert.Web.Pages.Index;
 
 /// <summary>Records which entries the wizard asked to load, and loads nothing (the real loader throws off-browser).</summary>
@@ -60,6 +59,7 @@ public class ComponentTests
         await page.WaitForAssertionAsync(() => page.Find(".download-button"));
         await Assert.That(session.Result!.Parts[0].Text).Contains("<h1");
         await Assert.That(page.Find(".download-button").TextContent).Contains("pasted.html");
+        await Assert.That(page.FindAll("[role=tab]").Select(_ => _.TextContent.Trim())).Contains("HTML Result");
 
         // An edit drops the cached result.
         await page.InvokeAsync(() => session.ReplaceSourceAsync(Document.FromText("pasted.md", "# Changed", FileTypes.Markdown)));
@@ -83,7 +83,7 @@ public class ComponentTests
     public static IEnumerable<string> OptionPanels() =>
         Fixtures.Registry.Conversions
             .Where(_ => _.OptionsComponent is not null)
-            .GroupBy(_ => (_.OptionsComponent, Flags: System.Text.Json.JsonSerializer.Serialize(_.CreateOptions(), _.CreateOptions().GetType())))
+            .GroupBy(_ => (_.OptionsComponent, Flags: JsonSerializer.Serialize(_.CreateOptions(), _.CreateOptions().GetType())))
             .Select(_ => _.First().Id)
             .Order(StringComparer.Ordinal);
 
@@ -95,8 +95,8 @@ public class ComponentTests
         await using var context = CreateContext(out _);
         var conversion = Fixtures.Registry.Conversions.Single(_ => _.Id == id);
         var panel = context.Render<OptionsHost>(_ => _
-            .Add(host => host.Conversion, conversion)
-            .Add(host => host.Options, conversion.CreateOptions()));
+            .Add(_ => _.Conversion, conversion)
+            .Add(_ => _.Options, conversion.CreateOptions()));
         await Verify(panel.Markup, "html").UseParameters(id);
     }
 }

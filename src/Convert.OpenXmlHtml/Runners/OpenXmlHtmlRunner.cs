@@ -1,5 +1,3 @@
-using OpenXmlHtml;
-
 namespace Convert.OpenXmlHtml;
 
 /// <summary>The only place OpenXmlHtml's namespace is used.</summary>

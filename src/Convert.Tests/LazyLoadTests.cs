@@ -1,5 +1,3 @@
-using System.Runtime.InteropServices;
-
 /// <summary>
 /// The part that must be right (plan §4): every entry declares the transitive closure of what it loads,
 /// the csproj lazy list is exactly the union, and nothing reached at startup names a lazy assembly.
@@ -189,28 +187,29 @@ public class LazyLoadTests
 
     static IEnumerable<Type> Expand(Type type)
     {
-        if (type.HasElementType)
+        while (true)
         {
-            foreach (var element in Expand(type.GetElementType()!))
+            if (type.HasElementType)
             {
-                yield return element;
+                type = type.GetElementType()!;
+                continue;
             }
 
-            yield break;
-        }
-
-        if (type.IsGenericParameter)
-        {
-            yield break;
-        }
-
-        yield return type;
-        foreach (var argument in type.GetGenericArguments())
-        {
-            foreach (var expanded in Expand(argument))
+            if (type.IsGenericParameter)
             {
-                yield return expanded;
+                yield break;
             }
+
+            yield return type;
+            foreach (var argument in type.GetGenericArguments())
+            {
+                foreach (var expanded in Expand(argument))
+                {
+                    yield return expanded;
+                }
+            }
+
+            break;
         }
     }
 
@@ -248,6 +247,13 @@ public class LazyLoadTests
     static IEnumerable<string> Folder(string project, string name)
     {
         var path = Path.Combine(project, name);
-        return Directory.Exists(path) ? Directory.GetFiles(path, "*.*", SearchOption.AllDirectories).Where(_ => _.EndsWith(".cs") || _.EndsWith(".razor")) : [];
+        if (Directory.Exists(path))
+        {
+            return Directory
+                .GetFiles(path, "*.*", SearchOption.AllDirectories)
+                .Where(_ => _.EndsWith(".cs") || _.EndsWith(".razor"));
+        }
+
+        return [];
     }
 }

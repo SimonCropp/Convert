@@ -44,19 +44,9 @@ public static class IssueLauncher
 /// <summary>Build facts for the footer and bug reports.</summary>
 public static class AppInfo
 {
-    public static string Version { get; } = ShortenSha(
-        typeof(AppInfo).Assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion ??
-        typeof(AppInfo).Assembly.GetName().Version?.ToString() ??
-        "unknown");
-
-    static string ShortenSha(string version)
-    {
-        var plus = version.IndexOf('+');
-        if (plus < 0 || version.Length - plus - 1 <= 7)
-        {
-            return version;
-        }
-
-        return version[..(plus + 8)];
-    }
+    /// <summary>
+    /// The version and short commit (0.1.0+b4bbab2), written by the build (Convert.Core.csproj's
+    /// WriteBuildInfo) as a constant: trimming strips the assembly's version attributes in the browser.
+    /// </summary>
+    public static string Version => BuildInfo.Version;
 }

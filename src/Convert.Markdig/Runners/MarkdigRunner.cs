@@ -1,5 +1,3 @@
-using Markdig;
-
 namespace Convert.Markdig;
 
 /// <summary>The only place Markdig's namespace is used.</summary>

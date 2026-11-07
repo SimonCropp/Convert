@@ -1,5 +1,3 @@
-using System.Text.RegularExpressions;
-
 static partial class ModuleInitializer
 {
     [ModuleInitializer]

@@ -13,12 +13,23 @@ sealed class CanvasConversion(FileType source, FileType target, CanvasBridge can
             ? "Drawn by the browser's SVG renderer, at any scale."
             : "Re-encoded by the browser's own image codecs.";
 
-    public override string? Expect =>
-        source == FileTypes.Svg
-            ? "SVG that embeds HTML (<foreignObject>) or external images can't be drawn on a canvas."
-            : target == FileTypes.Jpeg
-                ? "JPEG has no transparency: transparent pixels take the background colour."
-                : null;
+    public override string? Expect
+    {
+        get
+        {
+            if (source == FileTypes.Svg)
+            {
+                return "SVG that embeds HTML (<foreignObject>) or external images can't be drawn on a canvas.";
+            }
+
+            if (target == FileTypes.Jpeg)
+            {
+                return "JPEG has no transparency: transparent pixels take the background colour.";
+            }
+
+            return null;
+        }
+    }
 
     public override IReadOnlyList<string> Assemblies => [];
     public override Type OptionsComponent => typeof(Components.RasterOptionsPanel);
@@ -28,7 +39,8 @@ sealed class CanvasConversion(FileType source, FileType target, CanvasBridge can
         {
             Lossy = target != FileTypes.Png,
             SupportsAlpha = target != FileTypes.Jpeg,
-            TransparentBackground = target != FileTypes.Jpeg && source != FileTypes.Svg
+            TransparentBackground = target != FileTypes.Jpeg &&
+                                    source != FileTypes.Svg
         };
 
     protected override async Task<ConversionOutput> RunAsync(Document document, RasterOptions options, IProgress<ConversionProgress> progress, Cancel cancel)

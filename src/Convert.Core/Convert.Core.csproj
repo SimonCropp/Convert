@@ -23,4 +23,28 @@
     <InternalsVisibleTo Include="Convert.Tests" />
   </ItemGroup>
 
+  <!--
+    BuildInfo.Version (0.1.0+b4bbab2) for the footer and bug reports. A constant, since the trimmed
+    browser build drops AssemblyInformationalVersionAttribute and reports the assembly as 0.0.0.0.
+  -->
+  <Target Name="WriteBuildInfo"
+          BeforeTargets="CoreCompile"
+          DependsOnTargets="InitializeSourceControlInformation">
+    <PropertyGroup>
+      <_ConvertShortSha>$(SourceRevisionId)</_ConvertShortSha>
+      <_ConvertShortSha Condition="$(SourceRevisionId.Length) &gt; 7">$(SourceRevisionId.Substring(0, 7))</_ConvertShortSha>
+      <_ConvertVersionText>$(Version)</_ConvertVersionText>
+      <_ConvertVersionText Condition="'$(_ConvertShortSha)' != ''">$(_ConvertVersionText)+$(_ConvertShortSha)</_ConvertVersionText>
+      <_ConvertBuildInfo>$(IntermediateOutputPath)BuildInfo.g.cs</_ConvertBuildInfo>
+    </PropertyGroup>
+    <WriteLinesToFile File="$(_ConvertBuildInfo)"
+                      Lines="namespace Convert%3B;static class BuildInfo { public const string Version = &quot;$(_ConvertVersionText)&quot;%3B }"
+                      Overwrite="true"
+                      WriteOnlyWhenDifferent="true" />
+    <ItemGroup>
+      <Compile Include="$(_ConvertBuildInfo)" />
+      <FileWrites Include="$(_ConvertBuildInfo)" />
+    </ItemGroup>
+  </Target>
+
 </Project>

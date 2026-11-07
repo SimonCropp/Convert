@@ -19,6 +19,7 @@ public sealed class BrowserPack : IPack
     {
         registry.Add(FileTypes.Pdf);
         registry.Add(new Preview(FileTypes.Pdf, [], typeof(Previews.PdfPreview)));
+        registry.Add(new Sample("PDF", FileTypes.Pdf.Icon, "_content/Convert.Browser/samples/sample.pdf", "sample.pdf"));
 
         FileType[] rasters = [FileTypes.Png, FileTypes.Jpeg, FileTypes.WebP];
         foreach (var target in rasters)

@@ -50,10 +50,15 @@ public sealed class PackServiceProviderFactory : IServiceProviderFactory<IServic
     {
         public IServiceProvider ServiceProvider => this;
 
-        public object? GetService(Type serviceType) =>
-            serviceType == typeof(IServiceScopeFactory)
-                ? root
-                : Resolve(this, inner.ServiceProvider, serviceType);
+        public object? GetService(Type serviceType)
+        {
+            if (serviceType == typeof(IServiceScopeFactory))
+            {
+                return root;
+            }
+
+            return Resolve(this, inner.ServiceProvider, serviceType);
+        }
 
         public object? GetKeyedService(Type serviceType, object? serviceKey) =>
             inner.ServiceProvider.GetKeyedService(serviceType, serviceKey);
@@ -85,12 +90,14 @@ public sealed class PackServiceProviderFactory : IServiceProviderFactory<IServic
             return outer;
         }
 
-        if (serviceType == typeof(IServiceScopeFactory) && outer is IServiceScopeFactory factory)
+        if (serviceType == typeof(IServiceScopeFactory) &&
+            outer is IServiceScopeFactory factory)
         {
             return factory;
         }
 
-        return inner.GetService(serviceType) ?? PackServices.Resolve(serviceType, outer);
+        return inner.GetService(serviceType) ??
+               PackServices.Resolve(serviceType, outer);
     }
 
     static bool IsServiceIn(IServiceProvider inner, Type serviceType) =>

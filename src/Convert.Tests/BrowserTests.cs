@@ -119,7 +119,8 @@ public class BrowserTests
         () => ("MS Office/Word document", "PDF", "OfficeIMO", ".pdf"),
         () => ("MS Office/PowerPoint presentation", "PDF", "OfficeIMO", ".pdf"),
         () => ("MS Office/Excel workbook", "PDF", "OfficeIMO", ".pdf"),
-        () => ("Markdown", "DOCX", "OfficeIMO", ".docx")
+        () => ("Markdown", "DOCX", "OfficeIMO", ".docx"),
+        () => ("PDF", "DOCX", null, ".docx")
     ];
 
     // One route per pack, through the real lazy loads, the trimmed build and the download.

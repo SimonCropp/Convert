@@ -52,7 +52,7 @@ else
                     }
                     @if (Session.Result is not null)
                     {
-                        <button type="button" role="tab" class="@(view == View.Result ? "active" : "")" aria-selected="@(view == View.Result ? "true" : "false")" @onclick="() => Show(View.Result)">Result</button>
+                        <button type="button" role="tab" class="@(view == View.Result ? "active" : "")" aria-selected="@(view == View.Result ? "true" : "false")" @onclick="() => Show(View.Result)">@Session.Conversion?.Target.ShortName Result</button>
                     }
                 </div>
             </div>

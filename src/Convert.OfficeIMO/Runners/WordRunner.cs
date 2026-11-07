@@ -168,7 +168,7 @@ static class PdfProfiles
         options.RegisterNamedFontFamily(family);
         foreach (var alias in OfficeImoFonts.FontSet.Aliases)
         {
-            options.RegisterFontFamilySubstitution(alias, OfficeImoFonts.Family, PdfFontFamilySubstitutionImpact.LayoutSensitive);
+            options.RegisterFontFamilySubstitution(alias, OfficeImoFonts.Family);
         }
 
         return options;

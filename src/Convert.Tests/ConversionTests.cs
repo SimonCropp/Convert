@@ -104,7 +104,7 @@ static class Inputs
                     "<html><body><h1>Title</h1><p>Some <b>bold</b> and <i>italic</i> text.</p><ul><li>One</li><li>Two</li></ul><table><tr><th>A</th><th>B</th></tr><tr><td>1</td><td>2</td></tr></table></body></html>",
                     type);
             case "pdf":
-                return await ConvertAsync("docx-pdf-morph");
+                return Sample("_content/Convert.Browser/samples/sample.pdf", type);
             case "png":
                 return await ConvertAsync("mermaid-png-naiad");
             case "svg":

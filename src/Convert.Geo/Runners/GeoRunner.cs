@@ -1,5 +1,4 @@
-using System.Globalization;
-using GeoConvert;
+using System.Xml;
 
 namespace Convert.Geo;
 
@@ -58,7 +57,12 @@ static class GeoRunner
         {
             return GeoConverter.Read(stream, Format(document.Type));
         }
-        catch (Exception exception) when (exception is FormatException or InvalidDataException or System.Text.Json.JsonException or System.Xml.XmlException)
+        catch (Exception exception)
+            when (exception is
+                      FormatException or
+                      InvalidDataException or
+                      JsonException or
+                      XmlException)
         {
             throw new UserInputException($"The {document.Type.DisplayName} file could not be read: {exception.Message}", exception);
         }

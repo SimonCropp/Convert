@@ -53,7 +53,10 @@ public partial class TextEditor : IDisposable
         }
 
         pending = false;
-        var edited = Document with { Bytes = Encoding.UTF8.GetBytes(text) };
+        var edited = Document with
+        {
+            Bytes = Encoding.UTF8.GetBytes(text)
+        };
         shown = edited;
         await Changed.InvokeAsync(edited);
     }
