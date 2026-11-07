@@ -1,4 +1,4 @@
-@namespace Convert.OfficeIMO
+@namespace Convert
 @inherits OptionsPanel<OfficeImoPdfOptions>
 
 <ChoiceOption TValue="PdfProfile" Label="PDF profile" Choices="OfficeImoChoices.Profiles" @bind-Value="Options.Profile" @bind-Value:after="NotifyAsync" />

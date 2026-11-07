@@ -1,4 +1,4 @@
-namespace Convert.Components;
+namespace Convert;
 
 /// <summary>
 /// A failure shown to the user. Unexpected exceptions also get a pre-filled GitHub issue link;

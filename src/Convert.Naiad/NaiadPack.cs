@@ -1,4 +1,4 @@
-namespace Convert.Naiad;
+namespace Convert;
 
 /// <summary>Mermaid diagrams to SVG and PNG with Naiad, a managed Mermaid renderer.</summary>
 public sealed class NaiadPack : IPack
@@ -29,7 +29,7 @@ public sealed class NaiadPack : IPack
         registry.Add(FileTypes.Mermaid);
         registry.Add(new MermaidToSvg());
         registry.Add(new MermaidToPng());
-        registry.Add(new Preview(FileTypes.Mermaid, SvgAssemblies, typeof(Previews.MermaidPreview)));
+        registry.Add(new Preview(FileTypes.Mermaid, SvgAssemblies, typeof(MermaidPreview)));
         foreach (var sample in samples)
         {
             var file = sample.ToLowerInvariant() + ".mmd";

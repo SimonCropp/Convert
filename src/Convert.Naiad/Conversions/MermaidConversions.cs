@@ -1,4 +1,4 @@
-namespace Convert.Naiad;
+namespace Convert;
 
 sealed class MermaidToSvg : Conversion<MermaidOptions>
 {

@@ -1,12 +1,4 @@
-using OfficeIMO.Drawing;
-using OfficeIMO.Html.Pdf;
-using OfficeIMO.Pdf;
-using OfficeIMO.Pdf.Excel;
-using OfficeIMO.Pdf.PowerPoint;
-using OfficeIMO.Pdf.Word;
-using OfficeIMO.Security;
-
-namespace Convert.OfficeIMO;
+namespace Convert;
 
 /// <summary>PDF to docx/xlsx/pptx/html/png, after OfficeIMO's own browser converter.</summary>
 static class PdfImportRunner
@@ -32,13 +24,25 @@ static class PdfImportRunner
 
     static ConversionOutput Word(PdfDocument pdf, string name, Cancel cancel)
     {
-        using var word = pdf.ToWord(new PdfWordExportOptions { FailOnLoss = false }, out var report, cancel);
+        using var word = pdf.ToWord(
+            new()
+            {
+                FailOnLoss = false
+            },
+            out var report,
+            cancel);
         return new([new(name, word.ToBytes(), FileTypes.Docx)], Reports.Notes(report));
     }
 
     static ConversionOutput Excel(PdfDocument pdf, string name, Cancel cancel)
     {
-        using var excel = pdf.ToExcel(new PdfExcelExportOptions { FailOnLoss = false }, out var report, cancel);
+        using var excel = pdf.ToExcel(
+            new()
+            {
+                FailOnLoss = false
+            },
+            out var report,
+            cancel);
         List<string> notes = ["Only the tables detected in the PDF are imported.", .. Reports.Notes(report)];
         return new([new(name, excel.ToBytes(), FileTypes.Xlsx)], notes);
     }
@@ -46,7 +50,7 @@ static class PdfImportRunner
     static ConversionOutput PowerPoint(PdfDocument pdf, string name, SlideMode mode, OfficeImoFonts.FontSet fonts, Cancel cancel)
     {
         using var presentation = pdf.ToPowerPoint(
-            new PdfPowerPointExportOptions
+            new()
             {
                 FailOnLoss = false,
                 Mode = Mode(mode),
@@ -110,15 +114,17 @@ static class PdfImportRunner
         using var input = new MemoryStream(document.Bytes, writable: false);
         try
         {
-            return PdfDocument.Load(input, new PdfLoadOptions
-            {
-                AesCryptographyProvider = OfficeManagedAesCryptographyProvider.Default,
-                Limits = new PdfReadLimits
+            return PdfDocument.Load(
+                input,
+                new()
                 {
-                    MaxInputBytes = 25L * 1024 * 1024,
-                    MaxPages = maxPages
-                }
-            });
+                    AesCryptographyProvider = OfficeManagedAesCryptographyProvider.Default,
+                    Limits = new()
+                    {
+                        MaxInputBytes = 25L * 1024 * 1024,
+                        MaxPages = maxPages
+                    }
+                });
         }
         catch (Exception exception) when (exception is InvalidDataException or FormatException)
         {

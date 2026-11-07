@@ -1,6 +1,6 @@
 using Morph;
 
-namespace Convert.Morph;
+namespace Convert;
 
 /// <summary>The conversions' only route into Morph.</summary>
 static class MorphRunner
@@ -30,12 +30,12 @@ static class MorphRunner
                 var pages = ConversionService.RenderPngPages(bytes, format, settings, fonts, cancel);
                 if (pages.Count == 1)
                 {
-                    return new(new Document(name, pages[0], FileTypes.Png));
+                    return new(new(name, pages[0], FileTypes.Png));
                 }
 
                 return new([.. pages.Select((_, index) => new Document(ZipParts.PageName(index, FileTypes.Png), _, FileTypes.Png))], []);
             case "pdf":
-                return new(new Document(name, ConversionService.ToPdf(bytes, format, fonts, cancel), FileTypes.Pdf));
+                return new(new(name, ConversionService.ToPdf(bytes, format, fonts, cancel), FileTypes.Pdf));
             case "html":
                 return new(Document.FromText(name, ConversionService.ToHtml(bytes, format, fonts), FileTypes.Html));
             case "md":

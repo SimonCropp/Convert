@@ -46,7 +46,9 @@ public class LazyLoadTests
         var problems = new List<string>();
         foreach (var (entry, assemblies) in Entries)
         {
-            var declared = assemblies.Select(_ => _.Replace(".wasm", "")).ToHashSet(StringComparer.Ordinal);
+            var declared = assemblies
+                .Select(_ => _.Replace(".wasm", ""))
+                .ToHashSet(StringComparer.Ordinal);
             var queue = new Queue<string>(declared);
             var seen = new HashSet<string>(StringComparer.Ordinal);
             while (queue.TryDequeue(out var name))
@@ -152,7 +154,11 @@ public class LazyLoadTests
     static IEnumerable<Type> WithNested(Type type) =>
         [type, .. type.GetNestedTypes(BindingFlags.Public | BindingFlags.NonPublic).SelectMany(WithNested)];
 
-    const BindingFlags all = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static | BindingFlags.DeclaredOnly;
+    const BindingFlags all = BindingFlags.Public |
+                             BindingFlags.NonPublic |
+                             BindingFlags.Instance |
+                             BindingFlags.Static |
+                             BindingFlags.DeclaredOnly;
 
     static IEnumerable<(string What, Type Named)> Named(Type type)
     {

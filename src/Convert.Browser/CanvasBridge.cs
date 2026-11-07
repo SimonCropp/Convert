@@ -1,4 +1,4 @@
-namespace Convert.Browser;
+namespace Convert;
 
 /// <summary>The pack's JavaScript module, <c>_content/Convert.Browser/browser.js</c>, imported on first use.</summary>
 sealed class CanvasBridge

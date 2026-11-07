@@ -1,4 +1,4 @@
-namespace Convert.Components;
+namespace Convert;
 
 /// <summary>A collapsed group of less-used options.</summary>
 public partial class AdvancedOptions

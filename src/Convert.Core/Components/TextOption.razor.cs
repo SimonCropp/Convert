@@ -1,4 +1,4 @@
-namespace Convert.Components;
+namespace Convert;
 
 /// <summary>A text input, or a colour picker (<c>#rrggbb</c>) when <see cref="Color"/> is set.</summary>
 public partial class TextOption

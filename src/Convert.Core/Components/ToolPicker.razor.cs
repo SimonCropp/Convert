@@ -1,4 +1,4 @@
-namespace Convert.Components;
+namespace Convert;
 
 /// <summary>Shown when several tools serve one source/target pair: a radio list, best first.</summary>
 public partial class ToolPicker

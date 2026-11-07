@@ -1,4 +1,4 @@
-namespace Convert.Components;
+namespace Convert;
 
 /// <summary>A conversion result: one preview per part.</summary>
 public partial class PartsPreview

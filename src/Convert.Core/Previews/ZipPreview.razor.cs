@@ -1,4 +1,4 @@
-namespace Convert.Previews;
+namespace Convert;
 
 /// <summary>The entries of a zip archive.</summary>
 public partial class ZipPreview

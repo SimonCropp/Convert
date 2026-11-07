@@ -1,4 +1,4 @@
-namespace Convert.ImageSharp;
+namespace Convert;
 
 /// <summary>
 /// Raster images through ImageSharp, a managed codec set: every format it reads to every format it
@@ -53,7 +53,7 @@ public sealed class ImageSharpPack : IPack
 
         foreach (var format in decodedPreviews)
         {
-            registry.Add(new Preview(format, Assemblies, typeof(Previews.ImageSharpPreview)));
+            registry.Add(new Preview(format, Assemblies, typeof(ImageSharpPreview)));
         }
 
         foreach (var source in Formats)

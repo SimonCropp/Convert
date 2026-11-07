@@ -1,4 +1,4 @@
-namespace Convert.Skia.Previews;
+namespace Convert;
 
 /// <summary>Decodes the image with Skia and shows it through the core image preview.</summary>
 public partial class SkiaPreview

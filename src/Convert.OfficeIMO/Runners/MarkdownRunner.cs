@@ -4,7 +4,7 @@ using OfficeIMO.Markdown.Html;
 using OfficeIMO.MarkdownRenderer;
 using OfficeIMO.Word.Markdown;
 
-namespace Convert.OfficeIMO;
+namespace Convert;
 
 /// <summary>Markdown to HTML and Word, and HTML to Markdown.</summary>
 static class MarkdownRunner

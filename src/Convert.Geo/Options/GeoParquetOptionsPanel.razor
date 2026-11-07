@@ -1,4 +1,4 @@
-@namespace Convert.Geo
+@namespace Convert
 @inherits OptionsPanel<GeoParquetOptions>
 
 <ChoiceOption TValue="GeoParquetCodec" Label="Codec" Choices="GeoChoices.Codecs" @bind-Value="Options.Codec" @bind-Value:after="NotifyAsync" />

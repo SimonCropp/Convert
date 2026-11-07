@@ -1,4 +1,4 @@
-namespace Convert.Markdig;
+namespace Convert;
 
 sealed class MarkdownToHtml : Conversion<MarkdownHtmlOptions>
 {

@@ -1,4 +1,4 @@
-namespace Convert.Components;
+namespace Convert;
 
 /// <summary>Edits a document with its type's editor, loading that editor's assemblies first.</summary>
 public partial class EditorHost

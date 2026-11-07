@@ -1,4 +1,4 @@
-namespace Convert.Editors;
+namespace Convert;
 
 /// <summary>
 /// A plain textarea for every text type. Fires <see cref="Changed"/> once typing has paused for

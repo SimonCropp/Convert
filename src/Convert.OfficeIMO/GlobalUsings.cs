@@ -1,3 +1,10 @@
 global using IconifyBundle;
 global using Microsoft.AspNetCore.Components;
 global using Microsoft.Extensions.DependencyInjection;
+global using OfficeIMO.Drawing;
+global using OfficeIMO.Html.Pdf;
+global using OfficeIMO.Pdf;
+global using OfficeIMO.Pdf.Excel;
+global using OfficeIMO.Pdf.PowerPoint;
+global using OfficeIMO.Pdf.Word;
+global using OfficeIMO.Security;

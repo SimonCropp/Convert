@@ -1,4 +1,4 @@
-namespace Convert.Geo;
+namespace Convert;
 
 /// <summary>Mirrors GeoConvert's <c>MapProjection</c>.</summary>
 public enum GeoProjection

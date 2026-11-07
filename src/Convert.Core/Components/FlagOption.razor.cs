@@ -1,4 +1,4 @@
-namespace Convert.Components;
+namespace Convert;
 
 /// <summary>A checkbox.</summary>
 public partial class FlagOption

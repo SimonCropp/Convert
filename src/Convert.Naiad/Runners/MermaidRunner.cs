@@ -1,6 +1,6 @@
 using Naiad;
 
-namespace Convert.Naiad;
+namespace Convert;
 
 /// <summary>The only place Naiad's namespace is used. A parse error is the user's input, not a bug.</summary>
 static class MermaidRunner

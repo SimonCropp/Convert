@@ -1,4 +1,4 @@
-namespace Convert.Morph.Editors;
+namespace Convert;
 
 /// <summary>Edits a Word document in Morph's viewer.</summary>
 public partial class DocxEditor

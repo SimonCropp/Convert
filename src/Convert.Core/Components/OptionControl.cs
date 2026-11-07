@@ -1,4 +1,4 @@
-namespace Convert.Components;
+namespace Convert;
 
 /// <summary>Base of the option controls, each bound with <c>@bind-Value</c>.</summary>
 public abstract class OptionControl<TValue> : ComponentBase

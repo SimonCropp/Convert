@@ -14,7 +14,8 @@ static class Fixtures
     static string FindRepoRoot()
     {
         var directory = new DirectoryInfo(AppContext.BaseDirectory);
-        while (directory is not null && !File.Exists(Path.Combine(directory.FullName, "global.json")))
+        while (directory is not null &&
+               !File.Exists(Path.Combine(directory.FullName, "global.json")))
         {
             directory = directory.Parent;
         }
@@ -32,10 +33,10 @@ static class Fixtures
     public static void UseDesktopFonts()
     {
         var fonts = Path.Combine(Wwwroot, "_content", "Morph.Blazor", "fonts");
-        Convert.Morph.MorphFonts.Provider = () => Task.FromResult(fonts);
-        Convert.OfficeIMO.OfficeImoFonts.Fetch = _ => Task.FromResult(Asset(_));
-        Convert.Skia.SkiaFonts.Fetch = _ => Task.FromResult(Asset(_));
+        MorphFonts.Provider = () => Task.FromResult(fonts);
+        OfficeImoFonts.Fetch = _ => Task.FromResult(Asset(_));
+        SkiaFonts.Fetch = _ => Task.FromResult(Asset(_));
     }
 
-    public static ConversionRegistry Registry { get; } = ConvertServiceCollectionExtensions.BuildRegistry(Convert.Web.Packs.All);
+    public static ConversionRegistry Registry { get; } = ConvertServiceCollectionExtensions.BuildRegistry(Packs.All);
 }

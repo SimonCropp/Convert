@@ -1,4 +1,4 @@
-namespace Convert.Skia;
+namespace Convert;
 
 /// <summary>
 /// The faces SVG text is drawn with. Skia in the browser has no system fonts, so every family maps onto

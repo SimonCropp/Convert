@@ -1,4 +1,4 @@
-namespace Convert.Components;
+namespace Convert;
 
 /// <summary>The target formats reachable from the source, as chips grouped by <see cref="FileGroup"/>.</summary>
 public partial class TargetPicker

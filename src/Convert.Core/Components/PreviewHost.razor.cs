@@ -1,4 +1,4 @@
-namespace Convert.Components;
+namespace Convert;
 
 /// <summary>
 /// Shows a document with the best preview its type has, loading that preview's assemblies first.

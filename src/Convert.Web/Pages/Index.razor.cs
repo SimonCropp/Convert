@@ -1,4 +1,4 @@
-namespace Convert.Web.Pages;
+namespace Convert;
 
 /// <summary>
 /// The one page: Empty → Loaded → Converting → Converted, plus an Edit tab. All state is the
@@ -22,10 +22,22 @@ public partial class Index
         Result
     }
 
-    TargetOption? TargetOption =>
-        Session.Source is { } source && Session.Target is { } target
-            ? Session.Registry.TargetsFor(source.Type).SelectMany(_ => _.Targets).FirstOrDefault(_ => _.Target == target)
-            : null;
+    TargetOption? TargetOption
+    {
+        get
+        {
+            if (Session.Source is { } source &&
+                Session.Target is { } target)
+            {
+                return Session.Registry
+                    .TargetsFor(source.Type)
+                    .SelectMany(_ => _.Targets)
+                    .FirstOrDefault(_ => _.Target == target);
+            }
+
+            return null;
+        }
+    }
 
     protected override void OnInitialized() =>
         Session.Changed += OnSessionChanged;

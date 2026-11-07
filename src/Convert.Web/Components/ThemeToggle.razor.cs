@@ -1,4 +1,4 @@
-namespace Convert.Web.Components;
+namespace Convert;
 
 public partial class ThemeToggle
 {

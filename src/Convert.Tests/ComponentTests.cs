@@ -1,4 +1,4 @@
-using Index = Convert.Web.Pages.Index;
+using Index = Convert.Index;
 
 /// <summary>Records which entries the wizard asked to load, and loads nothing (the real loader throws off-browser).</summary>
 sealed class StubToolLoader : IToolLoader
@@ -26,8 +26,12 @@ public class ComponentTests
     {
         var context = new BunitContext();
         context.JSInterop.Mode = JSRuntimeMode.Loose;
-        context.Services.AddScoped(_ => new HttpClient { BaseAddress = new("http://localhost/") });
-        context.Services.AddConvert(Convert.Web.Packs.All);
+        context.Services.AddScoped(
+            _ => new HttpClient
+            {
+                BaseAddress = new("http://localhost/")
+            });
+        context.Services.AddConvert(Packs.All);
         var stub = new StubToolLoader();
         loader = stub;
         context.Services.AddScoped<IToolLoader>(_ => stub);
@@ -83,7 +87,9 @@ public class ComponentTests
     public static IEnumerable<string> OptionPanels() =>
         Fixtures.Registry.Conversions
             .Where(_ => _.OptionsComponent is not null)
-            .GroupBy(_ => (_.OptionsComponent, Flags: JsonSerializer.Serialize(_.CreateOptions(), _.CreateOptions().GetType())))
+            .GroupBy(_ => (
+                _.OptionsComponent,
+                Flags: JsonSerializer.Serialize(_.CreateOptions(), _.CreateOptions().GetType())))
             .Select(_ => _.First().Id)
             .Order(StringComparer.Ordinal);
 

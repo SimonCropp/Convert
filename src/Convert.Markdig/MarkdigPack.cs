@@ -1,4 +1,4 @@
-namespace Convert.Markdig;
+namespace Convert;
 
 /// <summary>Markdown to HTML with Markdig, and the rendered Markdown preview.</summary>
 public sealed class MarkdigPack : IPack
@@ -14,7 +14,7 @@ public sealed class MarkdigPack : IPack
     public void Register(ConversionRegistry registry)
     {
         registry.Add(new MarkdownToHtml());
-        registry.Add(new Preview(FileTypes.Markdown, Assemblies, typeof(Previews.MarkdownPreview)));
+        registry.Add(new Preview(FileTypes.Markdown, Assemblies, typeof(MarkdownPreview)));
         registry.Add(new Sample("Markdown", Lucide.FileText, "_content/Convert.Markdig/samples/readme.md", "readme.md"));
     }
 }

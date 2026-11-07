@@ -1,4 +1,4 @@
-namespace Convert.Browser;
+namespace Convert;
 
 /// <summary>
 /// What the browser does on its own: PDF preview in its built-in viewer, and image conversions through
@@ -18,7 +18,7 @@ public sealed class BrowserPack : IPack
     public void Register(ConversionRegistry registry)
     {
         registry.Add(FileTypes.Pdf);
-        registry.Add(new Preview(FileTypes.Pdf, [], typeof(Previews.PdfPreview)));
+        registry.Add(new Preview(FileTypes.Pdf, [], typeof(PdfPreview)));
         registry.Add(new Sample("PDF", FileTypes.Pdf.Icon, "_content/Convert.Browser/samples/sample.pdf", "sample.pdf"));
 
         FileType[] rasters = [FileTypes.Png, FileTypes.Jpeg, FileTypes.WebP];

@@ -52,7 +52,7 @@ public sealed class ConversionRegistry
         types.Add(type);
         if (type.Kind == FileKind.Text)
         {
-            editors.Add(new(type, [], typeof(Editors.TextEditor)));
+            editors.Add(new(type, [], typeof(TextEditor)));
         }
     }
 
@@ -77,7 +77,7 @@ public sealed class ConversionRegistry
     public void Add(Editor editor)
     {
         editor.Pack = current;
-        editors.RemoveAll(_ => _.Type == editor.Type && _.Component == typeof(Editors.TextEditor));
+        editors.RemoveAll(_ => _.Type == editor.Type && _.Component == typeof(TextEditor));
         editors.Add(editor);
     }
 

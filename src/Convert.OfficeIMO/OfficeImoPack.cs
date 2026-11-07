@@ -1,4 +1,4 @@
-namespace Convert.OfficeIMO;
+namespace Convert;
 
 /// <summary>
 /// The 13 routes OfficeIMO proves in the browser: Office and Publisher to PDF, HTML to PDF, PDF to Office,

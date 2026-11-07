@@ -16,17 +16,17 @@ public sealed class CorePack : IPack
         registry.Add(FileTypes.Bmp);
         registry.Add(FileTypes.Ico);
 
-        registry.Add(new Preview(FileTypes.Text, [], typeof(Previews.TextPreview)));
+        registry.Add(new Preview(FileTypes.Text, [], typeof(TextPreview)));
         // Markdig's rendered preview wins; this is the fallback when that pack is absent.
-        registry.Add(new Preview(FileTypes.Markdown, [], typeof(Previews.TextPreview), Priority: 100));
-        registry.Add(new Preview(FileTypes.Html, [], typeof(Previews.FramePreview)));
-        registry.Add(new Preview(FileTypes.Svg, [], typeof(Previews.SvgPreview)));
-        registry.Add(new Preview(FileTypes.Png, [], typeof(Previews.ImagePreview)));
-        registry.Add(new Preview(FileTypes.Jpeg, [], typeof(Previews.ImagePreview)));
-        registry.Add(new Preview(FileTypes.WebP, [], typeof(Previews.ImagePreview)));
-        registry.Add(new Preview(FileTypes.Gif, [], typeof(Previews.ImagePreview)));
-        registry.Add(new Preview(FileTypes.Bmp, [], typeof(Previews.ImagePreview)));
-        registry.Add(new Preview(FileTypes.Ico, [], typeof(Previews.ImagePreview)));
-        registry.Add(new Preview(FileTypes.Zip, [], typeof(Previews.ZipPreview)));
+        registry.Add(new Preview(FileTypes.Markdown, [], typeof(TextPreview), Priority: 100));
+        registry.Add(new Preview(FileTypes.Html, [], typeof(FramePreview)));
+        registry.Add(new Preview(FileTypes.Svg, [], typeof(SvgPreview)));
+        registry.Add(new Preview(FileTypes.Png, [], typeof(ImagePreview)));
+        registry.Add(new Preview(FileTypes.Jpeg, [], typeof(ImagePreview)));
+        registry.Add(new Preview(FileTypes.WebP, [], typeof(ImagePreview)));
+        registry.Add(new Preview(FileTypes.Gif, [], typeof(ImagePreview)));
+        registry.Add(new Preview(FileTypes.Bmp, [], typeof(ImagePreview)));
+        registry.Add(new Preview(FileTypes.Ico, [], typeof(ImagePreview)));
+        registry.Add(new Preview(FileTypes.Zip, [], typeof(ZipPreview)));
     }
 }

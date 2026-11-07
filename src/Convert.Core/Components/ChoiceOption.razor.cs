@@ -1,4 +1,4 @@
-namespace Convert.Components;
+namespace Convert;
 
 /// <summary>A drop-down over a fixed list of values.</summary>
 public partial class ChoiceOption<TValue>

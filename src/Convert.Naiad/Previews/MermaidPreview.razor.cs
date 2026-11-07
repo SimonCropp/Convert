@@ -1,4 +1,4 @@
-namespace Convert.Naiad.Previews;
+namespace Convert;
 
 /// <summary>The diagram rendered by Naiad, shown through the core SVG preview.</summary>
 public partial class MermaidPreview

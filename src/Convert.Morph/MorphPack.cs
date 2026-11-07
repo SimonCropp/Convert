@@ -1,4 +1,4 @@
-namespace Convert.Morph;
+namespace Convert;
 
 /// <summary>Word, Excel and PowerPoint through Morph: the viewer, the docx editor and 15 conversions.</summary>
 public sealed class MorphPack : IPack
@@ -35,7 +35,7 @@ public sealed class MorphPack : IPack
         foreach (var source in sources)
         {
             registry.Add(source);
-            registry.Add(new Preview(source, Assemblies, typeof(Previews.MorphPreview)));
+            registry.Add(new Preview(source, Assemblies, typeof(MorphPreview)));
             foreach (var target in targets)
             {
                 registry.Add(new MorphConversion(source, target));
@@ -44,7 +44,7 @@ public sealed class MorphPack : IPack
             registry.Add(new Sample(source.DisplayName, source.Icon, $"_content/Morph.Blazor/sample/sample{source.Extension}", $"sample{source.Extension}", "MS Office"));
         }
 
-        registry.Add(new Editor(FileTypes.Docx, Assemblies, typeof(Editors.DocxEditor)));
+        registry.Add(new Editor(FileTypes.Docx, Assemblies, typeof(DocxEditor)));
     }
 
     public void Loaded(IServiceProvider services) =>

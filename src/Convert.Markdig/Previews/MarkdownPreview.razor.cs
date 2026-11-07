@@ -1,4 +1,4 @@
-namespace Convert.Markdig.Previews;
+namespace Convert;
 
 /// <summary>Markdown rendered by Markdig into the core sandboxed frame.</summary>
 public partial class MarkdownPreview

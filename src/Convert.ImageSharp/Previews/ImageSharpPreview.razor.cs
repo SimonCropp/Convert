@@ -1,4 +1,4 @@
-namespace Convert.ImageSharp.Previews;
+namespace Convert;
 
 /// <summary>Decodes the image with ImageSharp and shows it through the core image preview.</summary>
 public partial class ImageSharpPreview

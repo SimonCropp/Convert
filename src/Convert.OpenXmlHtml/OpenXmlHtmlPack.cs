@@ -1,4 +1,4 @@
-namespace Convert.OpenXmlHtml;
+namespace Convert;
 
 /// <summary>HTML to Word with OpenXmlHtml.</summary>
 public sealed class OpenXmlHtmlPack : IPack

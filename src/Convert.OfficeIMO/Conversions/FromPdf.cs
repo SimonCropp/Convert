@@ -1,4 +1,4 @@
-﻿namespace Convert.OfficeIMO;
+﻿namespace Convert;
 
 /// <summary>PDF to docx/xlsx/pptx/html/png.</summary>
 sealed class FromPdf(FileType target, IReadOnlyList<string> assemblies, string summary) : Conversion
@@ -9,7 +9,7 @@ sealed class FromPdf(FileType target, IReadOnlyList<string> assemblies, string s
     public override Tool Tool => OfficeImoPack.Tool;
     public override string Summary => summary;
 
-    public override string? Expect =>
+    public override string Expect =>
         target.Id switch
         {
             "xlsx" => "Only tables are imported; other page content is left out.",

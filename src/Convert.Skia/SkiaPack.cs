@@ -1,4 +1,4 @@
-namespace Convert.Skia;
+namespace Convert;
 
 /// <summary>
 /// Raster images and SVG through Skia (SkiaSharp, and Svg.Skia for SVG): every format Skia decodes to
@@ -51,7 +51,7 @@ public sealed class SkiaPack : IPack
             registry.Add(format);
         }
 
-        registry.Add(new Preview(FileTypes.Wbmp, RasterAssemblies, typeof(Previews.SkiaPreview)));
+        registry.Add(new Preview(FileTypes.Wbmp, RasterAssemblies, typeof(SkiaPreview)));
 
         foreach (var source in Decodes)
         {

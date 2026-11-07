@@ -2,8 +2,6 @@ using OfficeIMO;
 using OfficeIMO.Excel;
 using OfficeIMO.Excel.Pdf;
 using OfficeIMO.Html;
-using OfficeIMO.Html.Pdf;
-using OfficeIMO.Pdf;
 using OfficeIMO.PowerPoint;
 using OfficeIMO.PowerPoint.Pdf;
 using OfficeIMO.Publisher;
@@ -11,7 +9,7 @@ using OfficeIMO.Publisher.Pdf;
 using OfficeIMO.Word;
 using OfficeIMO.Word.Pdf;
 
-namespace Convert.OfficeIMO;
+namespace Convert;
 
 /// <summary>
 /// docx/xlsx/pptx/pub/html to PDF, after OfficeIMO's own browser converter.
@@ -40,16 +38,26 @@ static class WordRunner
             _ => throw new NotSupportedException($"OfficeIMO does not convert {document.Type.DisplayName} to PDF here.")
         };
         cancel.ThrowIfCancellationRequested();
-        var bytes = pdf.ToBytes(new PdfSaveOptions { AllowLoss = true }, cancel);
+        var bytes = pdf.ToBytes(
+            new()
+            {
+                AllowLoss = true
+            },
+            cancel);
         return (bytes, Reports.Notes(report));
     }
 
     static PdfDocument Word(Document document, PdfCreateOptions pdfOptions, out OfficeConversionReport report, Cancel cancel)
     {
         using var stream = new MemoryStream(document.Bytes, writable: false);
-        using var word = WordDocument.Load(stream, new WordLoadOptions { MaxInputBytes = maxPackageBytes });
+        using var word = WordDocument.Load(
+            stream,
+            new()
+            {
+                MaxInputBytes = maxPackageBytes
+            });
         return word.ToPdf(
-            new WordPdfExportOptions
+            new()
             {
                 FailOnLoss = false,
                 PdfOptions = pdfOptions,
@@ -63,9 +71,15 @@ static class WordRunner
     static PdfDocument Excel(Document document, PdfCreateOptions pdfOptions, bool quickPreview, out OfficeConversionReport report, Cancel cancel)
     {
         using var stream = new MemoryStream(document.Bytes, writable: false);
-        using var excel = ExcelDocument.Load(stream, new ExcelLoadOptions { AccessMode = DocumentAccessMode.ReadOnly, PackageSecurity = Security() });
+        using var excel = ExcelDocument.Load(
+            stream,
+            new()
+            {
+                AccessMode = DocumentAccessMode.ReadOnly,
+                PackageSecurity = Security()
+            });
         return excel.ToPdf(
-            new ExcelPdfExportOptions
+            new()
             {
                 FailOnLoss = false,
                 PdfOptions = pdfOptions,
@@ -81,9 +95,15 @@ static class WordRunner
     static PdfDocument PowerPoint(Document document, PdfCreateOptions pdfOptions, out OfficeConversionReport report, Cancel cancel)
     {
         using var stream = new MemoryStream(document.Bytes, writable: false);
-        using var presentation = PowerPointDocument.Load(stream, new PowerPointLoadOptions { AccessMode = DocumentAccessMode.ReadOnly, PackageSecurity = Security() });
+        using var presentation = PowerPointDocument.Load(
+            stream,
+            new()
+            {
+                AccessMode = DocumentAccessMode.ReadOnly,
+                PackageSecurity = Security()
+            });
         return presentation.ToPdf(
-            new PowerPointPdfExportOptions
+            new()
             {
                 FailOnLoss = false,
                 PdfOptions = pdfOptions,
@@ -105,12 +125,20 @@ static class WordRunner
             Fonts = fonts.Layout()
         };
         var publication = PublisherDocument.Load(document.Bytes, load, cancel);
-        return publication.ToPdf(new PublisherPdfExportOptions { PdfOptions = pdfOptions, FailOnLoss = false }, out report, cancel);
+        return publication.ToPdf(
+            new()
+            {
+                PdfOptions = pdfOptions,
+                FailOnLoss = false
+            },
+            out report,
+            cancel);
     }
 
     static PdfDocument Html(Document document, PdfCreateOptions pdfOptions, OfficeImoFonts.FontSet fonts, out OfficeConversionReport report, Cancel cancel) =>
-        HtmlConversionDocument.Parse(document.Text).ToPdf(
-            new HtmlPdfExportOptions
+        HtmlConversionDocument.Parse(document.Text)
+            .ToPdf(
+            new()
             {
                 FailOnLoss = false,
                 PdfOptions = pdfOptions,
@@ -156,7 +184,9 @@ static class PdfProfiles
         switch (profile)
         {
             case PdfProfile.Archive:
-                options.UsePdfA(PdfComplianceProfile.PdfA2B, "und").RequireCompliance(PdfComplianceProfile.PdfA2B);
+                options
+                    .UsePdfA(PdfComplianceProfile.PdfA2B, "und")
+                    .RequireCompliance(PdfComplianceProfile.PdfA2B);
                 break;
             case PdfProfile.Accessible:
                 options.UsePdfUa(PdfComplianceProfile.PdfUa1, "und");

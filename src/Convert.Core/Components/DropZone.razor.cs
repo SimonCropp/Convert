@@ -1,4 +1,4 @@
-namespace Convert.Components;
+namespace Convert;
 
 /// <summary>
 /// The empty state: pick, drop or paste a file, or fetch a pack's sample. A drop anywhere on the page

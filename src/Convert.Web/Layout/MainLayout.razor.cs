@@ -1,4 +1,4 @@
-namespace Convert.Web.Layout;
+namespace Convert;
 
 public partial class MainLayout : IDisposable
 {

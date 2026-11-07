@@ -28,10 +28,28 @@ public class BrowserTests
         builder.Logging.ClearProviders();
         app = builder.Build();
         var files = new PhysicalFileProvider(Fixtures.Wwwroot);
-        var types = new FileExtensionContentTypeProvider { Mappings = { [".wasm"] = "application/wasm" } };
-        app.UseDefaultFiles(new DefaultFilesOptions { FileProvider = files });
-        app.UseStaticFiles(new StaticFileOptions { FileProvider = files, ContentTypeProvider = types, ServeUnknownFileTypes = true });
-        app.MapFallbackToFile("index.html", new StaticFileOptions { FileProvider = files });
+        var types = new FileExtensionContentTypeProvider
+        {
+            Mappings = {[".wasm"] = "application/wasm"}
+        };
+        app.UseDefaultFiles(
+            new DefaultFilesOptions
+            {
+                FileProvider = files
+            });
+        app.UseStaticFiles(
+            new StaticFileOptions
+            {
+                FileProvider = files,
+                ContentTypeProvider = types,
+                ServeUnknownFileTypes = true
+            });
+        app.MapFallbackToFile(
+            "index.html",
+            new StaticFileOptions
+            {
+                FileProvider = files
+            });
         await app.StartAsync();
 
         playwright = await Playwright.CreateAsync();
@@ -68,7 +86,7 @@ public class BrowserTests
 
     static async Task SettleAsync(IPage page)
     {
-        await page.WaitForSelectorAsync(".drop-zone", new() { Timeout = 120000 });
+        await page.WaitForSelectorAsync(".drop-zone", new() {Timeout = 120000});
         await page.WaitForLoadStateAsync(LoadState.Load);
     }
 
@@ -105,7 +123,7 @@ public class BrowserTests
 
         // Choosing a Mermaid sample loads Naiad, and only what its preview needs.
         await ChooseSampleAsync(page, "Mermaid/Flowchart");
-        await page.WaitForSelectorAsync(".svg-preview img", new() { Timeout = 60000 });
+        await page.WaitForSelectorAsync(".svg-preview img", new() {Timeout = 60000});
         await Assert.That(requested.Order()).IsEquivalentTo(["Naiad", "Parlot"]);
     }
 
@@ -196,9 +214,14 @@ public class BrowserTests
         await SettleAsync(page);
         await page.SetInputFilesAsync(
             ".drop-zone input[type=file]",
-            new FilePayload { Name = input.FileName, MimeType = input.Type.ContentType, Buffer = input.Bytes });
+            new FilePayload
+            {
+                Name = input.FileName,
+                MimeType = input.Type.ContentType,
+                Buffer = input.Bytes
+            });
         // The preview: the browser's own, or one decoded by ImageSharp or Skia.
-        await page.WaitForSelectorAsync(".source-pane img", new() { Timeout = 60000 });
+        await page.WaitForSelectorAsync(".source-pane img", new() {Timeout = 60000});
         await ConvertAndDownloadAsync(page, target, tool, extension);
     }
 
@@ -212,7 +235,7 @@ public class BrowserTests
         await SettleAsync(page);
         await ChooseSampleAsync(page, "Mermaid/Flowchart");
         var image = page.Locator(".split-preview img");
-        await image.WaitForAsync(new() { Timeout = 60000 });
+        await image.WaitForAsync(new() {Timeout = 60000});
         var before = await image.GetAttributeAsync("src");
 
         await page.ClickAsync(".split-edit textarea");
@@ -221,7 +244,7 @@ public class BrowserTests
         await page.WaitForFunctionAsync(
             "previous => document.querySelector('.split-preview img')?.getAttribute('src') !== previous",
             before,
-            new() { Timeout = 30000 });
+            new() {Timeout = 30000});
 
         // Still typing in the same editor, and the render has no error.
         await Assert.That(await page.EvaluateAsync<string>("document.activeElement.tagName")).IsEqualTo("TEXTAREA");
@@ -236,16 +259,25 @@ public class BrowserTests
         await page.GotoAsync(Url);
         await SettleAsync(page);
         await ChooseSampleAsync(page, "MS Office/Word document");
-        await page.ClickAsync("[role=tab]:text-is('Edit')", new() { Timeout = 60000 });
-        await page.WaitForSelectorAsync(".editor-ribbon", new() { Timeout = 60000 });
+        await page.ClickAsync("[role=tab]:text-is('Edit')", new() {Timeout = 60000});
+        await page.WaitForSelectorAsync(".editor-ribbon", new() {Timeout = 60000});
         var lines = page.Locator(".morph-preview .text-line");
 
-        await lines.Filter(new() { HasTextRegex = new System.Text.RegularExpressions.Regex("^PTA$") }).ClickAsync(new() { Timeout = 60000 });
+        await lines.Filter(
+                new()
+                {
+                    HasTextRegex = new("^PTA$")
+                })
+            .ClickAsync(
+                new()
+                {
+                    Timeout = 60000
+                });
         await page.Keyboard.PressAsync("End");
         await page.Keyboard.TypeAsync(" EDITED");
         // Moving on from the paragraph commits what was typed.
-        await lines.Filter(new() { HasText = "Mira Karlsson" }).First.ClickAsync();
-        await page.WaitForSelectorAsync(".editor-dirty", new() { Timeout = 60000 });
+        await lines.Filter(new() {HasText = "Mira Karlsson"}).First.ClickAsync();
+        await page.WaitForSelectorAsync(".editor-dirty", new() {Timeout = 60000});
 
         var download = await ConvertAndDownloadAsync(page, "TXT", null, ".txt");
         var text = await File.ReadAllTextAsync((await download.PathAsync()));
@@ -269,7 +301,7 @@ public class BrowserTests
 
     static async Task<IDownload> ConvertAndDownloadAsync(IPage page, string target, string? tool, string extension)
     {
-        await page.ClickAsync($".chip:text-is('{target}')", new() { Timeout = 60000 });
+        await page.ClickAsync($".chip:text-is('{target}')", new() {Timeout = 60000});
         if (tool is not null && await page.Locator(".tool-picker").CountAsync() > 0)
         {
             await page.ClickAsync($".tool-choice label:has-text('{tool}')");
@@ -277,7 +309,7 @@ public class BrowserTests
 
         await page.ClickAsync(".convert-button");
         // Either the result or an error: an error fails fast, with its text.
-        await page.WaitForSelectorAsync(".download-button, .choices-pane .error", new() { Timeout = 240000 });
+        await page.WaitForSelectorAsync(".download-button, .choices-pane .error", new() {Timeout = 240000});
         if (await page.Locator(".choices-pane .error").CountAsync() > 0)
         {
             throw new InvalidOperationException(await page.Locator(".choices-pane .error").InnerTextAsync());

@@ -1,6 +1,4 @@
 global using Convert;
-global using Convert.Web;
-global using Convert.Web.Services;
 global using IconifyBundle;
 global using Microsoft.AspNetCore.Components;
 global using Microsoft.AspNetCore.Components.Web;

@@ -6,7 +6,6 @@ global using System.Text.RegularExpressions;
 global using System.Xml.Linq;
 global using Bunit;
 global using Convert;
-global using Convert.Components;
 global using Microsoft.AspNetCore.Builder;
 global using Microsoft.AspNetCore.Components;
 global using Microsoft.AspNetCore.Hosting;

@@ -1,4 +1,4 @@
-namespace Convert.Components;
+namespace Convert;
 
 /// <summary>Renders a conversion's options panel over its options POCO.</summary>
 public partial class OptionsHost

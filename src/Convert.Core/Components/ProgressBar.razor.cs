@@ -1,4 +1,4 @@
-namespace Convert.Components;
+namespace Convert;
 
 /// <summary>An indeterminate bar with a label.</summary>
 public partial class ProgressBar

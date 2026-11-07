@@ -1,18 +1,12 @@
-namespace Convert.Web.Services;
-
-public enum ThemeType
-{
-    Light,
-    Dark
-}
+namespace Convert;
 
 public sealed class ThemePreferenceService(IJSRuntime jsRuntime)
 {
-    const string ThemeKey = "selectedTheme";
+    const string themeKey = "selectedTheme";
 
     public async Task<ThemeType> GetSavedThemeAsync()
     {
-        var value = await jsRuntime.InvokeAsync<string?>("statePreference.get", ThemeKey);
+        var value = await jsRuntime.InvokeAsync<string?>("statePreference.get", themeKey);
         if (value is not null &&
             Enum.TryParse<ThemeType>(value, out var theme))
         {
@@ -23,5 +17,5 @@ public sealed class ThemePreferenceService(IJSRuntime jsRuntime)
     }
 
     public async Task SaveThemeAsync(ThemeType theme) =>
-        await jsRuntime.InvokeVoidAsync("statePreference.set", ThemeKey, theme.ToString());
+        await jsRuntime.InvokeVoidAsync("statePreference.set", themeKey, theme.ToString());
 }

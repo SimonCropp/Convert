@@ -1,4 +1,4 @@
-namespace Convert.Previews;
+namespace Convert;
 
 /// <summary>The document's text in a <c>&lt;pre&gt;</c>.</summary>
 public partial class TextPreview

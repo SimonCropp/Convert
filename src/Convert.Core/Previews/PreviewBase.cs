@@ -1,4 +1,4 @@
-namespace Convert.Previews;
+namespace Convert;
 
 /// <summary>Base of every preview component: it renders one <see cref="Convert.Document"/> read-only.</summary>
 public abstract class PreviewBase : ComponentBase

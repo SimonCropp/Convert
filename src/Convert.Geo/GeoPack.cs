@@ -1,4 +1,4 @@
-namespace Convert.Geo;
+namespace Convert;
 
 /// <summary>Geospatial formats through GeoConvert: each to every other, plus PNG and SVG maps.</summary>
 public sealed class GeoPack : IPack
@@ -34,7 +34,7 @@ public sealed class GeoPack : IPack
         foreach (var format in Formats)
         {
             registry.Add(format);
-            registry.Add(new Preview(format, Assemblies, typeof(Previews.MapPreview)));
+            registry.Add(new Preview(format, Assemblies, typeof(MapPreview)));
         }
 
         foreach (var source in Formats)

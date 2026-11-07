@@ -23,8 +23,14 @@ public class GeoSampleTests
                 continue;
             }
 
-            var conversion = Fixtures.Registry.Conversions.Single(_ => _.Id == $"geojson-{format.Id}-geoconvert");
-            var output = await conversion.RunAsync(source, conversion.CreateOptions(), new Progress<ConversionProgress>(), Cancel.None);
+            var conversion = Fixtures.Registry
+                .Conversions
+                .Single(_ => _.Id == $"geojson-{format.Id}-geoconvert");
+            var output = await conversion.RunAsync(
+                source,
+                conversion.CreateOptions(),
+                new Progress<ConversionProgress>(),
+                Cancel.None);
             await File.WriteAllBytesAsync(path, output.Parts[0].Bytes);
             written.Add(Path.GetFileName(path));
         }

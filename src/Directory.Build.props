@@ -4,6 +4,7 @@
     <Version>0.1.0</Version>
     <NoWarn>NU1608</NoWarn>
     <AssemblyVersion>1.0.0</AssemblyVersion>
+    <RootNamespace>Convert</RootNamespace>
     <LangVersion>preview</LangVersion>
     <Description>Convert, edit and render files entirely in the browser</Description>
     <ImplicitUsings>enable</ImplicitUsings>

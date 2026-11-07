@@ -1,4 +1,4 @@
-@namespace Convert.Geo
+@namespace Convert
 @inherits OptionsPanel<GeoRenderOptions>
 
 <ChoiceOption TValue="GeoProjection" Label="Projection" Choices="GeoChoices.Projections" @bind-Value="Options.Projection" @bind-Value:after="NotifyAsync" />

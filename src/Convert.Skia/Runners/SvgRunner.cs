@@ -1,8 +1,7 @@
-using SkiaSharp;
 using Svg.Skia;
 using Svg.Skia.TypefaceProviders;
 
-namespace Convert.Skia;
+namespace Convert;
 
 /// <summary>SVG routes, through Svg.Skia. Kept apart from <see cref="SkiaRunner"/> so raster routes never load Svg.*.</summary>
 static class SvgRunner

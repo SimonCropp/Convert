@@ -1,4 +1,4 @@
-namespace Convert.OpenXmlHtml;
+namespace Convert;
 
 public sealed class HtmlDocxOptions
 {

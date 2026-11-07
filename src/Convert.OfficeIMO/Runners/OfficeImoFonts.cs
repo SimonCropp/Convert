@@ -1,7 +1,4 @@
-using OfficeIMO.Drawing;
-using OfficeIMO.Pdf;
-
-namespace Convert.OfficeIMO;
+namespace Convert;
 
 /// <summary>
 /// The faces every OfficeIMO render embeds: Morph's bundled Aptos, fetched by URL (the files ship with

@@ -1,5 +1,4 @@
-@namespace Convert.Morph
-@using Convert.Components
+@namespace Convert
 @inherits OptionsPanel<MorphPngOptions>
 
 <ChoiceOption TValue="int" Label="Resolution" Choices="dpis" @bind-Value="Options.Dpi" @bind-Value:after="NotifyAsync" />

@@ -1,6 +1,6 @@
 using System.Xml;
 
-namespace Convert.Geo;
+namespace Convert;
 
 /// <summary>The only place GeoConvert's namespace is used. Stream overloads only: no filesystem here.</summary>
 static class GeoRunner

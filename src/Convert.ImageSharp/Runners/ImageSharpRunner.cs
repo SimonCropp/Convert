@@ -1,4 +1,4 @@
-namespace Convert.ImageSharp;
+namespace Convert;
 
 /// <summary>The only place ImageSharp's namespaces are used. Every route loads only SixLabors.ImageSharp.</summary>
 static class ImageSharpRunner

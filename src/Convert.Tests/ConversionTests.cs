@@ -19,7 +19,11 @@ public class ConversionTests
     {
         var conversion = Registry.Conversions.Single(_ => _.Id == id);
         var source = await Inputs.ForAsync(conversion.Source);
-        var output = await conversion.RunAsync(source, conversion.CreateOptions(), new Progress<ConversionProgress>(), Cancel.None);
+        var output = await conversion.RunAsync(
+            source,
+            conversion.CreateOptions(),
+            new Progress<ConversionProgress>(),
+            Cancel.None);
 
         await Assert.That(output.Parts.Count).IsGreaterThan(0);
         foreach (var part in output.Parts)

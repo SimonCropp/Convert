@@ -1,4 +1,4 @@
-namespace Convert.OfficeIMO;
+namespace Convert;
 
 public enum PdfProfile
 {

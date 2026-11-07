@@ -1,6 +1,4 @@
-using SkiaSharp;
-
-namespace Convert.Skia;
+namespace Convert;
 
 /// <summary>Raster routes: the only SkiaSharp code they reach, so they load SkiaSharp alone.</summary>
 static class SkiaRunner

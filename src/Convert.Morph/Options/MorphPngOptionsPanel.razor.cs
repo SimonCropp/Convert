@@ -1,4 +1,4 @@
-namespace Convert.Morph;
+namespace Convert;
 
 public partial class MorphPngOptionsPanel
 {

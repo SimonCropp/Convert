@@ -1,6 +1,6 @@
 using System.Globalization;
 
-namespace Convert.Components;
+namespace Convert;
 
 /// <summary>A number input, clamped to <see cref="Min"/> and <see cref="Max"/>.</summary>
 public partial class NumberOption<TValue>

@@ -1,4 +1,4 @@
-namespace Convert.OfficeIMO;
+namespace Convert;
 
 /// <summary>docx/xlsx/pptx/pub/html to PDF.</summary>
 sealed class ToPdf(FileType source, IReadOnlyList<string> assemblies, string summary) : Conversion<OfficeImoPdfOptions>

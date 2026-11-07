@@ -1,4 +1,4 @@
-namespace Convert.Geo.Previews;
+namespace Convert;
 
 /// <summary>The features drawn by GeoConvert, shown through the core SVG or image preview.</summary>
 public partial class MapPreview

@@ -1,4 +1,4 @@
-﻿namespace Convert.OfficeIMO;
+﻿namespace Convert;
 
 sealed class MarkdownToHtml : Conversion<NoOptions>
 {

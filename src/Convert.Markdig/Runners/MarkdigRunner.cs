@@ -1,4 +1,4 @@
-namespace Convert.Markdig;
+namespace Convert;
 
 /// <summary>The only place Markdig's namespace is used.</summary>
 static class MarkdigRunner

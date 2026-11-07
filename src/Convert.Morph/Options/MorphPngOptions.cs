@@ -1,4 +1,4 @@
-namespace Convert.Morph;
+namespace Convert;
 
 /// <summary>Mirrors Morph's <c>PageCrop</c>, so the options type needs no Morph assembly to lay out.</summary>
 public enum MorphCrop

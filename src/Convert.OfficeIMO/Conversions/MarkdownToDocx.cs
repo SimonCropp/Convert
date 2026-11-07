@@ -1,4 +1,4 @@
-﻿namespace Convert.OfficeIMO;
+﻿namespace Convert;
 
 sealed class MarkdownToDocx : Conversion<NoOptions>
 {

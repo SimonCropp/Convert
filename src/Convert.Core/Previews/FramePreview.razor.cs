@@ -1,4 +1,4 @@
-namespace Convert.Previews;
+namespace Convert;
 
 /// <summary>An HTML document in a sandboxed frame.</summary>
 public partial class FramePreview
