@@ -1,10 +1,12 @@
 @using global::Morph
 
-@* The viewer in edit mode: every edit hands back the document's bytes, which become the session's source. *@
+@* Morph's word processor (the viewer only shows a document; MorphViewer's ReadOnly governs comments, not
+   text). Every edit hands back the document's bytes, which become the session's source. The editor's
+   own file chrome is hidden: the wizard owns the file. *@
 <div class="morph-preview">
-    <MorphViewer Source="@source"
+    <MorphEditor Source="@source"
                  FileName="@Document.FileName"
-                 ReadOnly="false"
+                 ShowNew="false"
                  ShowOpenFile="false"
                  ShowDownload="false"
                  ShowPrint="false"

@@ -162,7 +162,32 @@ public class BrowserTests
         await ConvertAndDownloadAsync(page, "PNG", null, ".png");
     }
 
-    static async Task ConvertAndDownloadAsync(IPage page, string target, string? tool, string extension)
+    // Text typed in the Edit tab becomes the session's source: the next conversion has it.
+    [Test]
+    public async Task EditedDocxConvertsWithTheEdit()
+    {
+        var page = await browser!.NewPageAsync();
+        await page.GotoAsync(Url);
+        await SettleAsync(page);
+        await page.ClickAsync("button.sample:has-text('DOCX sample')");
+        await page.ClickAsync("[role=tab]:text-is('Edit')", new() { Timeout = 60000 });
+        await page.WaitForSelectorAsync(".editor-ribbon", new() { Timeout = 60000 });
+        var lines = page.Locator(".morph-preview .text-line");
+
+        await lines.Filter(new() { HasTextRegex = new System.Text.RegularExpressions.Regex("^PTA$") }).ClickAsync(new() { Timeout = 60000 });
+        await page.Keyboard.PressAsync("End");
+        await page.Keyboard.TypeAsync(" EDITED");
+        // Moving on from the paragraph commits what was typed.
+        await lines.Filter(new() { HasText = "Mira Karlsson" }).First.ClickAsync();
+        await page.WaitForSelectorAsync(".editor-dirty", new() { Timeout = 60000 });
+
+        var download = await ConvertAndDownloadAsync(page, "TXT", null, ".txt");
+        var text = await File.ReadAllTextAsync((await download.PathAsync())!);
+        // The heading is "pta" in all-caps style; text output drops the style.
+        await Assert.That(text).Contains("pta EDITED");
+    }
+
+    static async Task<IDownload> ConvertAndDownloadAsync(IPage page, string target, string? tool, string extension)
     {
         await page.ClickAsync($".chip:text-is('{target}')", new() { Timeout = 60000 });
         if (tool is not null && await page.Locator(".tool-picker").CountAsync() > 0)
@@ -182,6 +207,7 @@ public class BrowserTests
         var download = await page.RunAndWaitForDownloadAsync(() => button!.ClickAsync());
         await Assert.That(download.SuggestedFilename).EndsWith(extension);
         await Assert.That(await page.Locator(".error").CountAsync()).IsEqualTo(0);
+        return download;
     }
 
     [Test]

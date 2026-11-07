@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "web",
+      "runtimeExecutable": "dotnet",
+      "runtimeArgs": ["run", "--project", "src/Convert.Web", "--urls", "http://localhost:5280"],
+      "port": 5280
+    }
+  ]
+}
