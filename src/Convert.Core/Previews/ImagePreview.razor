@@ -1,0 +1,8 @@
+@inherits BlobPreviewBase
+
+<div class="image-preview">
+    @if (Url is not null)
+    {
+        <img src="@Url" alt="@Document.FileName" />
+    }
+</div>

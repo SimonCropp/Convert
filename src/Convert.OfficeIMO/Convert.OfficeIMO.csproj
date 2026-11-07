@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <RootNamespace>Convert.OfficeIMO</RootNamespace>
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+  </PropertyGroup>
+
+  <!-- The browser-proven routes of OfficeIMO's own converter (Website/data/browser_tools.json). No
+       HarfBuzz: it is a native archive in OfficeIMO's repo, not a package dependency. -->
+  <ItemGroup>
+    <ProjectReference Include="..\Convert.Core\Convert.Core.csproj" />
+    <PackageReference Include="OfficeIMO.Word.Pdf" />
+    <PackageReference Include="OfficeIMO.Excel.Pdf" />
+    <PackageReference Include="OfficeIMO.PowerPoint.Pdf" />
+    <PackageReference Include="OfficeIMO.Publisher.Pdf" />
+    <PackageReference Include="OfficeIMO.Html.Pdf" />
+    <PackageReference Include="OfficeIMO.MarkdownRenderer" />
+    <PackageReference Include="OfficeIMO.Markdown.Html" />
+    <PackageReference Include="OfficeIMO.Word.Markdown" />
+    <PackageReference Include="OfficeIMO.Pdf.Word" />
+    <PackageReference Include="OfficeIMO.Pdf.Excel" />
+    <PackageReference Include="OfficeIMO.Pdf.PowerPoint" />
+    <PackageReference Include="OfficeIMO.Pdf" />
+    <PackageReference Include="IconifyBundle.Blazor" />
+    <PackageReference Include="IconifyBundle.Lucide" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" />
+    <PackageReference Include="ProjectDefaults" PrivateAssets="all" />
+  </ItemGroup>
+
+</Project>

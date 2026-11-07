@@ -1,0 +1,10 @@
+@namespace Convert.Markdig
+@inherits OptionsPanel<MarkdownHtmlOptions>
+
+<FlagOption Label="Full HTML document" Hint="With <html>, <head> and a readable stylesheet; off for a body fragment." @bind-Value="Options.FullDocument" @bind-Value:after="NotifyAsync" />
+<AdvancedOptions>
+    <FlagOption Label="Advanced extensions" Hint="Tables, footnotes, task lists, auto-links and more." @bind-Value="Options.AdvancedExtensions" @bind-Value:after="NotifyAsync" />
+    <FlagOption Label="Pipe tables" @bind-Value="Options.PipeTables" @bind-Value:after="NotifyAsync" />
+    <FlagOption Label="Line breaks are hard breaks" @bind-Value="Options.SoftLineBreakAsHard" @bind-Value:after="NotifyAsync" />
+    <FlagOption Label="Emoji shortcodes" @bind-Value="Options.Emoji" @bind-Value:after="NotifyAsync" />
+</AdvancedOptions>

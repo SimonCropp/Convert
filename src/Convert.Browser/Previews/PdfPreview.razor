@@ -1,0 +1,11 @@
+@inherits BlobPreviewBase
+
+@* The browser's built-in viewer (PDFium in Chromium, pdf.js in Firefox, PDFKit in Safari). Not sandboxed:
+   a sandboxed frame blocks the viewer. Some mobile browsers show no inline viewer, hence the link. *@
+<div class="pdf-preview-host">
+    @if (Url is not null)
+    {
+        <iframe class="pdf-preview" src="@Url" title="@Document.FileName"></iframe>
+        <p class="preview-note"><a href="@Url" target="_blank" rel="noopener">Open the PDF in a new tab</a></p>
+    }
+</div>

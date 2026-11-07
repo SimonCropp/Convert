@@ -1,0 +1,4 @@
+<div class="text-editor">
+    <textarea spellcheck="false" aria-label="@($"Edit {Document.FileName}")" value="@text" @oninput="OnInput"></textarea>
+    <p class="preview-note">@(pending ? "Editing…" : "The preview and every conversion use this text.")</p>
+</div>

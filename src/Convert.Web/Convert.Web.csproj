@@ -1,0 +1,153 @@
+<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+
+  <PropertyGroup>
+    <TargetFramework>net11.0</TargetFramework>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+    <!--
+      Trimmed, default (partial) mode: the BCL and the Components framework shrink, every other assembly
+      is kept as published unless it opts in. The reflection-heavy libraries are rooted below and by
+      Morph.Blazor's buildTransitive targets (OpenXml, AngleSharp, the SixLabors set).
+    -->
+    <PublishTrimmed>true</PublishTrimmed>
+    <InvariantGlobalization>true</InvariantGlobalization>
+    <!--
+      Single-threaded runtime (WasmEnableThreads off): the threaded one needs a cross-origin-isolated page
+      (COOP/COEP), which GitHub Pages cannot serve. Conversions run on the UI thread and yield with
+      `await Task.Run` so the progress state paints first.
+    -->
+    <BlazorEnableTimeZoneSupport>false</BlazorEnableTimeZoneSupport>
+    <!--
+      REQUIRED for PDF export through Morph: Krilla (Morph.Pdf) ships its browser-wasm native as a static
+      archive (runtimes/browser-wasm/native/krilla_capi.a, 10.9 MB) that only a native build links into
+      dotnet.native.wasm. Without it the app runs and fails on the first PDF with "krilla_capi could not
+      be loaded". It is linked whether or not Krilla.wasm (lazy) ever loads: ~0.7 MB brotli of fixed cost
+      on every first visit. Needs `dotnet workload install wasm-tools`.
+    -->
+    <WasmBuildNative>true</WasmBuildNative>
+    <UseNativeHttpHandler>true</UseNativeHttpHandler>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" />
+    <!-- The host `dotnet run` launches; development only. -->
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" PrivateAssets="all" />
+    <PackageReference Include="ProjectDefaults" PrivateAssets="all" />
+    <!-- The icon generator compiles in only the icons a project names, so the app references the pack too. -->
+    <PackageReference Include="IconifyBundle.Blazor" />
+    <PackageReference Include="IconifyBundle.Lucide" />
+    <ProjectReference Include="..\Convert.Core\Convert.Core.csproj" />
+    <ProjectReference Include="..\Convert.Browser\Convert.Browser.csproj" />
+    <ProjectReference Include="..\Convert.Geo\Convert.Geo.csproj" />
+    <ProjectReference Include="..\Convert.Markdig\Convert.Markdig.csproj" />
+    <ProjectReference Include="..\Convert.Morph\Convert.Morph.csproj" />
+    <ProjectReference Include="..\Convert.Naiad\Convert.Naiad.csproj" />
+    <ProjectReference Include="..\Convert.OfficeIMO\Convert.OfficeIMO.csproj" />
+    <ProjectReference Include="..\Convert.OpenXmlHtml\Convert.OpenXmlHtml.csproj" />
+  </ItemGroup>
+
+  <!--
+    Rooted whole. Every Convert.* pack is tiny glue whose components are reached only through
+    DynamicComponent (a Type), which the trimmer cannot follow. OpenXmlHtml and OpenXmlKit are not
+    verified trim-safe. Morph.Blazor's buildTransitive targets root OpenXml, AngleSharp and the SixLabors
+    set, which also covers OfficeIMO, OpenXmlHtml and Naiad.ImageSharp. Rooting is an ILLink input and
+    lazy loading a manifest input, so an assembly can be both.
+  -->
+  <ItemGroup Condition="'$(PublishTrimmed)' == 'true'">
+    <TrimmerRootAssembly Include="OpenXmlHtml" />
+    <TrimmerRootAssembly Include="OpenXmlKit" />
+    <TrimmerRootAssembly Include="Convert.Core" />
+    <TrimmerRootAssembly Include="Convert.Browser" />
+    <TrimmerRootAssembly Include="Convert.Geo" />
+    <TrimmerRootAssembly Include="Convert.Markdig" />
+    <TrimmerRootAssembly Include="Convert.Morph" />
+    <TrimmerRootAssembly Include="Convert.Naiad" />
+    <TrimmerRootAssembly Include="Convert.OfficeIMO" />
+    <TrimmerRootAssembly Include="Convert.OpenXmlHtml" />
+  </ItemGroup>
+
+  <!--
+    Downloaded on first use, not at boot: the union of every pack entry's Assemblies list (LazyLoadTests
+    keeps the two in sync, both directions). A lazy assembly's dependency that is missing here would land
+    in the boot manifest instead, so each entry declares its whole closure.
+  -->
+  <ItemGroup>
+    <!-- Shared by several packs. -->
+    <BlazorWebAssemblyLazyLoad Include="AngleSharp.wasm" />
+    <BlazorWebAssemblyLazyLoad Include="AngleSharp.Css.wasm" />
+    <BlazorWebAssemblyLazyLoad Include="DocumentFormat.OpenXml.wasm" />
+    <BlazorWebAssemblyLazyLoad Include="DocumentFormat.OpenXml.Framework.wasm" />
+    <BlazorWebAssemblyLazyLoad Include="System.IO.Packaging.wasm" />
+    <BlazorWebAssemblyLazyLoad Include="System.IO.Hashing.wasm" />
+    <BlazorWebAssemblyLazyLoad Include="SixLabors.ImageSharp.wasm" />
+    <BlazorWebAssemblyLazyLoad Include="SixLabors.ImageSharp.Drawing.wasm" />
+    <BlazorWebAssemblyLazyLoad Include="SixLabors.Fonts.wasm" />
+    <BlazorWebAssemblyLazyLoad Include="SixLabors.PolygonClipper.wasm" />
+    <!-- Markdig. -->
+    <BlazorWebAssemblyLazyLoad Include="Markdig.wasm" />
+    <!-- Naiad. -->
+    <BlazorWebAssemblyLazyLoad Include="Naiad.wasm" />
+    <BlazorWebAssemblyLazyLoad Include="Naiad.ImageSharp.wasm" />
+    <BlazorWebAssemblyLazyLoad Include="Parlot.wasm" />
+    <!-- GeoConvert. -->
+    <BlazorWebAssemblyLazyLoad Include="GeoConvert.wasm" />
+    <!-- OpenXmlHtml. -->
+    <BlazorWebAssemblyLazyLoad Include="OpenXmlHtml.wasm" />
+    <BlazorWebAssemblyLazyLoad Include="OpenXmlKit.wasm" />
+    <!-- Morph. -->
+    <BlazorWebAssemblyLazyLoad Include="Morph.Blazor.wasm" />
+    <BlazorWebAssemblyLazyLoad Include="Morph.wasm" />
+    <BlazorWebAssemblyLazyLoad Include="Morph.ImageSharp.wasm" />
+    <BlazorWebAssemblyLazyLoad Include="Morph.Pdf.wasm" />
+    <BlazorWebAssemblyLazyLoad Include="Krilla.wasm" />
+    <!-- OfficeIMO: each route names its own subset. -->
+    <BlazorWebAssemblyLazyLoad Include="OfficeIMO.Core.wasm" />
+    <BlazorWebAssemblyLazyLoad Include="OfficeIMO.Pdf.wasm" />
+    <BlazorWebAssemblyLazyLoad Include="OfficeIMO.Word.wasm" />
+    <BlazorWebAssemblyLazyLoad Include="OfficeIMO.Excel.wasm" />
+    <BlazorWebAssemblyLazyLoad Include="OfficeIMO.PowerPoint.wasm" />
+    <BlazorWebAssemblyLazyLoad Include="OfficeIMO.Publisher.wasm" />
+    <BlazorWebAssemblyLazyLoad Include="OfficeIMO.Markdown.wasm" />
+    <BlazorWebAssemblyLazyLoad Include="OfficeIMO.Html.wasm" />
+    <BlazorWebAssemblyLazyLoad Include="OfficeIMO.Html.Core.wasm" />
+    <BlazorWebAssemblyLazyLoad Include="OfficeIMO.Html.AngleSharp.wasm" />
+    <BlazorWebAssemblyLazyLoad Include="OfficeIMO.MarkdownRenderer.wasm" />
+    <BlazorWebAssemblyLazyLoad Include="OfficeIMO.Markdown.Html.wasm" />
+    <BlazorWebAssemblyLazyLoad Include="OfficeIMO.Word.Markdown.wasm" />
+    <BlazorWebAssemblyLazyLoad Include="OfficeIMO.Word.Pdf.wasm" />
+    <BlazorWebAssemblyLazyLoad Include="OfficeIMO.Excel.Pdf.wasm" />
+    <BlazorWebAssemblyLazyLoad Include="OfficeIMO.PowerPoint.Pdf.wasm" />
+    <BlazorWebAssemblyLazyLoad Include="OfficeIMO.Publisher.Pdf.wasm" />
+    <BlazorWebAssemblyLazyLoad Include="OfficeIMO.Html.Pdf.wasm" />
+    <BlazorWebAssemblyLazyLoad Include="OfficeIMO.Pdf.Word.wasm" />
+    <BlazorWebAssemblyLazyLoad Include="OfficeIMO.Pdf.Excel.wasm" />
+    <BlazorWebAssemblyLazyLoad Include="OfficeIMO.Pdf.PowerPoint.wasm" />
+  </ItemGroup>
+
+  <!--
+    js/version.js: the version the loading screen shows before .NET runs (v0.1.0+b4bbab2), so a page the
+    browser kept from an earlier deploy is plain to see. Written to obj and linked into wwwroot as a
+    static web asset; rewriting index.html after publish would leave its .br/.gz stale.
+  -->
+  <Target Name="WriteVersionScript"
+          BeforeTargets="ResolveProjectStaticWebAssets"
+          DependsOnTargets="InitializeSourceControlInformation">
+    <PropertyGroup>
+      <_ConvertShortSha>$(SourceRevisionId)</_ConvertShortSha>
+      <_ConvertShortSha Condition="$(SourceRevisionId.Length) &gt; 7">$(SourceRevisionId.Substring(0, 7))</_ConvertShortSha>
+      <_ConvertVersionText>v$(Version)</_ConvertVersionText>
+      <_ConvertVersionText Condition="'$(_ConvertShortSha)' != ''">$(_ConvertVersionText)+$(_ConvertShortSha)</_ConvertVersionText>
+      <_ConvertVersionScript>$(IntermediateOutputPath)version.js</_ConvertVersionScript>
+    </PropertyGroup>
+    <WriteLinesToFile File="$(_ConvertVersionScript)"
+                      Lines="window.convertVersion = '$(_ConvertVersionText)'%3B"
+                      Overwrite="true"
+                      WriteOnlyWhenDifferent="true" />
+    <ItemGroup>
+      <Content Include="$(_ConvertVersionScript)" Link="wwwroot\js\version.js" />
+      <FileWrites Include="$(_ConvertVersionScript)" />
+    </ItemGroup>
+  </Target>
+
+</Project>

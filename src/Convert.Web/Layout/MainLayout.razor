@@ -1,0 +1,36 @@
+@inherits LayoutComponentBase
+
+<header>
+    <h1>Convert</h1>
+    <p>Convert, edit and render files — entirely in the browser</p>
+    <ThemeToggle CurrentTheme="currentTheme" OnThemeChanged="HandleThemeChanged" />
+</header>
+
+<div class="container">
+    <ErrorBoundary>
+        <ChildContent>
+            @Body
+        </ChildContent>
+        <ErrorContent Context="exception">
+            <ErrorPanel Exception="exception" Action="Unhandled error" />
+        </ErrorContent>
+    </ErrorBoundary>
+</div>
+
+@if (Loader.Pending.Count > 0)
+{
+    <div class="loading-tools" role="status">Loading tool… (@string.Join(", ", Loader.Pending.Order().Take(3))@(Loader.Pending.Count > 3 ? ", …" : ""))</div>
+}
+
+<footer>
+    <a href="https://github.com/SimonCropp/Convert" target="_blank">Convert</a> — no data leaves your device
+    <span class="footer-version">@AppInfo.Version</span>
+    @if (downloadSize is { } size)
+    {
+        <span class="footer-size" title="Total app download — compressed over the wire / uncompressed">@FormatMb(size.Zipped) zipped · @FormatMb(size.Unzipped) unzipped</span>
+    }
+    @if (liveBytes is { } live && peakBytes is { } peak)
+    {
+        <span class="footer-ram" title="Memory the app is using — live .NET heap now / peak WebAssembly heap (never shrinks)">@FormatMb(live) RAM (@FormatMb(peak) peak)</span>
+    }
+</footer>

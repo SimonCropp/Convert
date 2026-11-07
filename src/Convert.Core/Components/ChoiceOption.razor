@@ -1,0 +1,17 @@
+@typeparam TValue
+@inherits OptionControl<TValue>
+
+<div class="option">
+    <label for="@Id">@Label</label>
+    <select id="@Id" @onchange="OnChange">
+        @for (var i = 0; i < Choices.Count; i++)
+        {
+            var index = i;
+            <option value="@index" selected="@(EqualityComparer<TValue>.Default.Equals(Choices[index].Value, Value))">@Choices[index].Label</option>
+        }
+    </select>
+    @if (Hint is not null)
+    {
+        <p class="option-hint">@Hint</p>
+    }
+</div>

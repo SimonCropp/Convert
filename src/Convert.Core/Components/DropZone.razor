@@ -1,0 +1,53 @@
+<div class="drop-zone">
+    <Iconify Value="Lucide.Upload" class="drop-icon" aria-hidden="true" />
+    <h2>Add a file</h2>
+    <p>Drop a file anywhere on the page, or</p>
+    <div class="drop-actions">
+        <label class="button primary">
+            Choose a file
+            <InputFile @ref="input" class="visually-hidden" accept="@Session.Registry.Accept" OnChange="OnFileChosen" />
+        </label>
+        <button type="button" class="button" @onclick="TogglePaste">
+            <Iconify Value="Lucide.ClipboardPaste" class="icon" aria-hidden="true" /> Paste text
+        </button>
+    </div>
+
+    @if (pasting)
+    {
+        <div class="paste-panel">
+            <textarea aria-label="Pasted text" placeholder="Paste or type here" @bind="pasted" @bind:event="oninput"></textarea>
+            <div class="paste-actions">
+                <label for="paste-type">Read it as</label>
+                <select id="paste-type" @bind="pasteTypeId">
+                    @foreach (var type in Session.Registry.TextTypes)
+                    {
+                        <option value="@type.Id">@type.DisplayName</option>
+                    }
+                </select>
+                <button type="button" class="button primary" disabled="@string.IsNullOrWhiteSpace(pasted)" @onclick="UsePasted">Use text</button>
+            </div>
+        </div>
+    }
+
+    @if (Session.Registry.Samples.Count > 0)
+    {
+        <div class="samples">
+            <p>Or try a sample:</p>
+            @foreach (var sample in Session.Registry.Samples)
+            {
+                <button type="button" class="button sample" disabled="@(loadingSample is not null)" @onclick="() => LoadSample(sample)">
+                    <Iconify Value="sample.Icon" class="icon" aria-hidden="true" /> @sample.DisplayName
+                </button>
+            }
+        </div>
+    }
+
+    @if (loadingSample is not null)
+    {
+        <ProgressBar Label="Fetching sample" Detail="@loadingSample.DisplayName" />
+    }
+    @if (error is not null)
+    {
+        <ErrorPanel Exception="error" Action="Open a file" />
+    }
+</div>

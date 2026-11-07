@@ -1,0 +1,10 @@
+global using System.IO.Compression;
+global using System.Net;
+global using System.Net.Http;
+global using IconifyBundle;
+global using Microsoft.AspNetCore.Components;
+global using Microsoft.AspNetCore.Components.Forms;
+global using Microsoft.AspNetCore.Components.Web;
+global using Microsoft.AspNetCore.Components.WebAssembly.Services;
+global using Microsoft.Extensions.DependencyInjection;
+global using Microsoft.JSInterop;

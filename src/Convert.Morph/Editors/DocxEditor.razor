@@ -1,0 +1,13 @@
+@using global::Morph
+
+@* The viewer in edit mode: every edit hands back the document's bytes, which become the session's source. *@
+<div class="morph-preview">
+    <MorphViewer Source="@source"
+                 FileName="@Document.FileName"
+                 ReadOnly="false"
+                 ShowOpenFile="false"
+                 ShowDownload="false"
+                 ShowPrint="false"
+                 ShowIssueLink="false"
+                 OnDocumentChanged="OnDocumentChanged" />
+</div>

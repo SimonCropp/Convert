@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project>
+  <PropertyGroup>
+    <Version>0.1.0</Version>
+    <NoWarn>NU1608</NoWarn>
+    <AssemblyVersion>1.0.0</AssemblyVersion>
+    <LangVersion>preview</LangVersion>
+    <Description>Convert, edit and render files entirely in the browser</Description>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <ResolveAssemblyReferencesSilent>true</ResolveAssemblyReferencesSilent>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+    <SuppressNETCoreSdkPreviewMessage>true</SuppressNETCoreSdkPreviewMessage>
+    <!-- An app, not a set of packages: ProjectDefaults would otherwise sign with src/key.snk and, in
+         Release, pack every project and demand XML docs on every public member. -->
+    <SignAssembly>false</SignAssembly>
+    <IsPackageProject>false</IsPackageProject>
+    <IsPackable>false</IsPackable>
+    <!-- Morph's packages reference SponsorCheck with CheckTransitiveReferences; this app is open source
+         and earns nothing, which is the exemption both Papyrine and Verify grant. -->
+    <Papyrine_SponsorshipExemption>OpenSource</Papyrine_SponsorshipExemption>
+    <Papyrine_SponsorshipExemptionUntil>2027-08</Papyrine_SponsorshipExemptionUntil>
+    <Verify_SponsorshipExemption>OpenSource</Verify_SponsorshipExemption>
+    <Verify_SponsorshipExemptionUntil>2027-08</Verify_SponsorshipExemptionUntil>
+  </PropertyGroup>
+  <ItemGroup>
+    <Using Include="System.ReadOnlySpan&lt;System.Char&gt;" Alias="CharSpan" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,39 @@
+namespace Convert.Browser;
+
+/// <summary>An image drawn on a canvas and re-encoded: svg/png/jpeg/webp to png/jpeg/webp.</summary>
+sealed class CanvasConversion(FileType source, FileType target, CanvasBridge canvas) : Conversion<CanvasOptions>
+{
+    public override string Id => $"{source.Id}-{target.Id}-browser";
+    public override FileType Source => source;
+    public override FileType Target => target;
+    public override Tool Tool => BrowserPack.Tool;
+
+    public override string Summary =>
+        source == FileTypes.Svg
+            ? "Drawn by the browser's SVG renderer, at any scale."
+            : "Re-encoded by the browser's own image codecs.";
+
+    public override string? Expect =>
+        source == FileTypes.Svg
+            ? "SVG that embeds HTML (<foreignObject>) or external images can't be drawn on a canvas."
+            : target == FileTypes.Jpeg
+                ? "JPEG has no transparency: transparent pixels take the background colour."
+                : null;
+
+    public override IReadOnlyList<string> Assemblies => [];
+    public override Type OptionsComponent => typeof(CanvasOptionsPanel);
+
+    public override object CreateOptions() =>
+        new CanvasOptions
+        {
+            Lossy = target != FileTypes.Png,
+            SupportsAlpha = target != FileTypes.Jpeg,
+            TransparentBackground = target != FileTypes.Jpeg && source != FileTypes.Svg
+        };
+
+    protected override async Task<ConversionOutput> RunAsync(Document document, CanvasOptions options, IProgress<ConversionProgress> progress, Cancel cancel)
+    {
+        var bytes = await canvas.RasterizeAsync(document.Bytes, source.ContentType, target.ContentType, options, cancel);
+        return new(new Document(target.FileNameFor(document.FileName), bytes, target));
+    }
+}

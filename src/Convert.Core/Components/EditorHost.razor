@@ -1,0 +1,14 @@
+<div class="editor-host">
+    @if (error is not null)
+    {
+        <ErrorPanel Exception="error" Action="@($"Edit {Document.Type.DisplayName}")" />
+    }
+    else if (loading)
+    {
+        <ProgressBar Label="Loading editor" />
+    }
+    else if (editor is not null)
+    {
+        <DynamicComponent Type="editor.Component" Parameters="Parameters" />
+    }
+</div>

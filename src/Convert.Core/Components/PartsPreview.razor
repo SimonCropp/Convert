@@ -1,0 +1,17 @@
+<div class="parts-preview">
+    @if (Output.Parts.Count == 1)
+    {
+        <PreviewHost Document="Output.Parts[0]" />
+    }
+    else
+    {
+        <p class="preview-note">@Output.Parts.Count files@(Output.Parts.Count > limit ? $", showing the first {limit}" : "")</p>
+        @foreach (var part in Output.Parts.Take(limit))
+        {
+            <figure class="part" @key="part">
+                <PreviewHost Document="part" />
+                <figcaption>@part.FileName</figcaption>
+            </figure>
+        }
+    }
+</div>

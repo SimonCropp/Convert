@@ -1,0 +1,10 @@
+@inherits BlobPreviewBase
+
+@* Through an <img>, not inline markup: an SVG from a file can carry event handlers, which an image
+   never runs. *@
+<div class="image-preview svg-preview">
+    @if (Url is not null)
+    {
+        <img src="@Url" alt="@Document.FileName" />
+    }
+</div>

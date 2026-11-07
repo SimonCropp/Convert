@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net11.0</TargetFramework>
+    <OutputType>Exe</OutputType>
+    <IsTestProject>true</IsTestProject>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+    <BlazorPublishDir>$(MSBuildThisFileDirectory)bin\$(Configuration)\blazor-publish\</BlazorPublishDir>
+  </PropertyGroup>
+
+  <!-- Publishes the app as part of build so the browser tests serve the real trimmed output, and the
+       desktop tests read its samples and fonts. -p:SkipBlazorPublish=true leaves blazor-publish as it is. -->
+  <Target Name="PublishBlazorForTests" AfterTargets="Build" Condition="'$(SkipBlazorPublish)' != 'true'">
+    <MSBuild Projects="..\Convert.Web\Convert.Web.csproj" Targets="Publish" Properties="Configuration=$(Configuration);PublishDir=$(BlazorPublishDir)" />
+  </Target>
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="TUnit" />
+    <PackageReference Include="Verify.TUnit" />
+    <PackageReference Include="Verify.Playwright" />
+    <PackageReference Include="Verify.Bunit" />
+    <PackageReference Include="bunit" />
+    <PackageReference Include="Microsoft.Playwright" />
+    <PackageReference Include="DiffEngine" />
+    <PackageReference Include="ProjectDefaults" PrivateAssets="all" />
+    <ProjectReference Include="..\Convert.Web\Convert.Web.csproj" />
+  </ItemGroup>
+
+</Project>

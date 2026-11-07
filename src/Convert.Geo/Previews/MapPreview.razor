@@ -1,0 +1,10 @@
+@inherits PreviewBase
+
+@if (error is not null)
+{
+    <ErrorPanel Exception="error" Action="Preview map" />
+}
+else if (map is not null)
+{
+    <PreviewHost Document="map" />
+}

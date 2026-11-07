@@ -1,0 +1,4 @@
+@namespace Convert.Geo
+@inherits OptionsPanel<KmzOptions>
+
+<ChoiceOption TValue="CompressionLevel" Label="Zip compression" Choices="GeoChoices.Compression" @bind-Value="Options.Compression" @bind-Value:after="NotifyAsync" />

@@ -1,0 +1,11 @@
+@typeparam TValue where TValue : struct, System.Numerics.INumber<TValue>
+@inherits OptionControl<TValue>
+
+<div class="option">
+    <label for="@Id">@Label</label>
+    <input id="@Id" type="number" value="@Format(Value)" min="@FormatOrNull(Min)" max="@FormatOrNull(Max)" step="@FormatOrNull(Step)" @onchange="OnChange" />
+    @if (Hint is not null)
+    {
+        <p class="option-hint">@Hint</p>
+    }
+</div>

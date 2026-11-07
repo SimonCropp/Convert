@@ -1,0 +1,31 @@
+@namespace Convert.Geo
+@inherits OptionsPanel<GeoRenderOptions>
+
+<ChoiceOption TValue="GeoProjection" Label="Projection" Choices="GeoChoices.Projections" @bind-Value="Options.Projection" @bind-Value:after="NotifyAsync" />
+<NumberOption TValue="int" Label="Longest side (px)" Min="64" Max="8192" Step="64" @bind-Value="Options.MaxDimension" @bind-Value:after="NotifyAsync" />
+<FlagOption Label="Labels" Hint="From each feature's name property." @bind-Value="Options.Labels" @bind-Value:after="NotifyAsync" />
+<TextOption Label="Fill" Color="true" @bind-Value="Options.Fill" @bind-Value:after="NotifyAsync" />
+<TextOption Label="Stroke" Color="true" @bind-Value="Options.Stroke" @bind-Value:after="NotifyAsync" />
+<AdvancedOptions>
+    <NumberOption TValue="int" Label="Fill opacity (0–255)" Min="0" Max="255" Step="5" @bind-Value="Options.FillOpacity" @bind-Value:after="NotifyAsync" />
+    <TextOption Label="Background" Color="true" @bind-Value="Options.Background" @bind-Value:after="NotifyAsync" />
+    <FlagOption Label="Ocean" Hint="Paint the projection's world envelope as sea." @bind-Value="Options.OceanEnabled" @bind-Value:after="NotifyAsync" />
+    @if (Options.OceanEnabled)
+    {
+        <TextOption Label="Ocean colour" Color="true" @bind-Value="Options.Ocean" @bind-Value:after="NotifyAsync" />
+    }
+    <NumberOption TValue="int" Label="Padding (px)" Min="0" Max="256" Step="1" @bind-Value="Options.Padding" @bind-Value:after="NotifyAsync" />
+    <NumberOption TValue="int" Label="Stroke width (px)" Min="0" Max="32" Step="1" @bind-Value="Options.StrokeWidth" @bind-Value:after="NotifyAsync" />
+    <FlagOption Label="Scale strokes with size" @bind-Value="Options.StrokeAutoScale" @bind-Value:after="NotifyAsync" />
+    <NumberOption TValue="int" Label="Point radius (px)" Min="1" Max="64" Step="1" @bind-Value="Options.PointRadius" @bind-Value:after="NotifyAsync" />
+    <NumberOption TValue="double" Label="Smallest feature drawn (px)" Min="0" Max="16" Step="0.5" @bind-Value="Options.MinFeaturePixels" @bind-Value:after="NotifyAsync" />
+    @if (Options.Labels)
+    {
+        <NumberOption TValue="double" Label="Label size (px)" Min="4" Max="72" Step="1" @bind-Value="Options.LabelSize" @bind-Value:after="NotifyAsync" />
+        <TextOption Label="Label colour" Color="true" @bind-Value="Options.LabelColor" @bind-Value:after="NotifyAsync" />
+    }
+    @if (Options.Svg)
+    {
+        <NumberOption TValue="double" Label="Simplify tolerance (px)" Hint="0 keeps every vertex." Min="0" Max="10" Step="0.1" @bind-Value="Options.SvgSimplifyTolerance" @bind-Value:after="NotifyAsync" />
+    }
+</AdvancedOptions>

@@ -1,0 +1,26 @@
+<div class="target-picker">
+    <h3>Convert to</h3>
+    @if (groups.Count == 0)
+    {
+        <p class="preview-note">No tool converts @Source.DisplayName yet.</p>
+    }
+    @foreach (var group in groups)
+    {
+        <div class="target-group">
+            <h4>@group.Group</h4>
+            <div class="chips">
+                @foreach (var option in group.Targets)
+                {
+                    var target = option.Target;
+                    <button type="button"
+                            class="chip @(target == Selected ? "selected" : "")"
+                            aria-pressed="@(target == Selected ? "true" : "false")"
+                            title="@target.DisplayName"
+                            @onclick="() => OnSelected.InvokeAsync(target)">
+                        <Iconify Value="target.Icon" class="icon" aria-hidden="true" /> @target.ShortName
+                    </button>
+                }
+            </div>
+        </div>
+    }
+</div>

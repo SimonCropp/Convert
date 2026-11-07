@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <RootNamespace>Convert.Naiad</RootNamespace>
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Convert.Core\Convert.Core.csproj" />
+    <PackageReference Include="Naiad" />
+    <PackageReference Include="Naiad.ImageSharp" />
+    <PackageReference Include="IconifyBundle.Blazor" />
+    <PackageReference Include="IconifyBundle.Lucide" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" />
+    <PackageReference Include="ProjectDefaults" PrivateAssets="all" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,4 @@
+@namespace Convert.OpenXmlHtml
+@inherits OptionsPanel<HtmlDocxOptions>
+
+<NumberOption TValue="int" Label="Heading level offset" Hint="1 turns each <h1> into Heading 2, and so on." Min="0" Max="5" Step="1" @bind-Value="Options.HeadingLevelOffset" @bind-Value:after="NotifyAsync" />

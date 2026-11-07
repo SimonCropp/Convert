@@ -1,0 +1,15 @@
+<fieldset class="tool-picker">
+    <legend>Tool</legend>
+    @foreach (var conversion in Conversions)
+    {
+        var current = conversion;
+        var id = $"tool-{current.Id}";
+        <div class="tool-choice @(current == Selected ? "selected" : "")">
+            <input type="radio" id="@id" name="tool" checked="@(current == Selected)" @onchange="() => OnSelected.InvokeAsync(current)" />
+            <label for="@id">
+                <span class="tool-name">@current.Tool.DisplayName</span>
+                <span class="tool-summary">@current.Summary</span>
+            </label>
+        </div>
+    }
+</fieldset>

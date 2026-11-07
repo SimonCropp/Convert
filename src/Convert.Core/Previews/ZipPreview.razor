@@ -1,0 +1,17 @@
+@inherits PreviewBase
+
+<div class="zip-preview">
+    @if (error is not null)
+    {
+        <p class="preview-note">@error</p>
+    }
+    else
+    {
+        <ul>
+            @foreach (var entry in entries)
+            {
+                <li><span class="zip-name">@entry.Name</span> <span class="zip-size">@FormatSize(entry.Size)</span></li>
+            }
+        </ul>
+    }
+</div>

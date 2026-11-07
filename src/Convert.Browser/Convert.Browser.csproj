@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <RootNamespace>Convert.Browser</RootNamespace>
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+  </PropertyGroup>
+
+  <!-- The browser itself is the tool: canvas for the image conversions, the built-in viewer for PDF.
+       No .NET assembly to lazy-load; wwwroot/browser.js is imported on first use. -->
+  <ItemGroup>
+    <ProjectReference Include="..\Convert.Core\Convert.Core.csproj" />
+    <PackageReference Include="IconifyBundle.Blazor" />
+    <PackageReference Include="IconifyBundle.Lucide" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" />
+    <PackageReference Include="ProjectDefaults" PrivateAssets="all" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,4 @@
+@namespace Convert.OfficeIMO
+@inherits OptionsPanel<PdfPngOptions>
+
+<ChoiceOption TValue="int" Label="Resolution" Choices="OfficeImoChoices.Dpis" @bind-Value="Options.Dpi" @bind-Value:after="NotifyAsync" />

@@ -1,0 +1,124 @@
+@page "/"
+@implements IDisposable
+
+<PageTitle>@(Session.Source is { } title ? $"{title.FileName} — Convert" : "Convert")</PageTitle>
+
+<ol class="stepper" aria-label="Steps">
+    <li class="@(Session.Source is null ? "active" : "")">Add a file</li>
+    <li class="@(Session.Source is not null && Session.Result is null ? "active" : "")">Choose options</li>
+    <li class="@(Session.Result is not null ? "active" : "")">Download the result</li>
+</ol>
+
+@if (Session.Source is not { } source)
+{
+    <DropZone Session="Session" />
+    @if (Session.Error is { } loadError)
+    {
+        <ErrorPanel Exception="loadError" Action="Open a file" />
+    }
+}
+else
+{
+    <div class="wizard">
+        <section class="panel source-pane">
+            <div class="source-bar">
+                <Iconify Value="source.Type.Icon" class="icon" aria-hidden="true" />
+                <span class="file-name">@source.FileName</span>
+                <span class="preview-note">@source.Type.DisplayName</span>
+                <span class="spacer"></span>
+                <div class="tabs" role="tablist">
+                    <button type="button" role="tab" class="@(view == View.Source ? "active" : "")" aria-selected="@(view == View.Source ? "true" : "false")" @onclick="() => Show(View.Source)">Preview</button>
+                    @if (Session.Registry.EditorsFor(source.Type).Count > 0)
+                    {
+                        <button type="button" role="tab" class="@(view == View.Edit ? "active" : "")" aria-selected="@(view == View.Edit ? "true" : "false")" @onclick="() => Show(View.Edit)">
+                            <Iconify Value="Lucide.Pencil" class="icon" aria-hidden="true" /> Edit
+                        </button>
+                    }
+                    @if (Session.Result is not null)
+                    {
+                        <button type="button" role="tab" class="@(view == View.Result ? "active" : "")" aria-selected="@(view == View.Result ? "true" : "false")" @onclick="() => Show(View.Result)">Result</button>
+                    }
+                </div>
+            </div>
+
+            @switch (view)
+            {
+                case View.Edit:
+                    <EditorHost Document="source" Changed="OnEdited" />
+                    break;
+                case View.Result when Session.Result is { } result:
+                    <PartsPreview Output="result" />
+                    break;
+                default:
+                    <PreviewHost Document="source" />
+                    break;
+            }
+        </section>
+
+        <aside class="panel choices-pane">
+            <TargetPicker Source="source.Type" Selected="Session.Target" OnSelected="OnTargetSelected" />
+
+            @if (TargetOption is { Conversions.Count: > 1 } option)
+            {
+                <ToolPicker Conversions="option.Conversions" Selected="Session.Conversion" OnSelected="OnConversionSelected" />
+            }
+
+            @if (Session.Conversion is { } conversion)
+            {
+                <p class="tool-summary">
+                    <strong>@conversion.Tool.DisplayName</strong> · <a href="@conversion.Tool.ProjectUrl" target="_blank" rel="noopener">@conversion.Tool.License</a>
+                </p>
+                <OptionsHost Conversion="conversion" Options="Session.OptionsFor(conversion)" Changed="OnOptionsChanged" />
+                @if (conversion.Expect is { } expect)
+                {
+                    <p class="expect">@expect</p>
+                }
+
+                <div class="convert-actions">
+                    @if (Session.IsConverting)
+                    {
+                        <button type="button" class="button" @onclick="Session.Cancel">Cancel</button>
+                    }
+                    else
+                    {
+                        <button type="button" class="button primary convert-button" @onclick="ConvertAsync">
+                            Convert to @conversion.Target.ShortName
+                        </button>
+                    }
+                    @if (Session.Result is { } converted && !Session.IsConverting)
+                    {
+                        <button type="button" class="button primary download-button" @onclick="() => DownloadAsync(converted)">
+                            <Iconify Value="Lucide.Download" class="icon" aria-hidden="true" /> Download @DownloadName(converted)
+                        </button>
+                    }
+                </div>
+
+                @if (Session.Progress is { } progress)
+                {
+                    <ProgressBar Label="@progress.Label" Detail="@progress.Detail" />
+                }
+
+                @if (Session.Result is { Notes.Count: > 0 } noted)
+                {
+                    <ul class="notes">
+                        @foreach (var note in noted.Notes.Take(20))
+                        {
+                            <li>@note</li>
+                        }
+                    </ul>
+                }
+            }
+
+            @if (Session.Error is { } error)
+            {
+                <ErrorPanel Exception="error" Action="@(Session.Conversion?.Id ?? "Convert")" />
+            }
+
+            <div class="convert-actions">
+                <button type="button" class="button start-over" @onclick="StartOver">
+                    <Iconify Value="Lucide.RotateCcw" class="icon" aria-hidden="true" /> Start over
+                </button>
+            </div>
+        </aside>
+    </div>
+}

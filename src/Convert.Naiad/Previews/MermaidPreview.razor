@@ -1,0 +1,10 @@
+@inherits PreviewBase
+
+@if (error is not null)
+{
+    <ErrorPanel Exception="error" Action="Preview Mermaid" />
+}
+else if (svg is not null)
+{
+    <SvgPreview Document="svg" />
+}

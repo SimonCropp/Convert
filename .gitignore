@@ -1,0 +1,12 @@
+*.suo
+*.user
+bin/
+obj/
+.vs/
+*.DotSettings.user
+.idea/
+*.received.*
+.claude/settings.local.json
+TestResults/
+publish/
+nul

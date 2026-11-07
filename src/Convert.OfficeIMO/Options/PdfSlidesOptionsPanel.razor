@@ -1,0 +1,4 @@
+@namespace Convert.OfficeIMO
+@inherits OptionsPanel<PdfSlidesOptions>
+
+<ChoiceOption TValue="SlideMode" Label="Slides" Choices="OfficeImoChoices.SlideModes" @bind-Value="Options.Mode" @bind-Value:after="NotifyAsync" />

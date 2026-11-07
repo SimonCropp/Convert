@@ -1,0 +1,10 @@
+@inherits OptionControl<bool>
+
+<div class="option option-flag">
+    <input id="@Id" type="checkbox" checked="@Value" @onchange="OnChange" />
+    <label for="@Id">@Label</label>
+    @if (Hint is not null)
+    {
+        <p class="option-hint">@Hint</p>
+    }
+</div>

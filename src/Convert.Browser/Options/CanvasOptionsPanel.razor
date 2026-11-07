@@ -1,0 +1,16 @@
+@namespace Convert.Browser
+@inherits OptionsPanel<CanvasOptions>
+
+<NumberOption TValue="double" Label="Scale" Hint="1 keeps the source size; 2 doubles it." Min="0.1" Max="8" Step="0.25" @bind-Value="Options.Scale" @bind-Value:after="NotifyAsync" />
+@if (Options.Lossy)
+{
+    <NumberOption TValue="int" Label="Quality" Hint="1–100; higher is larger and sharper." Min="1" Max="100" Step="1" @bind-Value="Options.Quality" @bind-Value:after="NotifyAsync" />
+}
+@if (Options.SupportsAlpha)
+{
+    <FlagOption Label="Keep transparency" @bind-Value="Options.TransparentBackground" @bind-Value:after="NotifyAsync" />
+}
+@if (!Options.SupportsAlpha || !Options.TransparentBackground)
+{
+    <TextOption Label="Background" Color="true" @bind-Value="Options.Background" @bind-Value:after="NotifyAsync" />
+}

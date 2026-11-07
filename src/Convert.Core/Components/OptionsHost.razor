@@ -1,0 +1,6 @@
+@if (Conversion.OptionsComponent is { } component)
+{
+    <div class="options-host options-grid">
+        <DynamicComponent @key="Conversion" Type="component" Parameters="Parameters" />
+    </div>
+}

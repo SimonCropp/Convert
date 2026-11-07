@@ -1,0 +1,7 @@
+@inherits PreviewBase
+
+<pre class="text-preview">@Shown</pre>
+@if (Truncated)
+{
+    <p class="preview-note">Showing the first @limit.ToString("N0") characters.</p>
+}

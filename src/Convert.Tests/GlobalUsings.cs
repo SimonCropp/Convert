@@ -1,0 +1,19 @@
+global using System.Net;
+global using System.Net.Sockets;
+global using System.Xml.Linq;
+global using Bunit;
+global using Convert;
+global using Microsoft.AspNetCore.Builder;
+global using Microsoft.AspNetCore.Components;
+global using Microsoft.AspNetCore.Hosting;
+global using Microsoft.AspNetCore.StaticFiles;
+global using Microsoft.Extensions.DependencyInjection;
+global using Microsoft.Extensions.FileProviders;
+global using Microsoft.Extensions.Logging;
+global using Microsoft.Playwright;
+global using TUnit.Assertions;
+global using TUnit.Assertions.Extensions;
+global using TUnit.Core;
+global using static VerifyTUnit.Verifier;
+// Bunit has a TestContext too, and TUnit's generated hook code names its own unqualified.
+global using TestContext = TUnit.Core.TestContext;

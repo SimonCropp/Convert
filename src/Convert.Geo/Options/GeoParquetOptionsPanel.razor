@@ -1,0 +1,8 @@
+@namespace Convert.Geo
+@inherits OptionsPanel<GeoParquetOptions>
+
+<ChoiceOption TValue="GeoParquetCodec" Label="Codec" Choices="GeoChoices.Codecs" @bind-Value="Options.Codec" @bind-Value:after="NotifyAsync" />
+@if (Options.Codec == GeoParquetCodec.Gzip)
+{
+    <ChoiceOption TValue="CompressionLevel" Label="GZIP level" Choices="GeoChoices.Compression" @bind-Value="Options.GzipLevel" @bind-Value:after="NotifyAsync" />
+}

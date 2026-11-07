@@ -1,0 +1,10 @@
+@inherits OptionControl<string>
+
+<div class="option">
+    <label for="@Id">@Label</label>
+    <input id="@Id" type="@(Color ? "color" : "text")" value="@Value" @onchange="OnChange" />
+    @if (Hint is not null)
+    {
+        <p class="option-hint">@Hint</p>
+    }
+</div>

@@ -1,0 +1,26 @@
+<div class="preview-host">
+    @if (error is not null)
+    {
+        <ErrorPanel Exception="error" Action="@($"Preview {Document.Type.DisplayName}")" />
+    }
+    else if (loading)
+    {
+        <ProgressBar Label="Loading preview" />
+    }
+    else if (preview is not null)
+    {
+        <DynamicComponent @key="Document" Type="preview.Component" Parameters="Parameters" />
+    }
+    else if (Document.Type.Kind == FileKind.Text)
+    {
+        <TextPreview Document="Document" />
+    }
+    else
+    {
+        <div class="no-preview">
+            <Iconify Value="Document.Type.Icon" class="icon" aria-hidden="true" />
+            <p>@Document.FileName</p>
+            <p class="preview-note">@Document.Type.DisplayName · @ZipPreview.FormatSize(Document.Bytes.Length) · no preview</p>
+        </div>
+    }
+</div>

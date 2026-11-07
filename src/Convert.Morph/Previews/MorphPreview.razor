@@ -1,0 +1,14 @@
+@using global::Morph
+@inherits PreviewBase
+
+@* Morph's own viewer, composed rather than derived from: deriving would put Morph.Blazor in this class's
+   base-type chain and load it at startup. The viewer's own chrome is hidden; the wizard owns the file. *@
+<div class="morph-preview">
+    <MorphViewer Source="@Document.Bytes"
+                 FileName="@Document.FileName"
+                 ReadOnly="true"
+                 ShowOpenFile="false"
+                 ShowDownload="false"
+                 ShowPrint="false"
+                 ShowIssueLink="false" />
+</div>

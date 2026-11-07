@@ -1,0 +1,28 @@
+<Solution>
+  <Folder Name="/SolutionItems/">
+    <File Path="../.editorconfig" />
+    <File Path="../global.json" />
+    <File Path="../README.md" />
+    <File Path="../docs/todo.md" />
+    <File Path="Directory.Build.props" />
+    <File Path="Directory.Packages.props" />
+  </Folder>
+  <Project Path="Convert.Core/Convert.Core.csproj" />
+  <Project Path="Convert.Browser/Convert.Browser.csproj" />
+  <Project Path="Convert.Geo/Convert.Geo.csproj" />
+  <Project Path="Convert.Markdig/Convert.Markdig.csproj" />
+  <Project Path="Convert.Morph/Convert.Morph.csproj" />
+  <Project Path="Convert.Naiad/Convert.Naiad.csproj" />
+  <Project Path="Convert.OfficeIMO/Convert.OfficeIMO.csproj" />
+  <Project Path="Convert.OpenXmlHtml/Convert.OpenXmlHtml.csproj" />
+  <!--
+    The WebAssembly app and its tests need the wasm-tools workload (WasmBuildNative), so a Release
+    solution build skips them and stays green on a machine without it. CI builds them by path.
+  -->
+  <Project Path="Convert.Web/Convert.Web.csproj">
+    <Build Solution="Release|*" Project="false" />
+  </Project>
+  <Project Path="Convert.Tests/Convert.Tests.csproj">
+    <Build Solution="Release|*" Project="false" />
+  </Project>
+</Solution>

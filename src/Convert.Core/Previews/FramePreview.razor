@@ -1,0 +1,4 @@
+@inherits PreviewBase
+
+@* sandbox="" gives the document a unique origin with scripts, forms and navigation all off. *@
+<iframe class="frame-preview" sandbox="" title="@Document.FileName" srcdoc="@(Html ?? Document.Text)"></iframe>
