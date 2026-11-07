@@ -7,8 +7,7 @@ public sealed class MorphPack : IPack
         "morph",
         "Morph",
         "A managed Office renderer: lays out Word, Excel and PowerPoint like Office does.",
-        "https://github.com/Papyrine/Morph",
-        "OSMF EULA");
+        "https://github.com/Papyrine/Morph");
 
     // Every entry loads Morph.Blazor, so Loaded may register its services (see MorphServices).
     internal static IReadOnlyList<string> Assemblies { get; } =

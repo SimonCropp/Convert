@@ -10,8 +10,7 @@ public sealed class BrowserPack : IPack
         "browser",
         "Your browser",
         "The browser's own image decoders and canvas, with no download.",
-        "https://developer.mozilla.org/docs/Web/API/HTMLCanvasElement/toBlob",
-        "Built in");
+        "https://developer.mozilla.org/docs/Web/API/HTMLCanvasElement/toBlob");
 
     // Per pack instance, not static: the JavaScript runtime arrives in Loaded.
     CanvasBridge canvas = new();

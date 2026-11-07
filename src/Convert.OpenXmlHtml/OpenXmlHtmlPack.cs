@@ -7,8 +7,7 @@ public sealed class OpenXmlHtmlPack : IPack
         "openxmlhtml",
         "OpenXmlHtml",
         "Converts HTML into native Word paragraphs, tables, lists and styles.",
-        "https://github.com/SimonCropp/OpenXmlHtml",
-        "MIT");
+        "https://github.com/SimonCropp/OpenXmlHtml");
 
     internal static IReadOnlyList<string> Assemblies { get; } =
     [

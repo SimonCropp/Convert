@@ -7,8 +7,7 @@ public sealed class NaiadPack : IPack
         "naiad",
         "Naiad",
         "Renders Mermaid diagrams to SVG and PNG in .NET, with no browser or Node.",
-        "https://github.com/Papyrine/Naiad",
-        "MIT");
+        "https://github.com/Papyrine/Naiad");
 
     internal static IReadOnlyList<string> SvgAssemblies { get; } = ["Naiad.wasm", "Parlot.wasm"];
 

@@ -10,8 +10,7 @@ public sealed class OfficeImoPack : IPack
         "officeimo",
         "OfficeIMO",
         "Reads and writes Office, PDF, HTML and Markdown in pure .NET, with fidelity reports.",
-        "https://github.com/EvotecIT/OfficeIMO",
-        "MIT");
+        "https://github.com/EvotecIT/OfficeIMO");
 
     const string core = "OfficeIMO.Core.wasm";
     const string pdf = "OfficeIMO.Pdf.wasm";

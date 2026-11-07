@@ -66,7 +66,7 @@ else
             @if (Session.Conversion is { } conversion)
             {
                 <p class="tool-summary">
-                    <strong>@conversion.Tool.DisplayName</strong> · <a href="@conversion.Tool.ProjectUrl" target="_blank" rel="noopener">@conversion.Tool.License</a>
+                    <a href="@conversion.Tool.ProjectUrl" target="_blank" rel="noopener"><strong>@conversion.Tool.DisplayName</strong></a>
                 </p>
                 <OptionsHost Conversion="conversion" Options="Session.OptionsFor(conversion)" Changed="OnOptionsChanged" />
                 @if (conversion.Expect is { } expect)

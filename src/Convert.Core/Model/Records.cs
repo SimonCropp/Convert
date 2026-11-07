@@ -1,7 +1,7 @@
 namespace Convert;
 
 /// <summary>The library behind a conversion, credited on the tool picker.</summary>
-public sealed record Tool(string Id, string DisplayName, string Description, string ProjectUrl, string License);
+public sealed record Tool(string Id, string DisplayName, string Description, string ProjectUrl);
 
 /// <summary>A file in memory: the source, one part of a result, or what a preview or editor shows.</summary>
 public sealed record Document(string FileName, byte[] Bytes, FileType Type)

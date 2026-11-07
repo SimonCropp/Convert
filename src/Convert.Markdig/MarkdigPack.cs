@@ -7,8 +7,7 @@ public sealed class MarkdigPack : IPack
         "markdig",
         "Markdig",
         "A fast, CommonMark-compliant Markdown processor for .NET.",
-        "https://github.com/xoofx/markdig",
-        "BSD-2-Clause");
+        "https://github.com/xoofx/markdig");
 
     internal static IReadOnlyList<string> Assemblies { get; } = ["Markdig.wasm"];
 

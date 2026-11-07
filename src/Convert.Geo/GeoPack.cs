@@ -7,8 +7,7 @@ public sealed class GeoPack : IPack
         "geoconvert",
         "GeoConvert",
         "Reads and writes GeoJSON, TopoJSON, KML, GPX, FlatGeobuf, GeoParquet and more, and draws maps.",
-        "https://github.com/Papyrine/GeoConvert",
-        "MIT");
+        "https://github.com/Papyrine/GeoConvert");
 
     internal static IReadOnlyList<string> Assemblies { get; } = ["GeoConvert.wasm", "System.IO.Hashing.wasm"];
 
