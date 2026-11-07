@@ -21,7 +21,7 @@ public partial class EditorHost
     bool loading;
     Exception? error;
 
-    Dictionary<string, object?> Parameters => new()
+    Dictionary<string, object> Parameters => new()
     {
         ["Document"] = Document,
         ["Changed"] = Changed

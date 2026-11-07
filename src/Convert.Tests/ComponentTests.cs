@@ -44,7 +44,7 @@ public class ComponentTests
 
         var session = context.Services.GetRequiredService<ConvertSession>();
         await page.InvokeAsync(() => session.LoadTextAsync(FileTypes.Markdown, "# Hello\n\nSome *text*."));
-        page.WaitForAssertion(() => page.Find(".target-picker"));
+        await page.WaitForAssertionAsync(() => page.Find(".target-picker"));
         await Assert.That(page.FindAll(".drop-zone").Count).IsEqualTo(0);
         // Markdig's preview asked for Markdig.
         await Assert.That(loader.Requests.Any(_ => _.Contains("Markdig.wasm"))).IsTrue();
@@ -57,7 +57,7 @@ public class ComponentTests
         await Assert.That(session.Conversion!.Id).IsEqualTo("md-html-markdig");
 
         await page.Find(".convert-button").ClickAsync(new());
-        page.WaitForAssertion(() => page.Find(".download-button"));
+        await page.WaitForAssertionAsync(() => page.Find(".download-button"));
         await Assert.That(session.Result!.Parts[0].Text).Contains("<h1");
         await Assert.That(page.Find(".download-button").TextContent).Contains("pasted.html");
 
@@ -76,7 +76,7 @@ public class ComponentTests
         var page = context.Render<Index>();
         var session = context.Services.GetRequiredService<ConvertSession>();
         await page.InvokeAsync(() => session.LoadAsync("thing.xyz", [1, 2, 3]));
-        page.WaitForAssertion(() => page.Find(".error"));
+        await page.WaitForAssertionAsync(() => page.Find(".error"));
         await Assert.That(page.FindAll(".error-report").Count).IsEqualTo(0);
     }
 

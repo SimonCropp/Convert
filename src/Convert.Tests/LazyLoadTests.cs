@@ -58,7 +58,7 @@ public class LazyLoadTests
                     continue;
                 }
 
-                System.Reflection.Assembly assembly;
+                Assembly assembly;
                 try
                 {
                     assembly = System.Reflection.Assembly.Load(name);

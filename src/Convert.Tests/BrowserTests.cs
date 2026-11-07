@@ -115,10 +115,10 @@ public class BrowserTests
         () => ("Mermaid/Flowchart", "SVG", null, ".svg"),
         () => ("Map/GeoJSON", "KML", null, ".kml"),
         () => ("Map/GeoParquet", "GEOJSON", null, ".geojson"),
-        () => ("DOCX sample", "PDF", "Morph", ".pdf"),
-        () => ("DOCX sample", "PDF", "OfficeIMO", ".pdf"),
-        () => ("PPTX sample", "PDF", "OfficeIMO", ".pdf"),
-        () => ("XLSX sample", "PDF", "OfficeIMO", ".pdf"),
+        () => ("MS Office/Word document", "PDF", "Morph", ".pdf"),
+        () => ("MS Office/Word document", "PDF", "OfficeIMO", ".pdf"),
+        () => ("MS Office/PowerPoint presentation", "PDF", "OfficeIMO", ".pdf"),
+        () => ("MS Office/Excel workbook", "PDF", "OfficeIMO", ".pdf"),
         () => ("Markdown", "DOCX", "OfficeIMO", ".docx")
     ];
 
@@ -160,7 +160,7 @@ public class BrowserTests
             {
                 Name = "shape.svg",
                 MimeType = "image/svg+xml",
-                Buffer = Encoding.UTF8.GetBytes("""<svg xmlns="http://www.w3.org/2000/svg" width="40" height="30"><rect width="40" height="30" fill="#2b579a"/></svg>""")
+                Buffer = """<svg xmlns="http://www.w3.org/2000/svg" width="40" height="30"><rect width="40" height="30" fill="#2b579a"/></svg>"""u8.ToArray()
             });
         await ConvertAndDownloadAsync(page, "PNG", null, ".png");
     }
@@ -234,7 +234,7 @@ public class BrowserTests
         var page = await browser!.NewPageAsync();
         await page.GotoAsync(Url);
         await SettleAsync(page);
-        await page.ClickAsync("button.sample:has-text('DOCX sample')");
+        await ChooseSampleAsync(page, "MS Office/Word document");
         await page.ClickAsync("[role=tab]:text-is('Edit')", new() { Timeout = 60000 });
         await page.WaitForSelectorAsync(".editor-ribbon", new() { Timeout = 60000 });
         var lines = page.Locator(".morph-preview .text-line");
@@ -247,7 +247,7 @@ public class BrowserTests
         await page.WaitForSelectorAsync(".editor-dirty", new() { Timeout = 60000 });
 
         var download = await ConvertAndDownloadAsync(page, "TXT", null, ".txt");
-        var text = await File.ReadAllTextAsync((await download.PathAsync())!);
+        var text = await File.ReadAllTextAsync((await download.PathAsync()));
         // The heading is "pta" in all-caps style; text output drops the style.
         await Assert.That(text).Contains("pta EDITED");
     }

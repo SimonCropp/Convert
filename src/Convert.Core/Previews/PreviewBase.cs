@@ -33,13 +33,15 @@ public abstract class BlobPreviewBase : PreviewBase, IAsyncDisposable
         Url = await Interop.CreateObjectUrlAsync(ContentType, Document.Bytes);
     }
 
-    async Task RevokeAsync()
+    Task RevokeAsync()
     {
         if (Url is { } url)
         {
             Url = null;
-            await Interop.RevokeObjectUrlAsync(url);
+            return Interop.RevokeObjectUrlAsync(url);
         }
+
+        return Task.CompletedTask;
     }
 
     public async ValueTask DisposeAsync()

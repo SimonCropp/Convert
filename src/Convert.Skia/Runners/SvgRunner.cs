@@ -49,12 +49,19 @@ static class SvgRunner
         svg.Settings.TypefaceProviders = [typefaces];
         try
         {
-            if (svg.FromSvg(text) is { } picture && picture.CullRect is { Width: > 0, Height: > 0 })
+            if (svg.FromSvg(text) is
+                {
+                    CullRect:
+                    {
+                        Width: > 0,
+                        Height: > 0
+                    }
+                })
             {
                 return svg;
             }
         }
-        catch (Exception exception) when (exception is System.Xml.XmlException or FormatException or InvalidOperationException)
+        catch (Exception exception) when (exception is XmlException or FormatException or InvalidOperationException)
         {
             svg.Dispose();
             throw new UserInputException($"The SVG could not be read: {exception.Message}", exception);

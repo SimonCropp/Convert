@@ -16,7 +16,7 @@ static class MarkdownRunner
         Guard(markdown);
         var options = MarkdownRendererPresets.CreateStrictMinimalPortable();
         options.MarkdownOverflowHandling = OverflowHandling.Throw;
-        return global::OfficeIMO.MarkdownRenderer.MarkdownRenderer.RenderBodyHtml(markdown, options);
+        return MarkdownRenderer.RenderBodyHtml(markdown, options);
     }
 
     public static (string Markdown, IReadOnlyList<string> Notes) FromHtml(string html)

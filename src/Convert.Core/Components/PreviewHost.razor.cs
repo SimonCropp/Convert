@@ -19,7 +19,7 @@ public partial class PreviewHost
     bool loading;
     Exception? error;
 
-    Dictionary<string, object?> Parameters => new() { ["Document"] = Document };
+    Dictionary<string, object> Parameters => new() { ["Document"] = Document };
 
     string Key => $"{Document.Type.Id}/{Document.FileName}";
 

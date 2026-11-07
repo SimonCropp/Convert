@@ -41,7 +41,7 @@ public sealed class MorphPack : IPack
                 registry.Add(new MorphConversion(source, target));
             }
 
-            registry.Add(new Sample($"{source.ShortName} sample", source.Icon, $"_content/Morph.Blazor/sample/sample{source.Extension}", $"sample{source.Extension}"));
+            registry.Add(new Sample(source.DisplayName, source.Icon, $"_content/Morph.Blazor/sample/sample{source.Extension}", $"sample{source.Extension}", "MS Office"));
         }
 
         registry.Add(new Editor(FileTypes.Docx, Assemblies, typeof(Editors.DocxEditor)));

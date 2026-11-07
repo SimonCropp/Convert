@@ -113,7 +113,11 @@ else
                             Convert to @conversion.Target.ShortName
                         </button>
                     }
-                    @if (Session.Result is { } converted && !Session.IsConverting)
+                    @if (Session is
+                         {
+                             Result: { } converted,
+                             IsConverting: false
+                         })
                     {
                         <button type="button" class="button primary download-button" @onclick="() => DownloadAsync(converted)">
                             <Iconify Value="Lucide.Download" class="icon" aria-hidden="true" /> Download @DownloadName(converted)

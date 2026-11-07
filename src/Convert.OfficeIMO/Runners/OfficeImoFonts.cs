@@ -55,7 +55,7 @@ public static class OfficeImoFonts
         public OfficeFontFaceCollection Layout()
         {
             var fonts = new OfficeFontFaceCollection()
-                .Add(Family, Regular, OfficeFontStyle.Regular)
+                .Add(Family, Regular)
                 .Add(Family, Bold, OfficeFontStyle.Bold)
                 .Add(Family, Italic, OfficeFontStyle.Italic)
                 .Add(Family, BoldItalic, OfficeFontStyle.Bold | OfficeFontStyle.Italic);

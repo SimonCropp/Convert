@@ -16,7 +16,6 @@ public sealed class PackServiceProviderFactory : IServiceProviderFactory<IServic
     // Root provider. WebAssemblyHost asks it for IServiceScopeFactory and hands the one scope it creates to
     // the renderer, so returning this here is what puts every component injection through Resolve.
     sealed class Provider(ServiceProvider inner) :
-        IServiceProvider,
         IServiceScopeFactory,
         IKeyedServiceProvider,
         IServiceProviderIsService,
@@ -45,7 +44,6 @@ public sealed class PackServiceProviderFactory : IServiceProviderFactory<IServic
 
     sealed class Scope(IServiceScope inner, IServiceScopeFactory root) :
         IServiceScope,
-        IServiceProvider,
         IKeyedServiceProvider,
         IServiceProviderIsService,
         IAsyncDisposable

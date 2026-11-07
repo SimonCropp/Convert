@@ -15,7 +15,7 @@ public partial class OptionsHost
     [Parameter]
     public EventCallback Changed { get; set; }
 
-    Dictionary<string, object?> Parameters => new()
+    Dictionary<string, object> Parameters => new()
     {
         ["Options"] = Options,
         ["Changed"] = Changed
