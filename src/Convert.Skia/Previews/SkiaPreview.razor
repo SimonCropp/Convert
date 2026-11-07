@@ -1,0 +1,11 @@
+@inherits PreviewBase
+
+@* A format the browser cannot show (WBMP), decoded by Skia and shown as a PNG. *@
+@if (error is not null)
+{
+    <ErrorPanel Exception="error" Action="@($"Preview {Document.Type.DisplayName}")" />
+}
+else if (png is not null)
+{
+    <ImagePreview Document="png" />
+}

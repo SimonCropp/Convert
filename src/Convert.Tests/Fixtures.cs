@@ -34,6 +34,7 @@ static class Fixtures
         var fonts = Path.Combine(Wwwroot, "_content", "Morph.Blazor", "fonts");
         Convert.Morph.MorphFonts.Provider = () => Task.FromResult(fonts);
         Convert.OfficeIMO.OfficeImoFonts.Fetch = _ => Task.FromResult(Asset(_));
+        Convert.Skia.SkiaFonts.Fetch = _ => Task.FromResult(Asset(_));
     }
 
     public static ConversionRegistry Registry { get; } = ConvertServiceCollectionExtensions.BuildRegistry(Convert.Web.Packs.All);

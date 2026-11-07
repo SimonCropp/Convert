@@ -1,5 +1,6 @@
-@namespace Convert.Browser
-@inherits OptionsPanel<CanvasOptions>
+@inherits OptionsPanel<RasterOptions>
+
+@* Shared by every raster encoder (the browser's canvas, ImageSharp, Skia). *@
 
 <NumberOption TValue="double" Label="Scale" Hint="1 keeps the source size; 2 doubles it." Min="0.1" Max="8" Step="0.25" @bind-Value="Options.Scale" @bind-Value:after="NotifyAsync" />
 @if (Options.Lossy)

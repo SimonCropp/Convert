@@ -22,6 +22,9 @@
     <Papyrine_SponsorshipExemptionUntil>2027-08</Papyrine_SponsorshipExemptionUntil>
     <Verify_SponsorshipExemption>OpenSource</Verify_SponsorshipExemption>
     <Verify_SponsorshipExemptionUntil>2027-08</Verify_SponsorshipExemptionUntil>
+    <!-- ImageSharp 4 validates a Six Labors license in Release builds of projects referencing it
+         directly (Convert.ImageSharp). The Community key Naiad uses. -->
+    <SixLaborsLicenseKey>Id=ctm_01krfkytx8bzkq3gsjc92kfmyq;Kind=Community;ExpiryDateUtc=2027-11-25T09:21:15.9115672Z;Key=EnnWb0h1t+2wdIykrPeKDQ38pqBo54wzHRtR5kVh4ULvrWgG0hTKaRo7ltVWPaY3msBMQHAXXUJJKESqEOz1/g==</SixLaborsLicenseKey>
   </PropertyGroup>
   <ItemGroup>
     <Using Include="System.ReadOnlySpan&lt;System.Char&gt;" Alias="CharSpan" />

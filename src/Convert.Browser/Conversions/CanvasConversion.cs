@@ -1,7 +1,7 @@
 namespace Convert.Browser;
 
 /// <summary>An image drawn on a canvas and re-encoded: svg/png/jpeg/webp to png/jpeg/webp.</summary>
-sealed class CanvasConversion(FileType source, FileType target, CanvasBridge canvas) : Conversion<CanvasOptions>
+sealed class CanvasConversion(FileType source, FileType target, CanvasBridge canvas) : Conversion<RasterOptions>
 {
     public override string Id => $"{source.Id}-{target.Id}-browser";
     public override FileType Source => source;
@@ -21,17 +21,17 @@ sealed class CanvasConversion(FileType source, FileType target, CanvasBridge can
                 : null;
 
     public override IReadOnlyList<string> Assemblies => [];
-    public override Type OptionsComponent => typeof(CanvasOptionsPanel);
+    public override Type OptionsComponent => typeof(Components.RasterOptionsPanel);
 
     public override object CreateOptions() =>
-        new CanvasOptions
+        new RasterOptions
         {
             Lossy = target != FileTypes.Png,
             SupportsAlpha = target != FileTypes.Jpeg,
             TransparentBackground = target != FileTypes.Jpeg && source != FileTypes.Svg
         };
 
-    protected override async Task<ConversionOutput> RunAsync(Document document, CanvasOptions options, IProgress<ConversionProgress> progress, Cancel cancel)
+    protected override async Task<ConversionOutput> RunAsync(Document document, RasterOptions options, IProgress<ConversionProgress> progress, Cancel cancel)
     {
         var bytes = await canvas.RasterizeAsync(document.Bytes, source.ContentType, target.ContentType, options, cancel);
         return new(new Document(target.FileNameFor(document.FileName), bytes, target));

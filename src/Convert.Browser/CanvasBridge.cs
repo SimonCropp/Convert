@@ -17,10 +17,10 @@ sealed class CanvasBridge
     }
 
     /// <summary>Draws an image (raster or SVG) on a canvas and encodes it as <paramref name="targetType"/>.</summary>
-    public async Task<byte[]> RasterizeAsync(byte[] bytes, string sourceType, string targetType, CanvasOptions options, Cancel cancel)
+    public async Task<byte[]> RasterizeAsync(byte[] bytes, string sourceType, string targetType, RasterOptions options, Cancel cancel)
     {
         var module = await Module;
-        var background = options.TransparentBackground && targetType != FileTypes.Jpeg.ContentType ? null : options.Background;
+        var background = options.Flatten;
         return await module.InvokeAsync<byte[]>(
             "rasterize",
             cancel,

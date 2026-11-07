@@ -32,11 +32,20 @@ public sealed class ConversionRegistry
         packs.Add(pack);
     }
 
-    /// <summary>Registers a readable type. A <see cref="FileKind.Text"/> type also gets the core text editor.</summary>
+    /// <summary>
+    /// Registers a readable type. A <see cref="FileKind.Text"/> type also gets the core text editor.
+    /// Several packs may read one format: registering the same <see cref="FileTypes"/> instance again is a
+    /// no-op; a different type claiming a registered id throws.
+    /// </summary>
     public void Add(FileType type)
     {
-        if (types.Any(_ => _.Id == type.Id))
+        if (types.FirstOrDefault(_ => _.Id == type.Id) is { } existing)
         {
+            if (ReferenceEquals(existing, type))
+            {
+                return;
+            }
+
             throw new InvalidOperationException($"File type '{type.Id}' is already registered.");
         }
 

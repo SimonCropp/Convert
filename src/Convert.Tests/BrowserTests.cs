@@ -165,6 +165,42 @@ public class BrowserTests
         await ConvertAndDownloadAsync(page, "PNG", null, ".png");
     }
 
+    public static IEnumerable<Func<(string Source, string Target, string? Tool, string Extension)>> UploadRoutes() =>
+    [
+        // Skia: the native libSkiaSharp linked into dotnet.native.wasm, its decoders, encoders and PDF
+        // backend, and Svg.Skia with the bundled font.
+        () => ("svg", "PDF", null, ".pdf"),
+        () => ("svg", "PNG", "Skia", ".png"),
+        () => ("gif", "PNG", "Skia", ".png"),
+        () => ("bmp", "JPG", "Skia", ".jpg"),
+        () => ("ico", "WEBP", "Skia", ".webp"),
+        () => ("wbmp", "PNG", null, ".png"),
+        () => ("png", "PDF", null, ".pdf"),
+        // ImageSharp: formats only it writes, and sources only it reads (previewed through it too).
+        () => ("png", "TIFF", null, ".tiff"),
+        () => ("tga", "PNG", "ImageSharp", ".png"),
+        () => ("exr", "JPG", "ImageSharp", ".jpg"),
+        () => ("pnm", "QOI", null, ".qoi")
+    ];
+
+    // A file of each new image format (made on desktop by the same packs) uploaded and converted in the
+    // published app, so the wasm build of each codec is what runs.
+    [Test]
+    [MethodDataSource(nameof(UploadRoutes))]
+    public async Task UploadedImageConvertsAndDownloads(string source, string target, string? tool, string extension)
+    {
+        var input = await Inputs.ForAsync(Fixtures.Registry.Types.Single(_ => _.Id == source));
+        var page = await browser!.NewPageAsync();
+        await page.GotoAsync(Url);
+        await SettleAsync(page);
+        await page.SetInputFilesAsync(
+            ".drop-zone input[type=file]",
+            new FilePayload { Name = input.FileName, MimeType = input.Type.ContentType, Buffer = input.Bytes });
+        // The preview: the browser's own, or one decoded by ImageSharp or Skia.
+        await page.WaitForSelectorAsync(".source-pane img", new() { Timeout = 60000 });
+        await ConvertAndDownloadAsync(page, target, tool, extension);
+    }
+
     // Wide, Mermaid is edited beside its render, which follows the text once typing pauses.
     [Test]
     public async Task MermaidRenderFollowsTheEditor()

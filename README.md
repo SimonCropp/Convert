@@ -16,6 +16,9 @@ the device: every conversion runs in .NET on WebAssembly.
 | Mermaid | SVG, PNG | Naiad |
 | GeoJSON, TopoJSON, KML, KMZ, GPX, WKT, WKB, CSV, FlatGeobuf, GeoParquet | each other, PNG, SVG | GeoConvert |
 | SVG, PNG, JPEG, WebP | PNG, JPEG, WebP | the browser's canvas |
+| PNG, JPEG, WebP, GIF, BMP, TIFF, ICO, CUR, ANI, TGA, QOI, Netpbm, OpenEXR | each other | ImageSharp |
+| PNG, JPEG, WebP, GIF, BMP, ICO, WBMP | PNG, JPEG, WebP, PDF | Skia |
+| SVG | PNG, JPEG, WebP, PDF | Skia (Svg.Skia) |
 
 The full list, with each route's lazy assemblies, is [docs/catalogue.md](docs/catalogue.md) (generated
 by a test). Text formats can be pasted and edited with a live preview; Word documents can be edited in

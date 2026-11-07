@@ -7,6 +7,8 @@ public static class Packs
     [
         new Morph.MorphPack(),
         new Browser.BrowserPack(),
+        new ImageSharp.ImageSharpPack(),
+        new Skia.SkiaPack(),
         new Naiad.NaiadPack(),
         new Geo.GeoPack(),
         new Markdig.MarkdigPack(),

@@ -45,11 +45,13 @@
     <ProjectReference Include="..\Convert.Core\Convert.Core.csproj" />
     <ProjectReference Include="..\Convert.Browser\Convert.Browser.csproj" />
     <ProjectReference Include="..\Convert.Geo\Convert.Geo.csproj" />
+    <ProjectReference Include="..\Convert.ImageSharp\Convert.ImageSharp.csproj" />
     <ProjectReference Include="..\Convert.Markdig\Convert.Markdig.csproj" />
     <ProjectReference Include="..\Convert.Morph\Convert.Morph.csproj" />
     <ProjectReference Include="..\Convert.Naiad\Convert.Naiad.csproj" />
     <ProjectReference Include="..\Convert.OfficeIMO\Convert.OfficeIMO.csproj" />
     <ProjectReference Include="..\Convert.OpenXmlHtml\Convert.OpenXmlHtml.csproj" />
+    <ProjectReference Include="..\Convert.Skia\Convert.Skia.csproj" />
   </ItemGroup>
 
   <!--
@@ -65,11 +67,18 @@
     <TrimmerRootAssembly Include="Convert.Core" />
     <TrimmerRootAssembly Include="Convert.Browser" />
     <TrimmerRootAssembly Include="Convert.Geo" />
+    <TrimmerRootAssembly Include="Convert.ImageSharp" />
     <TrimmerRootAssembly Include="Convert.Markdig" />
     <TrimmerRootAssembly Include="Convert.Morph" />
     <TrimmerRootAssembly Include="Convert.Naiad" />
     <TrimmerRootAssembly Include="Convert.OfficeIMO" />
     <TrimmerRootAssembly Include="Convert.OpenXmlHtml" />
+    <TrimmerRootAssembly Include="Convert.Skia" />
+    <!-- Svg.Skia's SVG DOM (Svg.Custom) maps elements and attributes by reflection, and ExCSS likewise. -->
+    <TrimmerRootAssembly Include="Svg.Custom" />
+    <TrimmerRootAssembly Include="Svg.Model" />
+    <TrimmerRootAssembly Include="Svg.Skia" />
+    <TrimmerRootAssembly Include="ExCSS" />
   </ItemGroup>
 
   <!--
@@ -106,6 +115,16 @@
     <BlazorWebAssemblyLazyLoad Include="Morph.ImageSharp.wasm" />
     <BlazorWebAssemblyLazyLoad Include="Morph.Pdf.wasm" />
     <BlazorWebAssemblyLazyLoad Include="Krilla.wasm" />
+    <!-- Skia: SkiaSharp for raster routes; SVG routes add Svg.Skia and its closure. -->
+    <BlazorWebAssemblyLazyLoad Include="SkiaSharp.wasm" />
+    <BlazorWebAssemblyLazyLoad Include="Svg.Skia.wasm" />
+    <BlazorWebAssemblyLazyLoad Include="Svg.Model.wasm" />
+    <BlazorWebAssemblyLazyLoad Include="Svg.Custom.wasm" />
+    <BlazorWebAssemblyLazyLoad Include="Svg.SceneGraph.wasm" />
+    <BlazorWebAssemblyLazyLoad Include="Svg.Animation.wasm" />
+    <BlazorWebAssemblyLazyLoad Include="ShimSkiaSharp.wasm" />
+    <BlazorWebAssemblyLazyLoad Include="ExCSS.wasm" />
+    <BlazorWebAssemblyLazyLoad Include="HarfBuzzSharp.wasm" />
     <!-- OfficeIMO: each route names its own subset. -->
     <BlazorWebAssemblyLazyLoad Include="OfficeIMO.Core.wasm" />
     <BlazorWebAssemblyLazyLoad Include="OfficeIMO.Pdf.wasm" />
@@ -129,6 +148,21 @@
     <BlazorWebAssemblyLazyLoad Include="OfficeIMO.Pdf.Excel.wasm" />
     <BlazorWebAssemblyLazyLoad Include="OfficeIMO.Pdf.PowerPoint.wasm" />
   </ItemGroup>
+
+  <!--
+    SkiaSharp 4.155.0 ships libSkiaSharp.a for emscripten 3.1.34, 3.1.56 and 5.0.6, but its targets link
+    3.1.56 for every TFM from net9.0. That archive uses emscripten 3's setjmp ABI (saveSetjmp/testSetjmp),
+    which the .NET 11 SDK's emscripten 6.0.2 no longer has, so the link fails. Swap in the 5.0.6 archive,
+    the one HarfBuzzSharp 14.4.0's own targets already pick for net11.0. Drop this once SkiaSharp selects
+    it itself (4.156 does, with a 6.0.2 archive).
+  -->
+  <Target Name="UseSkiaSharpEmscripten5" BeforeTargets="PrepareForBuild" Condition="'$(SkiaSharpStaticLibraryPath)' != ''">
+    <ItemGroup>
+      <_SkiaSharpEmscripten3 Include="@(NativeFileReference)" Condition="$([System.String]::Copy('%(FullPath)').Replace('\', '/').Contains('libSkiaSharp.a/3.1.56/'))" />
+      <NativeFileReference Remove="@(_SkiaSharpEmscripten3)" />
+      <NativeFileReference Include="$(SkiaSharpStaticLibraryPath)/5.0.6/$(_SkiaSharpNativeBinaryType)/*.a" />
+    </ItemGroup>
+  </Target>
 
   <!--
     js/version.js: the version the loading screen shows before .NET runs (v0.1.0+b4bbab2), so a page the

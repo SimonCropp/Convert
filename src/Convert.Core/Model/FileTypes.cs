@@ -19,6 +19,17 @@ public static class FileTypes
     public static readonly FileType Png = new("png", "PNG image", [".png"], "image/png", FileKind.Binary, Lucide.Image, FileGroup.Images);
     public static readonly FileType Jpeg = new("jpeg", "JPEG image", [".jpg", ".jpeg"], "image/jpeg", FileKind.Binary, Lucide.FileImage, FileGroup.Images);
     public static readonly FileType WebP = new("webp", "WebP image", [".webp"], "image/webp", FileKind.Binary, Lucide.FileImage, FileGroup.Images);
+    public static readonly FileType Gif = new("gif", "GIF image", [".gif"], "image/gif", FileKind.Binary, Lucide.FileImage, FileGroup.Images);
+    public static readonly FileType Bmp = new("bmp", "BMP image", [".bmp", ".dib"], "image/bmp", FileKind.Binary, Lucide.FileImage, FileGroup.Images);
+    public static readonly FileType Tiff = new("tiff", "TIFF image", [".tiff", ".tif"], "image/tiff", FileKind.Binary, Lucide.FileImage, FileGroup.Images);
+    public static readonly FileType Ico = new("ico", "Icon", [".ico"], "image/x-icon", FileKind.Binary, Lucide.FileImage, FileGroup.Images);
+    public static readonly FileType Cur = new("cur", "Cursor", [".cur"], "image/x-win-bitmap", FileKind.Binary, Lucide.MousePointer2, FileGroup.Images);
+    public static readonly FileType Ani = new("ani", "Animated cursor", [".ani"], "application/x-navi-animation", FileKind.Binary, Lucide.MousePointer2, FileGroup.Images);
+    public static readonly FileType Tga = new("tga", "TGA image", [".tga"], "image/x-tga", FileKind.Binary, Lucide.FileImage, FileGroup.Images);
+    public static readonly FileType Qoi = new("qoi", "QOI image", [".qoi"], "image/qoi", FileKind.Binary, Lucide.FileImage, FileGroup.Images);
+    public static readonly FileType Netpbm = new("pnm", "Netpbm image", [".ppm", ".pgm", ".pbm", ".pnm"], "image/x-portable-anymap", FileKind.Binary, Lucide.FileImage, FileGroup.Images);
+    public static readonly FileType Exr = new("exr", "OpenEXR image", [".exr"], "image/x-exr", FileKind.Binary, Lucide.FileImage, FileGroup.Images);
+    public static readonly FileType Wbmp = new("wbmp", "WBMP image", [".wbmp"], "image/vnd.wap.wbmp", FileKind.Binary, Lucide.FileImage, FileGroup.Images);
     public static readonly FileType GeoJson = new("geojson", "GeoJSON", [".geojson"], "application/geo+json", FileKind.Text, Lucide.Globe, FileGroup.Data);
     public static readonly FileType TopoJson = new("topojson", "TopoJSON", [".topojson"], "application/json", FileKind.Text, Lucide.Globe, FileGroup.Data);
     public static readonly FileType Kml = new("kml", "KML", [".kml"], "application/vnd.google-earth.kml+xml", FileKind.Text, Lucide.MapPin, FileGroup.Data);

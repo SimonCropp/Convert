@@ -6,6 +6,12 @@
       "runtimeExecutable": "dotnet",
       "runtimeArgs": ["run", "--project", "src/Convert.Web", "--urls", "http://localhost:5280"],
       "port": 5280
+    },
+    {
+      "name": "published",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["-m", "http.server", "5290", "--directory", "src/Convert.Tests/bin/Release/blazor-publish/wwwroot"],
+      "port": 5290
     }
   ]
 }

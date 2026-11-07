@@ -40,7 +40,19 @@ path-finding with per-hop options.
   internal, so the website converter's automatic 50,000-cell worksheet budget is not applied; "Quick
   preview" (250 rows per sheet) is a manual option. The plan's "Reproducible" PDF profile is not offered.
 - Shapefile (path-based, multi-file) read/write.
-- Skia backends: no browser-wasm natives.
+- Skia is stable SkiaSharp 4.155.0 linked with its emscripten 5.0.6 archive (the package's targets pick
+  3.1.56, which emscripten 6.0.2 cannot link: `UseSkiaSharpEmscripten5` in Convert.Web swaps it). When a
+  SkiaSharp release selects a 6.x archive itself (4.156 does), drop that target.
+- Before upgrading to 4.156: its release candidate crashes drawing a lazily decoded SKImage on the PDF
+  canvas, [mono/SkiaSharp#5645](https://github.com/mono/SkiaSharp/issues/5645). Image → PDF routes
+  would need to decode to pixels first (`ToRasterImage(true)`) until that is fixed.
+- Skia's native code is linked into dotnet.native.wasm, so it is paid at boot, not lazily: 1.62 MB →
+  3.05 MB brotli (6.0 → 11.5 MB raw). The managed assemblies stay lazy.
+- After changing Skia versions, clear Convert.Web's Debug output: an incremental `dotnet run` build can
+  serve the previous managed SkiaSharp.wasm with the new native ("native libSkiaSharp library (155.0) is
+  incompatible").
+- Skia decodes only the first frame of an animated GIF; ImageSharp keeps the frames.
+- HEIF, AVIF and RAW (DNG) are not offered: whether Skia's wasm build has those decoders is untested.
 
 ## Runtime
 

@@ -12,6 +12,9 @@ public sealed class CorePack : IPack
         registry.Add(FileTypes.Png);
         registry.Add(FileTypes.Jpeg);
         registry.Add(FileTypes.WebP);
+        registry.Add(FileTypes.Gif);
+        registry.Add(FileTypes.Bmp);
+        registry.Add(FileTypes.Ico);
 
         registry.Add(new Preview(FileTypes.Text, [], typeof(Previews.TextPreview)));
         // Markdig's rendered preview wins; this is the fallback when that pack is absent.
@@ -21,6 +24,9 @@ public sealed class CorePack : IPack
         registry.Add(new Preview(FileTypes.Png, [], typeof(Previews.ImagePreview)));
         registry.Add(new Preview(FileTypes.Jpeg, [], typeof(Previews.ImagePreview)));
         registry.Add(new Preview(FileTypes.WebP, [], typeof(Previews.ImagePreview)));
+        registry.Add(new Preview(FileTypes.Gif, [], typeof(Previews.ImagePreview)));
+        registry.Add(new Preview(FileTypes.Bmp, [], typeof(Previews.ImagePreview)));
+        registry.Add(new Preview(FileTypes.Ico, [], typeof(Previews.ImagePreview)));
         registry.Add(new Preview(FileTypes.Zip, [], typeof(Previews.ZipPreview)));
     }
 }

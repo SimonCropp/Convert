@@ -105,7 +105,18 @@ static class Inputs
                     type);
             case "pdf":
                 return await ConvertAsync("docx-pdf-morph");
+            case "png":
+                return await ConvertAsync("mermaid-png-naiad");
+            case "svg":
+                return await ConvertAsync("mermaid-svg-naiad");
+            case "wbmp":
+                return new("sample.wbmp", Wbmp(), type);
             default:
+                if (type.Group == FileGroup.Images)
+                {
+                    return await ConvertAsync($"png-{type.Id}-imagesharp");
+                }
+
                 if (type.Group == FileGroup.Data)
                 {
                     return await ConvertAsync($"geojson-{type.Id}-geoconvert");
@@ -114,6 +125,10 @@ static class Inputs
                 throw new NotSupportedException($"No test input for {type.Id}.");
         }
     }
+
+    // Nothing here encodes WBMP: an 8×2 one, by hand (type 0, fixed header 0, width, height, then 1-bit
+    // rows, 1 = white): a white row over a row of alternating pixels.
+    static byte[] Wbmp() => [0, 0, 8, 2, 0b1111_1111, 0b1010_1010];
 
     static Document Sample(string url, FileType type) =>
         new(Path.GetFileName(url), Fixtures.Asset(url), type);
