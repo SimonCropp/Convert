@@ -12,6 +12,11 @@
     <PublishTrimmed>true</PublishTrimmed>
     <InvariantGlobalization>true</InvariantGlobalization>
     <!--
+      No ICU is shipped, so a named culture (OfficeIMO's text casing asks for en-US) would throw
+      CultureNotFoundException; off, it is created over invariant data instead.
+    -->
+    <PredefinedCulturesOnly>false</PredefinedCulturesOnly>
+    <!--
       Single-threaded runtime (WasmEnableThreads off): the threaded one needs a cross-origin-isolated page
       (COOP/COEP), which GitHub Pages cannot serve. Conversions run on the UI thread and yield with
       `await Task.Run` so the progress state paints first.

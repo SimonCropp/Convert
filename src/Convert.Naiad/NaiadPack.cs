@@ -33,7 +33,7 @@ public sealed class NaiadPack : IPack
         foreach (var sample in samples)
         {
             var file = sample.ToLowerInvariant() + ".mmd";
-            registry.Add(new Sample($"Mermaid {sample.ToLowerInvariant()}", Lucide.Workflow, $"_content/Convert.Naiad/samples/{file}", file));
+            registry.Add(new Sample(sample, Lucide.Workflow, $"_content/Convert.Naiad/samples/{file}", file, "Mermaid"));
         }
     }
 }

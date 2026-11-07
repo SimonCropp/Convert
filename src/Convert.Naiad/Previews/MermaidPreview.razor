@@ -4,7 +4,10 @@
 {
     <ErrorPanel Exception="error" Action="Preview Mermaid" />
 }
-else if (svg is not null)
+@if (svg is not null)
 {
-    <SvgPreview Document="svg" />
+    @* While the text does not parse (mid-edit, say) the last good diagram stays, dimmed, under the error. *@
+    <div class="@(error is null ? "" : "stale-preview")">
+        <SvgPreview Document="svg" />
+    </div>
 }

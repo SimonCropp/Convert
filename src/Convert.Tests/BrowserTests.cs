@@ -104,7 +104,7 @@ public class BrowserTests
         await Assert.That(requested).IsEmpty();
 
         // Choosing a Mermaid sample loads Naiad, and only what its preview needs.
-        await page.ClickAsync("button.sample:has-text('Mermaid flowchart')");
+        await ChooseSampleAsync(page, "Mermaid/Flowchart");
         await page.WaitForSelectorAsync(".svg-preview img", new() { Timeout = 60000 });
         await Assert.That(requested.Order()).IsEquivalentTo(["Naiad", "Parlot"]);
     }
@@ -112,10 +112,13 @@ public class BrowserTests
     public static IEnumerable<Func<(string Sample, string Target, string? Tool, string Extension)>> Routes() =>
     [
         () => ("Markdown", "HTML", null, ".html"),
-        () => ("Mermaid flowchart", "SVG", null, ".svg"),
-        () => ("Map", "KML", null, ".kml"),
+        () => ("Mermaid/Flowchart", "SVG", null, ".svg"),
+        () => ("Map/GeoJSON", "KML", null, ".kml"),
+        () => ("Map/GeoParquet", "GEOJSON", null, ".geojson"),
         () => ("DOCX sample", "PDF", "Morph", ".pdf"),
         () => ("DOCX sample", "PDF", "OfficeIMO", ".pdf"),
+        () => ("PPTX sample", "PDF", "OfficeIMO", ".pdf"),
+        () => ("XLSX sample", "PDF", "OfficeIMO", ".pdf"),
         () => ("Markdown", "DOCX", "OfficeIMO", ".docx")
     ];
 
@@ -127,7 +130,7 @@ public class BrowserTests
         var page = await browser!.NewPageAsync();
         await page.GotoAsync(Url);
         await SettleAsync(page);
-        await page.ClickAsync($"button.sample:has-text('{sample}')");
+        await ChooseSampleAsync(page, sample);
         await ConvertAndDownloadAsync(page, target, tool, extension);
     }
 
@@ -162,6 +165,32 @@ public class BrowserTests
         await ConvertAndDownloadAsync(page, "PNG", null, ".png");
     }
 
+    // Wide, Mermaid is edited beside its render, which follows the text once typing pauses.
+    [Test]
+    public async Task MermaidRenderFollowsTheEditor()
+    {
+        var page = await browser!.NewPageAsync();
+        await page.SetViewportSizeAsync(1400, 900);
+        await page.GotoAsync(Url);
+        await SettleAsync(page);
+        await ChooseSampleAsync(page, "Mermaid/Flowchart");
+        var image = page.Locator(".split-preview img");
+        await image.WaitForAsync(new() { Timeout = 60000 });
+        var before = await image.GetAttributeAsync("src");
+
+        await page.ClickAsync(".split-edit textarea");
+        await page.Keyboard.PressAsync("Control+End");
+        await page.Keyboard.TypeAsync("\n    C --> E[Celebrate]");
+        await page.WaitForFunctionAsync(
+            "previous => document.querySelector('.split-preview img')?.getAttribute('src') !== previous",
+            before,
+            new() { Timeout = 30000 });
+
+        // Still typing in the same editor, and the render has no error.
+        await Assert.That(await page.EvaluateAsync<string>("document.activeElement.tagName")).IsEqualTo("TEXTAREA");
+        await Assert.That(await page.Locator(".split-preview .error").CountAsync()).IsEqualTo(0);
+    }
+
     // Text typed in the Edit tab becomes the session's source: the next conversion has it.
     [Test]
     public async Task EditedDocxConvertsWithTheEdit()
@@ -185,6 +214,20 @@ public class BrowserTests
         var text = await File.ReadAllTextAsync((await download.PathAsync())!);
         // The heading is "pta" in all-caps style; text output drops the style.
         await Assert.That(text).Contains("pta EDITED");
+    }
+
+    // "Group/Item" opens the group's menu and picks the item; a plain name is a button of its own.
+    static async Task ChooseSampleAsync(IPage page, string sample)
+    {
+        var slash = sample.IndexOf('/');
+        if (slash < 0)
+        {
+            await page.ClickAsync($"button.sample:has-text('{sample}')");
+            return;
+        }
+
+        await page.ClickAsync($"button.sample:has-text('{sample[..slash]}')");
+        await page.ClickAsync($".sample-menu-item:text-is('{sample[(slash + 1)..]}')");
     }
 
     static async Task<IDownload> ConvertAndDownloadAsync(IPage page, string target, string? tool, string extension)

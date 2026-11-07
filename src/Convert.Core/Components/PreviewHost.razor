@@ -9,7 +9,9 @@
     }
     else if (preview is not null)
     {
-        <DynamicComponent @key="Document" Type="preview.Component" Parameters="Parameters" />
+        @* Keyed by the file, not the Document: an edit (same name and type) updates the preview in place,
+           so it can keep showing the last render until the next is ready; another file starts afresh. *@
+        <DynamicComponent @key="Key" Type="preview.Component" Parameters="Parameters" />
     }
     else if (Document.Type.Kind == FileKind.Text)
     {

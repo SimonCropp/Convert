@@ -11,6 +11,9 @@ public partial class MainLayout : IDisposable
     [Inject]
     IToolLoader Loader { get; set; } = default!;
 
+    [Inject]
+    ConvertSession Session { get; set; } = default!;
+
     ThemeType currentTheme = ThemeType.Light;
     DownloadSize? downloadSize;
     long? liveBytes;

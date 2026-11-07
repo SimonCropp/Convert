@@ -4,6 +4,10 @@
 *.bmp binary
 *.tif binary
 *.zip binary
+*.fgb binary
+*.kmz binary
+*.parquet binary
+*.wkb binary
 *.docx binary
 *.odt binary
 *.ttf binary

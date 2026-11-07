@@ -49,6 +49,15 @@ public partial class Index
 
     void Show(View next) => view = next;
 
+    /// <summary>
+    /// Text with a render of its own (Mermaid, Markdown, HTML, the text geo formats): edited beside its
+    /// preview. Plain text, whose preview is the text again, is not.
+    /// </summary>
+    bool Splits(Document source) =>
+        source.Type.Kind == FileKind.Text &&
+        Session.Registry.EditorsFor(source.Type).Count > 0 &&
+        Session.Registry.PreviewsFor(source.Type).Count > 0;
+
     void OnTargetSelected(FileType target)
     {
         Session.SelectTarget(target);

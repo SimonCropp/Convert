@@ -45,11 +45,12 @@ public sealed record Editor(FileType Type, IReadOnlyList<string> Assemblies, Typ
 }
 
 /// <summary>A bundled example file offered on the empty screen, fetched only when chosen.</summary>
-/// <param name="DisplayName">Button label.</param>
-/// <param name="Icon">Button icon.</param>
+/// <param name="DisplayName">Button label, or the menu item's within a group.</param>
+/// <param name="Icon">Button icon. A group's button takes its first sample's.</param>
 /// <param name="AssetUrl">Path relative to the app base, e.g. <c>_content/Convert.Naiad/samples/flowchart.mmd</c>.</param>
 /// <param name="FileName">The name the file is loaded under.</param>
-public sealed record Sample(string DisplayName, Icon Icon, string AssetUrl, string FileName);
+/// <param name="Group">Samples sharing a group are one dropdown button labelled with it.</param>
+public sealed record Sample(string DisplayName, Icon Icon, string AssetUrl, string FileName, string? Group = null);
 
 /// <summary>One target format and every conversion that reaches it, best first.</summary>
 public sealed record TargetOption(FileType Target, IReadOnlyList<Conversion> Conversions);

@@ -16,8 +16,7 @@ public partial class MermaidPreview
         }
         catch (UserInputException exception)
         {
-            // Keep the last good diagram out of view: the error says why this text does not render.
-            svg = null;
+            // The last good diagram (if any) stays, marked stale: the error says why this text does not render.
             error = exception;
         }
     }

@@ -46,6 +46,11 @@ public sealed class GeoPack : IPack
         }
 
         registry.Add(JsonSniffer.Sniff);
-        registry.Add(new Sample("Map", Lucide.Globe, "_content/Convert.Geo/samples/capitals.geojson", "capitals.geojson"));
+        // The same capitals in every format (made by GeoSampleTests).
+        foreach (var format in Formats)
+        {
+            var file = format.FileNameFor("capitals");
+            registry.Add(new Sample(format.DisplayName, Lucide.Globe, $"_content/Convert.Geo/samples/{file}", file, "Map"));
+        }
     }
 }

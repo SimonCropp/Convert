@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<gpx version="1.1" creator="GeoConvert" xmlns="http://www.topografix.com/GPX/1/1">
+  <wpt lat="51.5072" lon="-0.1276">
+    <name>London</name>
+  </wpt>
+  <wpt lat="48.8566" lon="2.3522">
+    <name>Paris</name>
+  </wpt>
+  <wpt lat="40.4168" lon="-3.7038">
+    <name>Madrid</name>
+  </wpt>
+  <wpt lat="41.9028" lon="12.4964">
+    <name>Rome</name>
+  </wpt>
+  <wpt lat="52.52" lon="13.405">
+    <name>Berlin</name>
+  </wpt>
+  <wpt lat="48.2082" lon="16.3738">
+    <name>Vienna</name>
+  </wpt>
+  <trk>
+    <name>London–Paris–Rome</name>
+    <trkseg>
+      <trkpt lat="51.5072" lon="-0.1276" />
+      <trkpt lat="48.8566" lon="2.3522" />
+      <trkpt lat="41.9028" lon="12.4964" />
+    </trkseg>
+  </trk>
+  <trk>
+    <name>Alps (approx.)</name>
+    <trkseg>
+      <trkpt lat="45" lon="5.8" />
+      <trkpt lat="46.6" lon="7" />
+      <trkpt lat="47.5" lon="10.5" />
+      <trkpt lat="47.6" lon="13.5" />
+      <trkpt lat="47.6" lon="16" />
+      <trkpt lat="46.4" lon="15" />
+      <trkpt lat="46" lon="12" />
+      <trkpt lat="45.8" lon="9" />
+      <trkpt lat="44.2" lon="7" />
+      <trkpt lat="45" lon="5.8" />
+    </trkseg>
+  </trk>
+</gpx>

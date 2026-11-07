@@ -181,6 +181,57 @@ body.dragging .drop-zone {
     font-size: 0.9rem;
 }
 
+/* A group of samples: one button opening a menu under it. */
+.sample-menu {
+    position: relative;
+}
+
+.sample-menu-chevron {
+    opacity: 0.7;
+}
+
+.sample-menu-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 10;
+}
+
+.sample-menu-items {
+    position: absolute;
+    top: calc(100% + 0.25rem);
+    left: 0;
+    z-index: 11;
+    min-width: 100%;
+    margin: 0;
+    padding: 0.25rem;
+    list-style: none;
+    text-align: left;
+    background: var(--convert-surface, #fff);
+    border: 1px solid var(--convert-border, #dee2e6);
+    border-radius: 0.5rem;
+    box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 15%);
+}
+
+.sample-menu-item {
+    display: block;
+    width: 100%;
+    padding: 0.4rem 0.75rem;
+    border: 0;
+    border-radius: 0.375rem;
+    background: none;
+    color: inherit;
+    font: inherit;
+    text-align: left;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.sample-menu-item:hover,
+.sample-menu-item:focus-visible {
+    background: color-mix(in srgb, currentColor 10%, transparent);
+    outline: none;
+}
+
 .paste-panel {
     margin: 1rem auto 0;
     max-width: 40rem;
@@ -366,6 +417,11 @@ body.dragging .drop-zone {
 /* Previews. */
 .preview-host {
     min-height: 6rem;
+}
+
+/* A render kept while the edited text does not render (an error stands above it). */
+.stale-preview {
+    opacity: 0.4;
 }
 
 .text-preview {

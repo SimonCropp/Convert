@@ -4,7 +4,9 @@
 {
     <ErrorPanel Exception="error" Action="Preview map" />
 }
-else if (map is not null)
+@if (map is not null)
 {
-    <PreviewHost Document="map" />
+    <div class="@(error is null ? "" : "stale-preview")">
+        <PreviewHost Document="map" />
+    </div>
 }

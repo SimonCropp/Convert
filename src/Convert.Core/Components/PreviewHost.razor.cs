@@ -21,6 +21,8 @@ public partial class PreviewHost
 
     Dictionary<string, object?> Parameters => new() { ["Document"] = Document };
 
+    string Key => $"{Document.Type.Id}/{Document.FileName}";
+
     protected override async Task OnParametersSetAsync()
     {
         var candidates = Registry.PreviewsFor(Document.Type);

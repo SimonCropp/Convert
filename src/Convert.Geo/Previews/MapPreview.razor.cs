@@ -22,7 +22,7 @@ public partial class MapPreview
         }
         catch (Exception exception)
         {
-            map = null;
+            // The last good map (if any) stays, marked stale, under the error.
             error = exception;
         }
     }

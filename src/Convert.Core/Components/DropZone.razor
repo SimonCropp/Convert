@@ -33,11 +33,38 @@
     {
         <div class="samples">
             <p>Or try a sample:</p>
-            @foreach (var sample in Session.Registry.Samples)
+            @foreach (var entry in SampleEntries())
             {
-                <button type="button" class="button sample" disabled="@(loadingSample is not null)" @onclick="() => LoadSample(sample)">
-                    <Iconify Value="sample.Icon" class="icon" aria-hidden="true" /> @sample.DisplayName
-                </button>
+                if (entry.Group is not { } group)
+                {
+                    var sample = entry.Samples[0];
+                    <button type="button" class="button sample" disabled="@(loadingSample is not null)" @onclick="() => LoadSample(sample)">
+                        <Iconify Value="sample.Icon" class="icon" aria-hidden="true" /> @sample.DisplayName
+                    </button>
+                    continue;
+                }
+
+                var open = openGroup == group;
+                <div class="sample-menu" @onkeydown="OnMenuKeyDown">
+                    <button type="button" class="button sample" aria-haspopup="menu" aria-expanded="@(open ? "true" : "false")"
+                            disabled="@(loadingSample is not null)" @onclick="() => ToggleGroup(group)">
+                        <Iconify Value="entry.Samples[0].Icon" class="icon" aria-hidden="true" /> @group
+                        <Iconify Value="Lucide.ChevronDown" class="icon sample-menu-chevron" aria-hidden="true" />
+                    </button>
+                    @if (open)
+                    {
+                        @* Catches a click outside the menu, which closes it. *@
+                        <div class="sample-menu-backdrop" @onclick="CloseGroup"></div>
+                        <ul class="sample-menu-items" role="menu" aria-label="@($"{group} samples")">
+                            @foreach (var sample in entry.Samples)
+                            {
+                                <li role="none">
+                                    <button type="button" role="menuitem" class="sample-menu-item" @onclick="() => LoadSample(sample)">@sample.DisplayName</button>
+                                </li>
+                            }
+                        </ul>
+                    }
+                </div>
             }
         </div>
     }

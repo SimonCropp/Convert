@@ -27,10 +27,26 @@ else
                 <span class="preview-note">@source.Type.DisplayName</span>
                 <span class="spacer"></span>
                 <div class="tabs" role="tablist">
-                    <button type="button" role="tab" class="@(view == View.Source ? "active" : "")" aria-selected="@(view == View.Source ? "true" : "false")" @onclick="() => Show(View.Source)">Preview</button>
+                    @{
+                        // Split, a wide screen shows both at once, so one tab ("Edit and preview") stands for
+                        // the pair: it is the selected one whether Preview or Edit was picked on a narrow screen.
+                        var splits = Splits(source);
+                        var sourceClass = (view == View.Source ? "active " : "") + (splits && view == View.Edit ? "wide-active" : "");
+                    }
+                    <button type="button" role="tab" class="@sourceClass" aria-selected="@(view == View.Source ? "true" : "false")" @onclick="() => Show(View.Source)">
+                        @if (splits)
+                        {
+                            <span class="narrow-only">Preview</span>
+                            <span class="wide-only">Edit and preview</span>
+                        }
+                        else
+                        {
+                            @:Preview
+                        }
+                    </button>
                     @if (Session.Registry.EditorsFor(source.Type).Count > 0)
                     {
-                        <button type="button" role="tab" class="@(view == View.Edit ? "active" : "")" aria-selected="@(view == View.Edit ? "true" : "false")" @onclick="() => Show(View.Edit)">
+                        <button type="button" role="tab" class="@((splits ? "narrow-only " : "") + (view == View.Edit ? "active" : ""))" aria-selected="@(view == View.Edit ? "true" : "false")" @onclick="() => Show(View.Edit)">
                             <Iconify Value="Lucide.Pencil" class="icon" aria-hidden="true" /> Edit
                         </button>
                     }
@@ -43,6 +59,18 @@ else
 
             @switch (view)
             {
+                case View.Source or View.Edit when Splits(source):
+                    @* Text with a render of its own: on a wide screen the editor and the render stand side by
+                       side and the render follows the text; on a narrow one the tabs pick either. *@
+                    <div class="split @(view == View.Edit ? "show-edit" : "show-preview")">
+                        <div class="split-edit">
+                            <EditorHost Document="source" Changed="OnEdited" />
+                        </div>
+                        <div class="split-preview">
+                            <PreviewHost Document="source" />
+                        </div>
+                    </div>
+                    break;
                 case View.Edit:
                     <EditorHost Document="source" Changed="OnEdited" />
                     break;

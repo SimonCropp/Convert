@@ -23,6 +23,7 @@ public partial class DropZone
     string pasted = "";
     string pasteTypeId = FileTypes.Text.Id;
     Sample? loadingSample;
+    string? openGroup;
     Exception? error;
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -67,8 +68,42 @@ public partial class DropZone
         return Session.LoadTextAsync(type, pasted);
     }
 
+    /// <summary>The samples as buttons: each ungrouped one alone, each group where its first sample stands.</summary>
+    List<(string? Group, List<Sample> Samples)> SampleEntries()
+    {
+        var entries = new List<(string? Group, List<Sample> Samples)>();
+        foreach (var sample in Session.Registry.Samples)
+        {
+            var index = sample.Group is null ? -1 : entries.FindIndex(_ => _.Group == sample.Group);
+            if (index < 0)
+            {
+                entries.Add((sample.Group, [sample]));
+            }
+            else
+            {
+                entries[index].Samples.Add(sample);
+            }
+        }
+
+        return entries;
+    }
+
+    void ToggleGroup(string group) =>
+        openGroup = openGroup == group ? null : group;
+
+    void CloseGroup() => openGroup = null;
+
+    void OnMenuKeyDown(KeyboardEventArgs args)
+    {
+        if (args.Key == "Escape")
+        {
+            openGroup = null;
+        }
+    }
+
     async Task LoadSample(Sample sample)
     {
+        openGroup = null;
         error = null;
         loadingSample = sample;
         try
