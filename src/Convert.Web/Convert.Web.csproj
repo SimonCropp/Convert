@@ -214,6 +214,8 @@
       <_ConvertWebcilStale Condition="Exists('$(_ConvertWebcilStamp)') And $([System.IO.File]::GetLastWriteTimeUtc('$(ProjectAssetsFile)').Ticks) &gt; $([System.IO.File]::GetLastWriteTimeUtc('$(_ConvertWebcilStamp)').Ticks)">true</_ConvertWebcilStale>
     </PropertyGroup>
     <RemoveDir Directories="$(_ConvertWebcilDirectory)" Condition="$(_ConvertWebcilStale)" />
+    <!-- A fresh checkout has no obj/{Configuration}/{TargetFramework} yet: PrepareForBuild makes it later. -->
+    <MakeDir Directories="$(IntermediateOutputPath)" Condition="$(_ConvertWebcilStale)" />
     <Touch Files="$(_ConvertWebcilStamp)" AlwaysCreate="true" Condition="$(_ConvertWebcilStale)" />
     <ItemGroup>
       <FileWrites Include="$(_ConvertWebcilStamp)" />
