@@ -9,6 +9,12 @@ public class LazyLoadTests
     static readonly string runtimeDirectory = RuntimeEnvironment.GetRuntimeDirectory();
 
     // Loaded at boot in the browser: the framework, Core and the pack glue, the icon runtime.
+    // Referenced in metadata but never loaded at run time, and not a package dependency: Parlot 2 names
+    // Roslyn only for its source-generator support.
+    static bool NeverLoaded(string assembly, AssemblyName reference) =>
+        assembly == "Parlot" &&
+        reference.Name!.StartsWith("Microsoft.CodeAnalysis", StringComparison.Ordinal);
+
     static bool IsEager(AssemblyName name)
     {
         var simple = name.Name!;
@@ -71,7 +77,7 @@ public class LazyLoadTests
 
                 foreach (var reference in assembly.GetReferencedAssemblies())
                 {
-                    if (IsEager(reference))
+                    if (IsEager(reference) || NeverLoaded(name, reference))
                     {
                         continue;
                     }

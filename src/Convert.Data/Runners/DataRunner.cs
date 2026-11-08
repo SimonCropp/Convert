@@ -26,10 +26,10 @@ static class DataRunner
     static string Write(JsonNode? tree, FileType target, DataOptions options) =>
         target.Id switch
         {
-            "json" => JsonFormat.Write(tree, options.Indent),
+            "json" => JsonFormat.Write(tree, options.PrettyPrint),
             "yaml" => YamlFormat.Write(tree),
             "toml" => TomlFormat.Write(tree),
-            "xml" => XmlFormat.Write(tree),
+            "xml" => XmlFormat.Write(tree, options.PrettyPrint),
             "csv" or "tsv" => DelimitedFormat.Write(tree, Delimited.For(target)),
             _ => throw new NotSupportedException($"{target.DisplayName} is not a data format.")
         };

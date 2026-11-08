@@ -6,6 +6,10 @@
 <FlagOption Label="Labels" Hint="From each feature's name property." @bind-Value="Options.Labels" @bind-Value:after="NotifyAsync" />
 <TextOption Label="Fill" Color="true" @bind-Value="Options.Fill" @bind-Value:after="NotifyAsync" />
 <TextOption Label="Stroke" Color="true" @bind-Value="Options.Stroke" @bind-Value:after="NotifyAsync" />
+@if (Options.Svg)
+{
+    <FlagOption Label="Pretty print" Hint="Indent the output, one element per line." @bind-Value="Options.PrettyPrint" @bind-Value:after="NotifyAsync" />
+}
 <AdvancedOptions>
     <NumberOption TValue="int" Label="Fill opacity (0–255)" Min="0" Max="255" Step="5" @bind-Value="Options.FillOpacity" @bind-Value:after="NotifyAsync" />
     <TextOption Label="Background" Color="true" @bind-Value="Options.Background" @bind-Value:after="NotifyAsync" />

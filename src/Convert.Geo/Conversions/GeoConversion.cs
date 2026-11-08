@@ -25,6 +25,7 @@ sealed class GeoConversion(FileType source, FileType target) : Conversion
         {
             "kmz" => typeof(KmzOptionsPanel),
             "geoparquet" => typeof(GeoParquetOptionsPanel),
+            _ when PrettyPrint.Supports(target) => typeof(PrettyPrintOptionsPanel),
             _ => null
         };
 
@@ -33,17 +34,19 @@ sealed class GeoConversion(FileType source, FileType target) : Conversion
         {
             "kmz" => new KmzOptions(),
             "geoparquet" => new GeoParquetOptions(),
+            _ when PrettyPrint.Supports(target) => new PrettyPrintOptions(),
             _ => new NoOptions()
         };
 
     public override Task<ConversionOutput> RunAsync(Document document, object options, IProgress<ConversionProgress> progress, Cancel cancel)
     {
         var bytes = GeoRunner.Convert(document, target, options, progress);
-        return Task.FromResult(
-            new ConversionOutput(
-                new(
-                    target.FileNameFor(document.FileName),
-                    bytes,
-                    target)));
+        Document part = new(target.FileNameFor(document.FileName), bytes, target);
+        if (options is PrettyPrintOptions pretty)
+        {
+            part = PrettyPrint.Apply(part, pretty.PrettyPrint);
+        }
+
+        return Task.FromResult(new ConversionOutput(part));
     }
 }

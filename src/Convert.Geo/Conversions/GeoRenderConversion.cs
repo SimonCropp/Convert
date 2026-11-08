@@ -29,11 +29,12 @@ sealed class GeoRenderConversion(FileType source, FileType target) : Conversion<
     protected override Task<ConversionOutput> RunAsync(Document document, GeoRenderOptions options, IProgress<ConversionProgress> progress, Cancel cancel)
     {
         var bytes = GeoRunner.Render(document, target, options, progress);
-        return Task.FromResult(
-            new ConversionOutput(
-                new(
-                    target.FileNameFor(document.FileName),
-                    bytes,
-                    target)));
+        Document part = new(target.FileNameFor(document.FileName), bytes, target);
+        if (options.Svg)
+        {
+            part = PrettyPrint.Apply(part, options.PrettyPrint);
+        }
+
+        return Task.FromResult(new ConversionOutput(part));
     }
 }

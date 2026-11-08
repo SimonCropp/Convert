@@ -53,13 +53,13 @@ sealed class DataConversion(FileType source, FileType target) : Conversion<DataO
         [.. DataPack.AssembliesFor(source).Concat(DataPack.AssembliesFor(target)).Distinct(StringComparer.Ordinal)];
 
     public override Type? OptionsComponent =>
-        DataOptions.IsUntyped(source) || target == FileTypes.Json ? typeof(DataOptionsPanel) : null;
+        DataOptions.IsUntyped(source) || DataOptions.HasLayout(target) ? typeof(DataOptionsPanel) : null;
 
     public override object CreateOptions() =>
         new DataOptions
         {
             ShowInference = DataOptions.IsUntyped(source),
-            ShowIndent = target == FileTypes.Json
+            ShowPrettyPrint = DataOptions.HasLayout(target)
         };
 
     protected override Task<ConversionOutput> RunAsync(Document document, DataOptions options, IProgress<ConversionProgress> progress, Cancel cancel)

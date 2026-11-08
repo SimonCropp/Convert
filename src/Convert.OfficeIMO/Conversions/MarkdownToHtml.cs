@@ -1,6 +1,6 @@
 ﻿namespace Convert;
 
-sealed class MarkdownToHtml : Conversion<NoOptions>
+sealed class MarkdownToHtml : Conversion<PrettyPrintOptions>
 {
     public override string Id => "md-html-officeimo";
     public override FileType Source => FileTypes.Markdown;
@@ -12,11 +12,16 @@ sealed class MarkdownToHtml : Conversion<NoOptions>
     // Markdig serves Markdown to HTML first.
     public override int Priority => 10;
 
-    protected override Task<ConversionOutput> RunAsync(Document source, NoOptions options, IProgress<ConversionProgress> progress, Cancel cancel) =>
-        Task.FromResult(
+    public override Type OptionsComponent => typeof(PrettyPrintOptionsPanel);
+
+    protected override Task<ConversionOutput> RunAsync(Document source, PrettyPrintOptions options, IProgress<ConversionProgress> progress, Cancel cancel)
+    {
+        var html = MarkdownRunner.ToHtml(source.Text);
+        return Task.FromResult(
             new ConversionOutput(
                 Document.FromText(
                     FileTypes.Html.FileNameFor(source.FileName),
-                    MarkdownRunner.ToHtml(source.Text),
+                    options.PrettyPrint ? PrettyPrint.Html(html) : html,
                     FileTypes.Html)));
+    }
 }

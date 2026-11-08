@@ -6,6 +6,10 @@
     <NumberOption TValue="double" Label="Scale" Hint="2 renders at twice the diagram's size." Min="0.25" Max="8" Step="0.25" @bind-Value="Options.PngScale" @bind-Value:after="NotifyAsync" />
     <TextOption Label="Background" Color="true" @bind-Value="Options.PngBackground" @bind-Value:after="NotifyAsync" />
 }
+@if (!Options.Png)
+{
+    <FlagOption Label="Pretty print" Hint="Indent the output, one element per line." @bind-Value="Options.PrettyPrint" @bind-Value:after="NotifyAsync" />
+}
 <AdvancedOptions>
     <NumberOption TValue="int" Label="Font size" Min="6" Max="48" Step="1" @bind-Value="Options.FontSize" @bind-Value:after="NotifyAsync" />
     <TextOption Label="Font family" @bind-Value="Options.FontFamily" @bind-Value:after="NotifyAsync" />

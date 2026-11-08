@@ -30,13 +30,26 @@ sealed class MorphConversion(FileType source, FileType target) : Conversion
     public override IReadOnlyList<string> Assemblies => MorphPack.Assemblies;
 
     public override Type? OptionsComponent =>
-        target == FileTypes.Png ? typeof(MorphPngOptionsPanel) : null;
+        target.Id switch
+        {
+            "png" => typeof(MorphPngOptionsPanel),
+            "html" => typeof(PrettyPrintOptionsPanel),
+            _ => null
+        };
 
     public override int Priority => 0;
 
     public override object CreateOptions() =>
-        target == FileTypes.Png ? new MorphPngOptions() : new NoOptions();
+        target.Id switch
+        {
+            "png" => new MorphPngOptions(),
+            "html" => new PrettyPrintOptions(),
+            _ => new NoOptions()
+        };
 
-    public override Task<ConversionOutput> RunAsync(Document document, object options, IProgress<ConversionProgress> progress, Cancel cancel) =>
-        MorphRunner.RunAsync(document, target, options as MorphPngOptions, progress, cancel);
+    public override async Task<ConversionOutput> RunAsync(Document document, object options, IProgress<ConversionProgress> progress, Cancel cancel)
+    {
+        var output = await MorphRunner.RunAsync(document, target, options as MorphPngOptions, progress, cancel);
+        return options is PrettyPrintOptions pretty ? PrettyPrint.Apply(output, pretty.PrettyPrint) : output;
+    }
 }

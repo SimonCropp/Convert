@@ -16,4 +16,7 @@ public sealed class MarkdownHtmlOptions
 
     /// <summary>Wrap the output in a full HTML document with a stylesheet.</summary>
     public bool FullDocument { get; set; } = true;
+
+    /// <summary>Indent the HTML, one block per line.</summary>
+    public bool PrettyPrint { get; set; } = true;
 }

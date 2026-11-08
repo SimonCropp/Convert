@@ -15,6 +15,9 @@ public sealed class MermaidOptions
     /// </summary>
     public bool AllowHtmlElements { get; set; }
 
+    /// <summary>SVG only: indent the markup, one element per line (Naiad's <c>PrettyPrint</c>).</summary>
+    public bool PrettyPrint { get; set; } = true;
+
     public double PngScale { get; set; } = 2;
 
     public string PngBackground { get; set; } = "#ffffff";

@@ -26,7 +26,8 @@ static class MarkdigRunner
         }
 
         var body = Markdown.ToHtml(markdown, builder.Build());
-        return options.FullDocument ? Wrap(body) : body;
+        var html = options.FullDocument ? Wrap(body) : body;
+        return options.PrettyPrint ? PrettyPrint.Html(html) : html;
     }
 
     /// <summary>The preview: the default pipeline, as a full document.</summary>

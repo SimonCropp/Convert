@@ -11,12 +11,6 @@ static class JsonFormat
     };
 
     // Non-ASCII text stays readable rather than \u-escaped.
-    static readonly JsonSerializerOptions indented = new()
-    {
-        WriteIndented = true,
-        Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
-    };
-
     static readonly JsonSerializerOptions compact = new()
     {
         Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
@@ -34,6 +28,10 @@ static class JsonFormat
         }
     }
 
-    public static string Write(JsonNode? tree, bool indent) =>
-        tree is null ? "null" : tree.ToJsonString(indent ? indented : compact);
+    // Laid out by Core's printer, as every pack's JSON is: lists of plain values stay on one line.
+    public static string Write(JsonNode? tree, bool indent)
+    {
+        var json = tree is null ? "null" : tree.ToJsonString(compact);
+        return indent ? PrettyPrint.Json(json) : json;
+    }
 }

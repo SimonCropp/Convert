@@ -1,0 +1,102 @@
+﻿{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-0.1276, 51.5072]
+      },
+      "properties": {
+        "name": "London"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [2.3522, 48.8566]
+      },
+      "properties": {
+        "name": "Paris"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-3.7038, 40.4168]
+      },
+      "properties": {
+        "name": "Madrid"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [12.4964, 41.9028]
+      },
+      "properties": {
+        "name": "Rome"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [13.405, 52.52]
+      },
+      "properties": {
+        "name": "Berlin"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [16.3738, 48.2082]
+      },
+      "properties": {
+        "name": "Vienna"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-0.1276, 51.5072],
+          [2.3522, 48.8566],
+          [12.4964, 41.9028]
+        ]
+      },
+      "properties": {
+        "name": "London–Paris–Rome"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [5.8, 45],
+            [7, 44.2],
+            [9, 45.8],
+            [12, 46],
+            [15, 46.4],
+            [16, 47.6],
+            [13.5, 47.6],
+            [10.5, 47.5],
+            [7, 46.6],
+            [5.8, 45]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Alps (approx.)"
+      }
+    }
+  ]
+}

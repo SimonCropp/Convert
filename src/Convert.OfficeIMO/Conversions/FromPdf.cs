@@ -24,6 +24,7 @@ sealed class FromPdf(FileType target, IReadOnlyList<string> assemblies, string s
         {
             "pptx" => typeof(PdfSlidesOptionsPanel),
             "png" => typeof(PdfPngOptionsPanel),
+            "html" => typeof(PrettyPrintOptionsPanel),
             _ => null
         };
 
@@ -32,6 +33,7 @@ sealed class FromPdf(FileType target, IReadOnlyList<string> assemblies, string s
         {
             "pptx" => new PdfSlidesOptions(),
             "png" => new PdfPngOptions(),
+            "html" => new PrettyPrintOptions(),
             _ => new NoOptions()
         };
 
@@ -40,6 +42,7 @@ sealed class FromPdf(FileType target, IReadOnlyList<string> assemblies, string s
         progress.Report(new("Loading fonts"));
         var fonts = await OfficeImoFonts.EnsureAsync();
         progress.Report(new("Converting", $"PDF to {target.ShortName}"));
-        return PdfImportRunner.Convert(document, target, options, fonts, cancel);
+        var output = PdfImportRunner.Convert(document, target, options, fonts, cancel);
+        return options is PrettyPrintOptions pretty ? PrettyPrint.Apply(output, pretty.PrettyPrint) : output;
     }
 }

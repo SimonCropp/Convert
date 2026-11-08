@@ -66,7 +66,7 @@ static class XmlFormat
         return result;
     }
 
-    public static string Write(JsonNode? tree)
+    public static string Write(JsonNode? tree, bool indent)
     {
         // A single key names the root element (a list under it becomes <item>s); anything else is wrapped.
         var root = tree is JsonObject { Count: 1 } single
@@ -74,12 +74,12 @@ static class XmlFormat
             : Element(rootName, tree);
         var document = new XDocument(new XDeclaration("1.0", "utf-8", null), root);
         var writer = new Utf8StringWriter();
-        using (var xml = XmlWriter.Create(writer, new() { Indent = true, IndentChars = "  ", NewLineChars = "\n" }))
+        using (var xml = XmlWriter.Create(writer, new() { Indent = indent, IndentChars = "  ", NewLineChars = "\n" }))
         {
             document.Save(xml);
         }
 
-        return writer.ToString() + "\n";
+        return indent ? writer + "\n" : writer.ToString();
     }
 
     static XElement Element(string name, JsonNode? node)

@@ -1,0 +1,4 @@
+@namespace Convert
+@inherits OptionsPanel<PrettyPrintOptions>
+
+<FlagOption Label="Pretty print" Hint="Indent the output, one element per line." @bind-Value="Options.PrettyPrint" @bind-Value:after="NotifyAsync" />

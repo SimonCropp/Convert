@@ -5,7 +5,7 @@
 {
     <FlagOption Label="Detect numbers, true and false" Hint="Off keeps every value as text." @bind-Value="Options.InferTypes" @bind-Value:after="NotifyAsync" />
 }
-@if (Options.ShowIndent)
+@if (Options.ShowPrettyPrint)
 {
-    <FlagOption Label="Indent" Hint="Off writes the JSON on one line." @bind-Value="Options.Indent" @bind-Value:after="NotifyAsync" />
+    <FlagOption Label="Pretty print" Hint="Indent the output, one element per line." @bind-Value="Options.PrettyPrint" @bind-Value:after="NotifyAsync" />
 }

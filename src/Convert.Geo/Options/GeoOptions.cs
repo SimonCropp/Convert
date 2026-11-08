@@ -47,6 +47,9 @@ public sealed class GeoRenderOptions
     /// <summary>SVG only: Douglas–Peucker tolerance in pixels; 0 keeps every vertex.</summary>
     public double SvgSimplifyTolerance { get; set; }
 
+    /// <summary>SVG only: indent the markup, one element per line.</summary>
+    public bool PrettyPrint { get; set; } = true;
+
     /// <summary>Set by the conversion: show the SVG-only setting.</summary>
     public bool Svg { get; set; }
 }
