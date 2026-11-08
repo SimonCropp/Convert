@@ -12,11 +12,12 @@ the device: every conversion runs in .NET on WebAssembly.
 |---|---|---|
 | Word, Excel, PowerPoint | PDF, PNG, HTML, Markdown, text | Morph, OfficeIMO (PDF) |
 | Publisher | PDF | OfficeIMO |
-| PDF | Word, Excel, PowerPoint, HTML, PNG | OfficeIMO |
+| PDF | Word, Excel, PowerPoint, HTML, PNG, Markdown, text | OfficeIMO |
 | HTML | PDF, Word, Markdown | OfficeIMO, OpenXmlHtml |
-| Markdown | HTML, Word | Markdig, OfficeIMO |
+| Markdown | HTML, Word, PDF | Markdig, OfficeIMO |
+| Text | PDF, Word | OfficeIMO |
 | Mermaid | SVG, PNG, PDF | Naiad (PDF drawn by Skia) |
-| GeoJSON, TopoJSON, KML, KMZ, GPX, WKT, WKB, CSV, FlatGeobuf, GeoParquet | each other, PNG, SVG | GeoConvert |
+| GeoJSON, TopoJSON, KML, KMZ, GPX, WKT, WKB, CSV (with geometry), FlatGeobuf, GeoParquet | each other, PNG, SVG | GeoConvert |
 | SVG, PNG, JPEG, WebP | PNG, JPEG, WebP | the browser's canvas |
 | PNG, JPEG, WebP, GIF, BMP, TIFF, ICO, CUR, ANI, TGA, QOI, Netpbm, OpenEXR | each other | ImageSharp |
 | PNG, JPEG, WebP, GIF, BMP, ICO, WBMP | PNG, JPEG, WebP, PDF | Skia |

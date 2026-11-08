@@ -1,8 +1,9 @@
 namespace Convert;
 
 /// <summary>
-/// The routes OfficeIMO proves in the browser: Office and Publisher to PDF, HTML to PDF, PDF to Office,
-/// HTML and PNG, Markdown to and from HTML and Word, and worksheets to and from CSV and TSV.
+/// The routes OfficeIMO proves in the browser: Office, Publisher, HTML, Markdown and text to PDF; PDF to
+/// Office, HTML, PNG, text and Markdown; Markdown to and from HTML and Word; text to Word; and worksheets
+/// to and from CSV and TSV.
 /// </summary>
 public sealed class OfficeImoPack : IPack
 {
@@ -36,6 +37,8 @@ public sealed class OfficeImoPack : IPack
     internal static IReadOnlyList<string> PdfPowerPoint { get; } = [core, powerPoint, .. openXml, pdf, "OfficeIMO.Pdf.PowerPoint.wasm"];
     internal static IReadOnlyList<string> PdfHtml { get; } = [core, pdf, .. html, "OfficeIMO.Html.Pdf.wasm"];
     internal static IReadOnlyList<string> PdfPng { get; } = [core, pdf];
+    internal static IReadOnlyList<string> MarkdownPdf { get; } = [.. MarkdownHtml.Concat(HtmlPdf).Distinct()];
+    internal static IReadOnlyList<string> TextWord { get; } = [core, word, .. openXml];
     internal static IReadOnlyList<string> ExcelData { get; } = [core, excel, .. openXml];
 
     public void Register(ConversionRegistry registry)
@@ -49,16 +52,21 @@ public sealed class OfficeImoPack : IPack
         registry.Add(new ToPdf(FileTypes.Pptx, PowerPointPdf, "One page per slide, with a fidelity report."));
         registry.Add(new ToPdf(FileTypes.Pub, PublisherPdf, "Publisher pages at their own size, with a fidelity report."));
         registry.Add(new ToPdf(FileTypes.Html, HtmlPdf, "HTML and CSS laid out as paged PDF."));
+        registry.Add(new ToPdf(FileTypes.Markdown, MarkdownPdf, "Headings, lists, tables and code laid out as paged PDF."));
+        registry.Add(new ToPdf(FileTypes.Text, HtmlPdf, "The text as paged PDF, line breaks kept and long lines wrapped."));
 
         registry.Add(new MarkdownToHtml());
         registry.Add(new HtmlToMarkdown());
         registry.Add(new MarkdownToDocx());
+        registry.Add(new TextToDocx());
 
         registry.Add(new FromPdf(FileTypes.Docx, PdfWord, "Rebuilds paragraphs, headings and tables as an editable document."));
         registry.Add(new FromPdf(FileTypes.Xlsx, PdfExcel, "The tables it detects, one per worksheet."));
         registry.Add(new FromPdf(FileTypes.Pptx, PdfPowerPoint, "One slide per page: editable, as images, or both."));
         registry.Add(new FromPdf(FileTypes.Html, PdfHtml, "Positioned HTML for review, with links and form fields."));
         registry.Add(new FromPdf(FileTypes.Png, PdfPng, "Each page drawn in .NET at the chosen resolution."));
+        registry.Add(new FromPdf(FileTypes.Text, PdfPng, "The text of every page, in reading order."));
+        registry.Add(new FromPdf(FileTypes.Markdown, PdfPng, "The text with headings, lists and tables rebuilt as Markdown."));
 
         registry.Add(new DelimitedToXlsx(FileTypes.Csv));
         registry.Add(new DelimitedToXlsx(FileTypes.Tsv));

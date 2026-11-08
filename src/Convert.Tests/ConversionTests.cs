@@ -54,6 +54,8 @@ public class ConversionTests
     [Arguments("xlsx-html-morph")]
     [Arguments("docx-md-morph")]
     [Arguments("html-md-officeimo")]
+    [Arguments("pdf-txt-officeimo")]
+    [Arguments("pdf-md-officeimo")]
     [Arguments("json-yaml-yamldotnet")]
     [Arguments("json-toml-tomlyn")]
     [Arguments("json-xml-dotnet")]
@@ -132,6 +134,20 @@ static class Inputs
                 return await ConvertAsync("mermaid-png-naiad");
             case "svg":
                 return await ConvertAsync("mermaid-svg-naiad");
+            case "txt":
+                return Document.FromText(
+                    "notes.txt",
+                    """
+                    Shopping list
+
+                      - Bread
+                      - Café au lait
+                      - 牛乳
+
+                    A long line that should wrap rather than run off the edge of the page when it is laid out as PDF.
+
+                    """,
+                    type);
             case "wbmp":
                 return new("sample.wbmp", Wbmp(), type);
             default:

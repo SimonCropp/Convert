@@ -85,7 +85,7 @@ else
         </section>
 
         <aside class="panel choices-pane">
-            <TargetPicker Source="source.Type" Selected="Session.Target" OnSelected="OnTargetSelected" />
+            <TargetPicker Source="source" Selected="Session.Target" OnSelected="OnTargetSelected" />
 
             @if (TargetOption is { Conversions.Count: > 1 } option)
             {

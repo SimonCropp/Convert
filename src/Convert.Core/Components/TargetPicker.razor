@@ -3,7 +3,7 @@
     <h3>Convert to</h3>
     @if (groups.Count == 0)
     {
-        <p class="preview-note">No tool converts @Source.DisplayName yet.</p>
+        <p class="preview-note">No tool converts @Source.Type.DisplayName yet.</p>
     }
     @foreach (var group in groups)
     {

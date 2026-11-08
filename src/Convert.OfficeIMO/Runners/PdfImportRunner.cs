@@ -1,6 +1,6 @@
 namespace Convert;
 
-/// <summary>PDF to docx/xlsx/pptx/html/png, after OfficeIMO's own browser converter.</summary>
+/// <summary>PDF to docx/xlsx/pptx/html/png/txt/md, after OfficeIMO's own browser converter.</summary>
 static class PdfImportRunner
 {
     const int maxPages = 500;
@@ -18,6 +18,8 @@ static class PdfImportRunner
             "pptx" => PowerPoint(pdf, name, (options as PdfSlidesOptions)?.Mode ?? SlideMode.EditableContent, fonts, cancel),
             "html" => Html(pdf, name, cancel),
             "png" => Png(pdf, document, (options as PdfPngOptions)?.Dpi ?? 144, fonts, cancel),
+            "txt" => Text(pdf, name, cancel),
+            "md" => Markdown(pdf, name, cancel),
             _ => throw new NotSupportedException($"OfficeIMO does not convert PDF to {target.DisplayName} here.")
         };
     }
@@ -76,6 +78,35 @@ static class PdfImportRunner
             out var report,
             cancel);
         return new([Document.FromText(name, html, FileTypes.Html)], Reports.Notes(report));
+    }
+
+    static ConversionOutput Text(PdfDocument pdf, string name, Cancel cancel)
+    {
+        var text = pdf.ExtractText(cancel);
+        return new(Document.FromText(name, text, FileTypes.Text), Empty(text));
+    }
+
+    static ConversionOutput Markdown(PdfDocument pdf, string name, Cancel cancel)
+    {
+        var markdown = pdf.ExtractMarkdown(
+            new()
+            {
+                IncludePageSeparators = true,
+                IncludeLinkAnnotations = true
+            },
+            cancel);
+        return new(Document.FromText(name, markdown, FileTypes.Markdown), Empty(markdown));
+    }
+
+    // A scanned PDF is page images: there is no text to extract without OCR.
+    static List<string> Empty(string text)
+    {
+        if (string.IsNullOrWhiteSpace(text))
+        {
+            return ["The PDF has no text layer (a scan, perhaps): nothing could be extracted."];
+        }
+
+        return [];
     }
 
     static ConversionOutput Png(PdfDocument pdf, Document document, int dpi, OfficeImoFonts.FontSet fonts, Cancel cancel)

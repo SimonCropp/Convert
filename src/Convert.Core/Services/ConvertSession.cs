@@ -82,7 +82,7 @@ public sealed class ConvertSession(ConversionRegistry registry, IToolLoader load
         }
 
         Target = target;
-        Conversion = registry.TargetsFor(Source.Type)
+        Conversion = registry.TargetsFor(Source)
             .SelectMany(_ => _.Targets)
             .FirstOrDefault(_ => _.Target == target)?
             .Conversions[0];

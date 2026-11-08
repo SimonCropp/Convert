@@ -1,3 +1,4 @@
+using System.Net;
 using OfficeIMO;
 using OfficeIMO.Excel;
 using OfficeIMO.Excel.Pdf;
@@ -12,7 +13,7 @@ using OfficeIMO.Word.Pdf;
 namespace Convert;
 
 /// <summary>
-/// docx/xlsx/pptx/pub/html to PDF, after OfficeIMO's own browser converter.
+/// docx/xlsx/pptx/pub/html/md/txt to PDF, after OfficeIMO's own browser converter.
 ///
 /// One method per format, and the dispatcher names only OfficeIMO.Core and OfficeIMO.Pdf types (which
 /// every route loads): Mono resolves a method's locals when it first interprets it, so a single switch
@@ -35,6 +36,8 @@ static class WordRunner
             "pptx" => PowerPoint(document, pdfOptions, out report, cancel),
             "pub" => Publisher(document, pdfOptions, fonts, out report, cancel),
             "html" => Html(document, pdfOptions, fonts, out report, cancel),
+            "md" => Markdown(document, pdfOptions, fonts, out report, cancel),
+            "txt" => PlainText(document, pdfOptions, fonts, out report, cancel),
             _ => throw new NotSupportedException($"OfficeIMO does not convert {document.Type.DisplayName} to PDF here.")
         };
         cancel.ThrowIfCancellationRequested();
@@ -135,8 +138,18 @@ static class WordRunner
             cancel);
     }
 
+    // Markdown and plain text go through the HTML layout: OfficeIMO's plain-text importer is internal.
+    static PdfDocument Markdown(Document document, PdfCreateOptions pdfOptions, OfficeImoFonts.FontSet fonts, out OfficeConversionReport report, Cancel cancel) =>
+        Html($"<html><body>{MarkdownRunner.ToHtml(document.Text)}</body></html>", pdfOptions, fonts, out report, cancel);
+
+    static PdfDocument PlainText(Document document, PdfCreateOptions pdfOptions, OfficeImoFonts.FontSet fonts, out OfficeConversionReport report, Cancel cancel) =>
+        Html($"<html><body><pre style=\"white-space: pre-wrap; font-family: inherit\">{WebUtility.HtmlEncode(document.Text)}</pre></body></html>", pdfOptions, fonts, out report, cancel);
+
     static PdfDocument Html(Document document, PdfCreateOptions pdfOptions, OfficeImoFonts.FontSet fonts, out OfficeConversionReport report, Cancel cancel) =>
-        HtmlConversionDocument.Parse(document.Text)
+        Html(document.Text, pdfOptions, fonts, out report, cancel);
+
+    static PdfDocument Html(string html, PdfCreateOptions pdfOptions, OfficeImoFonts.FontSet fonts, out OfficeConversionReport report, Cancel cancel) =>
+        HtmlConversionDocument.Parse(html)
             .ToPdf(
             new()
             {
@@ -149,7 +162,7 @@ static class WordRunner
             out report,
             cancel);
 
-    static OfficePackageSecurityOptions Security()
+    internal static OfficePackageSecurityOptions Security()
     {
         var options = OfficePackageSecurityOptions.SecureDefaults;
         options.MaxPackageBytes = maxPackageBytes;

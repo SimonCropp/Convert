@@ -1,6 +1,6 @@
 namespace Convert;
 
-/// <summary>docx/xlsx/pptx/pub/html to PDF.</summary>
+/// <summary>docx/xlsx/pptx/pub/html/md/txt to PDF.</summary>
 sealed class ToPdf(FileType source, IReadOnlyList<string> assemblies, string summary) : Conversion<OfficeImoPdfOptions>
 {
     public override string Id => $"{source.Id}-pdf-officeimo";

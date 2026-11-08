@@ -28,6 +28,13 @@ public abstract class Conversion
     /// <summary>An <see cref="OptionsPanel{TOptions}"/> in the pack assembly, or null for no options.</summary>
     public virtual Type? OptionsComponent => null;
 
+    /// <summary>
+    /// Whether this conversion applies to <paramref name="source"/>, for a type only some of whose files
+    /// it can read (geometry in a CSV). Decided from the bytes alone, BCL only: it runs before any
+    /// assembly loads.
+    /// </summary>
+    public virtual bool Accepts(Document source) => true;
+
     /// <summary>Lower first when several tools serve one pair.</summary>
     public virtual int Priority => 0;
 

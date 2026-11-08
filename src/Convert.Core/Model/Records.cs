@@ -30,7 +30,11 @@ public sealed record ConversionProgress(string Label, string? Detail = null);
 /// <param name="Assemblies">Lazy assemblies the component needs, the full transitive closure.</param>
 /// <param name="Component">A component in the pack assembly.</param>
 /// <param name="Priority">Lower wins when several previews serve a type.</param>
-public sealed record Preview(FileType Type, IReadOnlyList<string> Assemblies, Type Component, int Priority = 0)
+/// <param name="Accepts">
+/// Narrows the preview to some documents of its type (a CSV with geometry columns), from the bytes
+/// alone. BCL only: it runs before any assembly loads.
+/// </param>
+public sealed record Preview(FileType Type, IReadOnlyList<string> Assemblies, Type Component, int Priority = 0, Func<Document, bool>? Accepts = null)
 {
     internal IPack? Pack { get; set; }
 }

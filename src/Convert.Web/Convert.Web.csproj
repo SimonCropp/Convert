@@ -197,4 +197,27 @@
     </ItemGroup>
   </Target>
 
+  <!--
+    obj/webcil holds each assembly converted to .wasm, redone only when the dll is newer than its .wasm.
+    NuGet keeps a package's own file dates, so a package update can bring an older-dated dll and the
+    previous version's .wasm ships instead (Naiad 2.1.0 ran against Parlot 1.5.11 that way). Restore
+    rewrites project.assets.json only when packages change: when it is newer than the stamp, start over.
+  -->
+  <Target Name="ClearStaleWebcil"
+          BeforeTargets="BeforeBuild"
+          Condition="Exists('$(ProjectAssetsFile)')">
+    <PropertyGroup>
+      <_ConvertWebcilDirectory>$(IntermediateOutputPath)webcil\</_ConvertWebcilDirectory>
+      <_ConvertWebcilStamp>$(IntermediateOutputPath)webcil.assets.stamp</_ConvertWebcilStamp>
+      <_ConvertWebcilStale>false</_ConvertWebcilStale>
+      <_ConvertWebcilStale Condition="!Exists('$(_ConvertWebcilStamp)')">true</_ConvertWebcilStale>
+      <_ConvertWebcilStale Condition="Exists('$(_ConvertWebcilStamp)') And $([System.IO.File]::GetLastWriteTimeUtc('$(ProjectAssetsFile)').Ticks) &gt; $([System.IO.File]::GetLastWriteTimeUtc('$(_ConvertWebcilStamp)').Ticks)">true</_ConvertWebcilStale>
+    </PropertyGroup>
+    <RemoveDir Directories="$(_ConvertWebcilDirectory)" Condition="$(_ConvertWebcilStale)" />
+    <Touch Files="$(_ConvertWebcilStamp)" AlwaysCreate="true" Condition="$(_ConvertWebcilStale)" />
+    <ItemGroup>
+      <FileWrites Include="$(_ConvertWebcilStamp)" />
+    </ItemGroup>
+  </Target>
+
 </Project>

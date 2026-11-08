@@ -34,7 +34,7 @@ public sealed class GeoPack : IPack
         foreach (var format in Formats)
         {
             registry.Add(format);
-            registry.Add(new Preview(format, Assemblies, typeof(MapPreview)));
+            registry.Add(new Preview(format, Assemblies, typeof(MapPreview), Accepts: GeoCsv.Accepts));
         }
 
         foreach (var source in Formats)

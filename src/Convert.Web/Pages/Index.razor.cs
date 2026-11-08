@@ -30,7 +30,7 @@ public partial class Index
                 Session.Target is { } target)
             {
                 return Session.Registry
-                    .TargetsFor(source.Type)
+                    .TargetsFor(source)
                     .SelectMany(_ => _.Targets)
                     .FirstOrDefault(_ => _.Target == target);
             }
@@ -68,7 +68,7 @@ public partial class Index
     bool Splits(Document source) =>
         source.Type.Kind == FileKind.Text &&
         Session.Registry.EditorsFor(source.Type).Count > 0 &&
-        Session.Registry.PreviewsFor(source.Type).Count > 0;
+        Session.Registry.PreviewsFor(source).Count > 0;
 
     void OnTargetSelected(FileType target)
     {

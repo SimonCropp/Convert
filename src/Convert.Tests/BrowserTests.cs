@@ -138,8 +138,52 @@ public class BrowserTests
         () => ("MS Office/PowerPoint presentation", "PDF", "OfficeIMO", ".pdf"),
         () => ("MS Office/Excel workbook", "PDF", "OfficeIMO", ".pdf"),
         () => ("Markdown", "DOCX", "OfficeIMO", ".docx"),
-        () => ("PDF", "DOCX", null, ".docx")
+        () => ("PDF", "DOCX", null, ".docx"),
+        () => ("PDF", "TXT", null, ".txt"),
+        () => ("PDF", "MD", null, ".md"),
+        () => ("MS Office/Excel workbook", "CSV", null, ".csv"),
+        () => ("Markdown", "PDF", null, ".pdf")
     ];
+
+    public static IEnumerable<Func<(string Target, string Extension)>> PastedTextRoutes() =>
+    [
+        () => ("PDF", ".pdf"),
+        () => ("DOCX", ".docx")
+    ];
+
+    [Test]
+    [MethodDataSource(nameof(PastedTextRoutes))]
+    public async Task PastedTextConverts(string target, string extension)
+    {
+        var page = await browser!.NewPageAsync();
+        await page.GotoAsync(Url);
+        await SettleAsync(page);
+        await page.ClickAsync("button:has-text('Paste text')");
+        await page.FillAsync(".paste-panel textarea", "Shopping list\n\n  - Café au lait\n  - 牛乳\n");
+        await page.SelectOptionAsync("#paste-type", "txt");
+        await page.ClickAsync("button:has-text('Use text')");
+        await ConvertAndDownloadAsync(page, target, null, extension);
+    }
+
+    // A CSV without geometry previews as a table and offers XLSX, not the geo formats.
+    [Test]
+    public async Task PlainCsvPreviewsAsATableAndConvertsToXlsx()
+    {
+        var page = await browser!.NewPageAsync();
+        await page.GotoAsync(Url);
+        await SettleAsync(page);
+        await page.SetInputFilesAsync(
+            ".drop-zone input[type=file]",
+            new FilePayload
+            {
+                Name = "people.csv",
+                MimeType = "text/csv",
+                Buffer = Encoding.UTF8.GetBytes("name,age\nAda,36\n\"Smith, J\",41\n")
+            });
+        await page.WaitForSelectorAsync(".table-preview td:text-is('Smith, J')", new() {Timeout = 60000});
+        await Assert.That(await page.Locator(".chip:text-is('GEOJSON')").CountAsync()).IsEqualTo(0);
+        await ConvertAndDownloadAsync(page, "XLSX", null, ".xlsx");
+    }
 
     // One route per pack, through the real lazy loads, the trimmed build and the download.
     [Test]

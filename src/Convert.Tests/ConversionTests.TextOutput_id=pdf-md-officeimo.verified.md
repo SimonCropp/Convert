@@ -1,0 +1,49 @@
+﻿# MEETING MINUTES
+
+## PTA
+
+| DATE: | TIME: | FACILITATOR: |
+| --- | --- | --- |
+| 9/8/23 | 6:00 PM | Angelica Astrom |
+
+| IN ATTENDANCE | APPROVAL OF MINUTES |
+| --- | --- |
+| Mira Karlsson, Angelica Astrom, August | The minutes were read from the August |
+| Bergqvist, Allan Mattsson, Ian Hansson | meeting and approved. |
+
+BOARD
+
+The Board, new principal, and guests were introduced. Mira Karlsson was nominated as the new Secretary. A motion to elect Mira was made by Angelica Astrom and seconded by August Bergqvist. All present voted in favor, and Mira Karlsson was confirmed as the new Secretary.
+
+ADVISORY COMMITTEE
+
+There are a number of parent openings on the Advisory Committee. These openings were listed in the most recent newsletter. Three parents indicated an interest in serving on the committee. August Bergqvist will follow up with those parents and do some additional recruiting to fill these openings.
+
+---
+
+BUDGET
+
+The budget for the current school year was distributed by August Bergqvist, PTA Treasurer, and reviewed by the board and PTA members at the last meeting. In tonight’s meeting, Angelica Astrom made a motion to approve the budget which was seconded by Allan Mattsson. All present voted in favor of approving the budget as presented.
+
+PRINCIPAL’S REPORT
+
+Principal Ian Hansson presented his report.
+
+| NEW BUSINESS | COMMITTEE REPORTS |
+| --- | --- |
+| • Recap of Back-to-School night – September | • Membership |
+| 9 | • Volunteers |
+| • Parent Education Programs – Counselors | • Newsletter |
+| • Teacher Grants Application Process – | • Computer Support |
+
+School Principal
+
+ANNOUNCEMENTS
+
+None
+
+NEXT MEETING
+
+13 October 2023| 6:00 p.m. in the cafeteria
+
+Motion to adjourn was made at 9:00 p.m. and was passed unanimously.

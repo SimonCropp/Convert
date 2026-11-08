@@ -55,8 +55,8 @@ public sealed class DataPack : IPack
         registry.Add(new Preview(FileTypes.Yaml, [], typeof(TextPreview)));
         registry.Add(new Preview(FileTypes.Toml, [], typeof(TextPreview)));
         registry.Add(new Preview(FileTypes.Xml, [], typeof(TextPreview)));
-        // A CSV is a table first: GeoConvert's map of a CSV with coordinates comes second.
-        registry.Add(new Preview(FileTypes.Csv, [], typeof(TablePreview), Priority: -1));
+        // GeoConvert's map wins for a CSV with geometry columns (it accepts no other); any other CSV is a table.
+        registry.Add(new Preview(FileTypes.Csv, [], typeof(TablePreview), Priority: 10));
         registry.Add(new Preview(FileTypes.Tsv, [], typeof(TablePreview)));
 
         foreach (var source in Formats)

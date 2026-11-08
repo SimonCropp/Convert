@@ -1,6 +1,6 @@
 ﻿namespace Convert;
 
-/// <summary>PDF to docx/xlsx/pptx/html/png.</summary>
+/// <summary>PDF to docx/xlsx/pptx/html/png/txt/md.</summary>
 sealed class FromPdf(FileType target, IReadOnlyList<string> assemblies, string summary) : Conversion
 {
     public override string Id => $"pdf-{target.Id}-officeimo";
@@ -14,6 +14,8 @@ sealed class FromPdf(FileType target, IReadOnlyList<string> assemblies, string s
         {
             "xlsx" => "Only tables are imported; other page content is left out.",
             "png" => "Several pages download as a zip of page_0001.png, page_0002.png, ….",
+            "txt" => "The text layer only: a scanned PDF has none. Reading order follows the page layout.",
+            "md" => "Headings, lists and tables are inferred from the layout; images are left out.",
             _ => "A reconstruction: layout that PDF only implies (columns, flow) is approximated."
         };
 

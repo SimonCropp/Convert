@@ -9,6 +9,9 @@ static class SheetRunner
 {
     // Excel's limit, and the characters it refuses in a sheet name.
     const int maxSheetName = 31;
+
+    // The digits a double, and so an Excel number, holds exactly.
+    const int maxNumberDigits = 15;
     static readonly char[] badSheetCharacters = ['[', ']', ':', '*', '?', '/', '\\'];
 
     /// <summary>One worksheet holding the records, the first row bold; numbers and true/false as typed cells.</summary>
@@ -47,7 +50,8 @@ static class SheetRunner
     }
 
     // Header cells stay text; elsewhere an integer, a decimal or true/false is typed, but "007" (a code,
-    // not a number) stays text, as does anything empty.
+    // not a number) stays text, as does a number longer than Excel keeps (an id, a card number) and
+    // anything empty.
     static object? Cell(string text, bool header)
     {
         if (text.Length == 0)
@@ -66,7 +70,8 @@ static class SheetRunner
         }
 
         var leadingZero = text.Length > 1 && text[0] == '0' && char.IsAsciiDigit(text[1]);
-        if (!leadingZero && char.IsAsciiDigit(text[^1]))
+        var digits = text.Count(char.IsAsciiDigit);
+        if (!leadingZero && digits <= maxNumberDigits && char.IsAsciiDigit(text[^1]))
         {
             if (long.TryParse(text, NumberStyles.AllowLeadingSign, CultureInfo.InvariantCulture, out var integer))
             {
@@ -112,7 +117,8 @@ static class SheetRunner
         return sheets;
     }
 
-    // Invariant culture throughout: dates ISO 8601, numbers with a point and full precision.
+    // Invariant culture throughout: dates ISO 8601, numbers with a point to Excel's 15 significant digits
+    // (750 * 1.0875 is stored as 815.6249999999999 and shown, and written, as 815.625).
     static string Text(object? value) =>
         value switch
         {
@@ -121,7 +127,7 @@ static class SheetRunner
             bool flag => flag ? "true" : "false",
             DateTime date when date.TimeOfDay == TimeSpan.Zero => date.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture),
             DateTime date => date.ToString("yyyy-MM-ddTHH:mm:ss", CultureInfo.InvariantCulture),
-            double number => number.ToString("R", CultureInfo.InvariantCulture),
+            double number => number.ToString("G15", CultureInfo.InvariantCulture),
             IFormattable formattable => formattable.ToString(null, CultureInfo.InvariantCulture),
             _ => value.ToString() ?? ""
         };

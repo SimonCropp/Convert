@@ -6,9 +6,9 @@ public partial class TargetPicker
     [Inject]
     ConversionRegistry Registry { get; set; } = default!;
 
-    /// <summary>The source type.</summary>
+    /// <summary>The source file.</summary>
     [Parameter, EditorRequired]
-    public FileType Source { get; set; } = default!;
+    public Document Source { get; set; } = default!;
 
     /// <summary>The chosen target, highlighted.</summary>
     [Parameter]

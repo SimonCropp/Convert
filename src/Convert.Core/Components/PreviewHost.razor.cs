@@ -28,7 +28,7 @@ public partial class PreviewHost
 
     protected override async Task OnParametersSetAsync()
     {
-        var candidates = Registry.PreviewsFor(Document.Type);
+        var candidates = Registry.PreviewsFor(Document);
         var next = candidates.Count > 0 ? candidates[0] : null;
         if (next == preview && !loading)
         {

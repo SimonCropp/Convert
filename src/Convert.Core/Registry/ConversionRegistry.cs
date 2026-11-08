@@ -128,11 +128,17 @@ public sealed class ConversionRegistry
         return types.FirstOrDefault(_ => _.Matches(fileName));
     }
 
-    /// <summary>Every target reachable from <paramref name="source"/>, grouped for the picker.</summary>
+    /// <summary>Every target reachable from a file of type <paramref name="source"/>, grouped for the picker.</summary>
     public IReadOnlyList<TargetGroup> TargetsFor(FileType source) =>
+        Group(conversions.Where(_ => _.Source == source));
+
+    /// <summary>The targets that apply to <paramref name="source"/> itself, grouped for the picker.</summary>
+    public IReadOnlyList<TargetGroup> TargetsFor(Document source) =>
+        Group(conversions.Where(_ => _.Source == source.Type && _.Accepts(source)));
+
+    static IReadOnlyList<TargetGroup> Group(IEnumerable<Conversion> candidates) =>
     [
-        .. conversions
-            .Where(_ => _.Source == source)
+        .. candidates
             .GroupBy(_ => _.Target)
             .Select(_ => new TargetOption(_.Key, [.. _.OrderBy(conversion => conversion.Priority).ThenBy(conversion => conversion.Id, StringComparer.Ordinal)]))
             .GroupBy(_ => _.Target.Group)
@@ -142,6 +148,10 @@ public sealed class ConversionRegistry
 
     public IReadOnlyList<Preview> PreviewsFor(FileType type) =>
         [.. previews.Where(_ => _.Type == type).OrderBy(_ => _.Priority)];
+
+    /// <summary>The previews that apply to <paramref name="document"/> itself, best first.</summary>
+    public IReadOnlyList<Preview> PreviewsFor(Document document) =>
+        [.. PreviewsFor(document.Type).Where(_ => _.Accepts?.Invoke(document) ?? true)];
 
     public IReadOnlyList<Editor> EditorsFor(FileType type) =>
         [.. editors.Where(_ => _.Type == type)];

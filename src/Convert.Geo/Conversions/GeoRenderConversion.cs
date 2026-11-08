@@ -5,6 +5,7 @@ sealed class GeoRenderConversion(FileType source, FileType target) : Conversion<
 {
     public override string Id => $"{source.Id}-{target.Id}-geoconvert";
     public override FileType Source => source;
+    public override bool Accepts(Document document) => GeoCsv.Accepts(document);
     public override FileType Target => target;
     public override Tool Tool => GeoPack.Tool;
 
