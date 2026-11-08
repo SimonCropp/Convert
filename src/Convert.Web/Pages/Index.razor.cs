@@ -63,8 +63,8 @@ public partial class Index
 
     /// <summary>
     /// Text with a render of its own (Mermaid, Markdown, HTML, a CSV's table, the text geo formats):
-    /// edited beside its preview. Text whose preview is the text again (plain text, JSON, YAML, TOML, XML)
-    /// is one panel.
+    /// edited beside its preview. Text whose preview is the text again is edited in place
+    /// (<see cref="EditsInPlace"/>).
     /// </summary>
     bool Splits(Document source)
     {
@@ -76,6 +76,22 @@ public partial class Index
 
         var previews = Session.Registry.PreviewsFor(source);
         return previews.Count > 0 && previews[0].Component != typeof(TextPreview);
+    }
+
+    /// <summary>
+    /// Editable text whose preview would only be the text again (plain text, JSON, YAML, TOML, XML): the
+    /// editor is the view.
+    /// </summary>
+    bool EditsInPlace(Document source)
+    {
+        if (source.Type.Kind != FileKind.Text ||
+            Session.Registry.EditorsFor(source.Type).Count == 0)
+        {
+            return false;
+        }
+
+        var previews = Session.Registry.PreviewsFor(source);
+        return previews.Count == 0 || previews[0].Component == typeof(TextPreview);
     }
 
     void OnTargetSelected(FileType target)

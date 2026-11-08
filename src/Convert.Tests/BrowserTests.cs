@@ -295,22 +295,28 @@ public class BrowserTests
         await Assert.That(await page.Locator(".split-preview .error").CountAsync()).IsEqualTo(0);
     }
 
-    // Wide, text whose preview is the text again is one panel, with Preview and Edit tabs.
+    // Text whose preview would be the text again opens in its editor: one panel, no Preview tab, and
+    // tabs only once a result gives it a second view.
     [Test]
-    public async Task JsonIsOnePanel()
+    public async Task JsonOpensInTheEditor()
     {
         var page = await browser!.NewPageAsync();
         await page.SetViewportSizeAsync(1400, 900);
         await page.GotoAsync(Url);
         await SettleAsync(page);
         await ChooseSampleAsync(page, "Data/JSON");
-        await page.WaitForSelectorAsync(".text-preview", new() {Timeout = 60000});
+        await page.WaitForSelectorAsync(".source-pane textarea", new() {Timeout = 60000});
         await Assert.That(await page.Locator(".split").CountAsync()).IsEqualTo(0);
-        await Assert.That(await page.Locator(".text-preview").CountAsync()).IsEqualTo(1);
-
-        await page.ClickAsync("[role=tab]:text-is('Edit')");
-        await page.WaitForSelectorAsync("textarea", new() {Timeout = 60000});
         await Assert.That(await page.Locator(".text-preview").CountAsync()).IsEqualTo(0);
+        await Assert.That(await page.Locator("[role=tab]:visible").CountAsync()).IsEqualTo(0);
+
+        await ConvertAndDownloadAsync(page, "YAML", null, ".yaml");
+        var tabs = await page.Locator("[role=tab]:visible").AllInnerTextsAsync();
+        await Assert.That(tabs.Select(_ => _.Trim())).IsEquivalentTo(["Edit", "YAML Result"]);
+
+        // Back on the source, it is still the editor.
+        await page.ClickAsync("[role=tab]:text-is('Edit')");
+        await page.WaitForSelectorAsync(".source-pane textarea", new() {Timeout = 60000});
     }
 
     // A lone tab is nothing to pick: a PDF (no editor) shows none until a result gives it a second.

@@ -32,11 +32,13 @@ else
                     // the pair: it is the selected one whether Preview or Edit was picked on a narrow screen.
                     var splits = Splits(source);
                     var sourceClass = (view == View.Source ? "active " : "") + (splits && view == View.Edit ? "wide-active" : "");
-                    var editable = Session.Registry.EditorsFor(source.Type).Count > 0;
+                    // Text whose preview would be the text again is shown in its editor, with no Preview tab.
+                    var inPlace = EditsInPlace(source);
+                    var editable = !inPlace && Session.Registry.EditorsFor(source.Type).Count > 0;
                     var hasResult = Session.Result is not null;
                 }
-                @* A lone tab is nothing to pick: no tabs when Preview is all there is, and none on a wide
-                   screen when "Edit and preview" is. *@
+                @* A lone tab is nothing to pick: no tabs when Preview (or the in-place editor) is all there
+                   is, and none on a wide screen when "Edit and preview" is. *@
                 @if (editable || hasResult)
                 {
                 <div class="@(splits && !hasResult ? "tabs narrow-only" : "tabs")" role="tablist">
@@ -45,6 +47,11 @@ else
                         {
                             <span class="narrow-only">Preview</span>
                             <span class="wide-only">Edit and preview</span>
+                        }
+                        else if (inPlace)
+                        {
+                            <Iconify Value="Lucide.Pencil" class="icon" aria-hidden="true" />
+                            @:Edit
                         }
                         else
                         {
@@ -79,6 +86,7 @@ else
                         </div>
                     </div>
                     break;
+                case View.Source or View.Edit when EditsInPlace(source):
                 case View.Edit:
                     <EditorHost Document="source" Changed="OnEdited" />
                     break;
