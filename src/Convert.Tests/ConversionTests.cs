@@ -122,7 +122,7 @@ static class Inputs
             case "json" or "yaml" or "toml" or "xml" or "tsv":
                 return Sample($"_content/Convert.Data/samples/planets{type.Extension}", type);
             case "geojson":
-                return Sample("_content/Convert.Geo/samples/capitals.geojson", type);
+                return Sample("_content/Convert.Geo/samples/europe.geojson", type);
             case "html":
                 return Document.FromText(
                     "page.html",

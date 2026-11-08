@@ -49,10 +49,10 @@ public sealed class GeoPack : IPack
         }
 
         registry.Add(JsonSniffer.Sniff);
-        // The same capitals in every format (made by GeoSampleTests).
+        // Europe's countries in every format, from Natural Earth (public domain; made by GeoSampleTests).
         foreach (var format in Formats)
         {
-            var file = format.FileNameFor("capitals");
+            var file = format.FileNameFor("europe");
             registry.Add(new Sample(format.DisplayName, Lucide.Globe, $"_content/Convert.Geo/samples/{file}", file, "Map"));
         }
     }

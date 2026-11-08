@@ -296,7 +296,8 @@ header:has(+ .container .viewer) {
         display: inline;
     }
 
-    .narrow-only {
+    .narrow-only,
+    .tabs.narrow-only {
         display: none;
     }
 

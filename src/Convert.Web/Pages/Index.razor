@@ -27,13 +27,19 @@ else
                 <span class="file-name">@source.FileName</span>
                 <span class="preview-note">@source.Type.DisplayName</span>
                 <span class="spacer"></span>
-                <div class="tabs" role="tablist">
-                    @{
-                        // Split, a wide screen shows both at once, so one tab ("Edit and preview") stands for
-                        // the pair: it is the selected one whether Preview or Edit was picked on a narrow screen.
-                        var splits = Splits(source);
-                        var sourceClass = (view == View.Source ? "active " : "") + (splits && view == View.Edit ? "wide-active" : "");
-                    }
+                @{
+                    // Split, a wide screen shows both at once, so one tab ("Edit and preview") stands for
+                    // the pair: it is the selected one whether Preview or Edit was picked on a narrow screen.
+                    var splits = Splits(source);
+                    var sourceClass = (view == View.Source ? "active " : "") + (splits && view == View.Edit ? "wide-active" : "");
+                    var editable = Session.Registry.EditorsFor(source.Type).Count > 0;
+                    var hasResult = Session.Result is not null;
+                }
+                @* A lone tab is nothing to pick: no tabs when Preview is all there is, and none on a wide
+                   screen when "Edit and preview" is. *@
+                @if (editable || hasResult)
+                {
+                <div class="@(splits && !hasResult ? "tabs narrow-only" : "tabs")" role="tablist">
                     <button type="button" role="tab" class="@sourceClass" aria-selected="@(view == View.Source ? "true" : "false")" @onclick="() => Show(View.Source)">
                         @if (splits)
                         {
@@ -45,17 +51,18 @@ else
                             @:Preview
                         }
                     </button>
-                    @if (Session.Registry.EditorsFor(source.Type).Count > 0)
+                    @if (editable)
                     {
                         <button type="button" role="tab" class="@((splits ? "narrow-only " : "") + (view == View.Edit ? "active" : ""))" aria-selected="@(view == View.Edit ? "true" : "false")" @onclick="() => Show(View.Edit)">
                             <Iconify Value="Lucide.Pencil" class="icon" aria-hidden="true" /> Edit
                         </button>
                     }
-                    @if (Session.Result is not null)
+                    @if (hasResult)
                     {
                         <button type="button" role="tab" class="@(view == View.Result ? "active" : "")" aria-selected="@(view == View.Result ? "true" : "false")" @onclick="() => Show(View.Result)">@Session.Conversion?.Target.ShortName Result</button>
                     }
                 </div>
+                }
             </div>
 
             @switch (view)
