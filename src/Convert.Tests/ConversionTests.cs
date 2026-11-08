@@ -68,9 +68,14 @@ public class ConversionTests
         var conversion = Registry.Conversions.Single(_ => _.Id == id);
         var source = await Inputs.ForAsync(conversion.Source);
         var output = await conversion.RunAsync(source, conversion.CreateOptions(), new Progress<ConversionProgress>(), Cancel.None);
-        await Verify(output.Parts[0].Text, conversion.Target == FileTypes.Wkt ? "txt" : conversion.Target.Extension.TrimStart('.'))
+        await Verify(ScrubPageWidth(output.Parts[0].Text), conversion.Target == FileTypes.Wkt ? "txt" : conversion.Target.Extension.TrimStart('.'))
             .UseParameters(id);
     }
+
+    // Morph sizes a sheet's page from its column widths, which Excel counts in the default font's
+    // characters: the width depends on whether Calibri is installed (it is not on CI runners).
+    static string ScrubPageWidth(string text) =>
+        System.Text.RegularExpressions.Regex.Replace(text, @"(<body [^>]*max-width: )[\d.]+pt", "$1{scrubbed}");
 
     [Test]
     public async Task MermaidParseErrorIsUserInput()
