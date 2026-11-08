@@ -11,6 +11,7 @@ public static class Packs
         new SkiaPack(),
         new NaiadPack(),
         new GeoPack(),
+        new DataPack(),
         new MarkdigPack(),
         new OpenXmlHtmlPack(),
         new OfficeImoPack(),

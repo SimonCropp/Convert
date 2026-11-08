@@ -39,6 +39,45 @@ static class SkiaRunner
         return data.ToArray();
     }
 
+    /// <summary>The image in an ICO at every <see cref="IconPackager.IcoSizes"/>.</summary>
+    public static byte[] Ico(byte[] bytes)
+    {
+        using var image = Decode(bytes);
+        return IconPackager.Ico([.. IconPackager.IcoSizes.Select(_ => (_, Square(image, _, false)))]);
+    }
+
+    /// <summary>The favicon set for the image.</summary>
+    public static byte[] Favicons(byte[] bytes, string name)
+    {
+        using var image = Decode(bytes);
+        return IconPackager.Favicons((size, opaque) => Square(image, size, opaque), null, name);
+    }
+
+    static byte[] Square(SKImage image, int size, bool opaque) =>
+        Square(size, opaque, image.Width, image.Height, (canvas, scale) =>
+        {
+            canvas.Scale(scale);
+            // Mipmaps: a large image drawn at 16 pixels averages its pixels rather than skipping them.
+            canvas.DrawImage(image, 0, 0, new SKSamplingOptions(SKFilterMode.Linear, SKMipmapMode.Linear));
+        });
+
+    /// <summary>
+    /// A <paramref name="size"/>-pixel square PNG with a drawing of <paramref name="width"/>×<paramref name="height"/>
+    /// scaled to fit and centred: on white when <paramref name="opaque"/>, else on transparency.
+    /// </summary>
+    internal static byte[] Square(int size, bool opaque, float width, float height, Action<SKCanvas, float> draw)
+    {
+        using var surface = Surface(size, size);
+        var canvas = surface.Canvas;
+        canvas.Clear(opaque ? SKColors.White : SKColors.Transparent);
+        var scale = size / Math.Max(width, height);
+        canvas.Translate((size - width * scale) / 2, (size - height * scale) / 2);
+        draw(canvas, scale);
+        using var snapshot = surface.Snapshot();
+        using var data = snapshot.Encode(SKEncodedImageFormat.Png, 100);
+        return data.ToArray();
+    }
+
     internal static SKSurface Surface(int width, int height) =>
         SKSurface.Create(new SKImageInfo(width, height, SKColorType.Rgba8888, SKAlphaType.Premul)) ??
         throw new UserInputException($"A {width}×{height} image is too large to draw.");

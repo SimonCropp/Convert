@@ -8,6 +8,7 @@
     <File Path="Directory.Packages.props" />
   </Folder>
   <Project Path="Convert.Core/Convert.Core.csproj" />
+  <Project Path="Convert.Data/Convert.Data.csproj" />
   <Project Path="Convert.Browser/Convert.Browser.csproj" />
   <Project Path="Convert.Geo/Convert.Geo.csproj" />
   <Project Path="Convert.ImageSharp/Convert.ImageSharp.csproj" />

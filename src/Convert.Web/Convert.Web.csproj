@@ -44,6 +44,7 @@
     <PackageReference Include="IconifyBundle.Lucide" />
     <ProjectReference Include="..\Convert.Core\Convert.Core.csproj" />
     <ProjectReference Include="..\Convert.Browser\Convert.Browser.csproj" />
+    <ProjectReference Include="..\Convert.Data\Convert.Data.csproj" />
     <ProjectReference Include="..\Convert.Geo\Convert.Geo.csproj" />
     <ProjectReference Include="..\Convert.ImageSharp\Convert.ImageSharp.csproj" />
     <ProjectReference Include="..\Convert.Markdig\Convert.Markdig.csproj" />
@@ -66,6 +67,7 @@
     <TrimmerRootAssembly Include="OpenXmlKit" />
     <TrimmerRootAssembly Include="Convert.Core" />
     <TrimmerRootAssembly Include="Convert.Browser" />
+    <TrimmerRootAssembly Include="Convert.Data" />
     <TrimmerRootAssembly Include="Convert.Geo" />
     <TrimmerRootAssembly Include="Convert.ImageSharp" />
     <TrimmerRootAssembly Include="Convert.Markdig" />
@@ -79,6 +81,9 @@
     <TrimmerRootAssembly Include="Svg.Model" />
     <TrimmerRootAssembly Include="Svg.Skia" />
     <TrimmerRootAssembly Include="ExCSS" />
+    <!-- Tomlyn and YamlDotNet: only their model and emitter are used, but neither is verified trim-safe here. -->
+    <TrimmerRootAssembly Include="Tomlyn" />
+    <TrimmerRootAssembly Include="YamlDotNet" />
   </ItemGroup>
 
   <!--
@@ -125,6 +130,9 @@
     <BlazorWebAssemblyLazyLoad Include="ShimSkiaSharp.wasm" />
     <BlazorWebAssemblyLazyLoad Include="ExCSS.wasm" />
     <BlazorWebAssemblyLazyLoad Include="HarfBuzzSharp.wasm" />
+    <!-- Data: YAML and TOML (JSON, XML, CSV and TSV are the runtime's own). -->
+    <BlazorWebAssemblyLazyLoad Include="YamlDotNet.wasm" />
+    <BlazorWebAssemblyLazyLoad Include="Tomlyn.wasm" />
     <!-- OfficeIMO: each route names its own subset. -->
     <BlazorWebAssemblyLazyLoad Include="OfficeIMO.Core.wasm" />
     <BlazorWebAssemblyLazyLoad Include="OfficeIMO.Pdf.wasm" />

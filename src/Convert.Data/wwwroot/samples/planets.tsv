@@ -1,0 +1,9 @@
+name	type	radiusKm	moons	rings	orbit.au	orbit.days
+Mercury	Terrestrial	2439.7	0	false	0.387	87.97
+Venus	Terrestrial	6051.8	0	false	0.723	224.7
+Earth	Terrestrial	6371	1	false	1	365.26
+Mars	Terrestrial	3389.5	2	false	1.524	686.98
+Jupiter	Gas giant	69911	95	true	5.203	4332.59
+Saturn	Gas giant	58232	146	true	9.537	10759.22
+Uranus	Ice giant	25362	28	true	19.191	30688.5
+Neptune	Ice giant	24622	16	true	30.069	60182

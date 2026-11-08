@@ -18,6 +18,14 @@ static class MermaidRunner
         return Guard(() => ImageSharpRenderer.RenderPng(mermaid, render));
     }
 
+    /// <summary>For drawing outside a browser (Skia): plain-text labels, since there is no HTML layout.</summary>
+    public static string PlainSvg(string mermaid, MermaidOptions options)
+    {
+        var render = Map(options);
+        render.AllowHtmlElements = false;
+        return Guard(() => Mermaid.Render(mermaid, render));
+    }
+
     /// <summary>The preview: offline-safe, with no Font Awesome import.</summary>
     public static string Preview(string mermaid) =>
         Guard(() => Mermaid.Render(mermaid, new() { AllowHtmlElements = false }));

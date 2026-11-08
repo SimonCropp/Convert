@@ -110,16 +110,12 @@ public sealed class ConversionRegistry
     public IReadOnlyList<FileType> TextTypes => [.. types.Where(_ => _.Kind == FileKind.Text)];
 
     /// <summary>
-    /// Identifies a file: by extension first (browser MIME types are empty for Office files), then by
-    /// asking each sniffer, for extensions no type claims (<c>.json</c>).
+    /// Identifies a file: by asking each sniffer first, for extensions shared by several formats (a
+    /// <c>.json</c> file may be GeoJSON, TopoJSON or plain JSON), then by extension (browser MIME types are
+    /// empty for Office files). A sniffer claims only what it recognises, so the extension decides the rest.
     /// </summary>
     public FileType? Detect(string fileName, ReadOnlySpan<byte> bytes)
     {
-        if (types.FirstOrDefault(_ => _.Matches(fileName)) is { } byExtension)
-        {
-            return byExtension;
-        }
-
         var extension = Path.GetExtension(fileName).ToLowerInvariant();
         foreach (var sniffer in sniffers)
         {
@@ -129,7 +125,7 @@ public sealed class ConversionRegistry
             }
         }
 
-        return null;
+        return types.FirstOrDefault(_ => _.Matches(fileName));
     }
 
     /// <summary>Every target reachable from <paramref name="source"/>, grouped for the picker.</summary>

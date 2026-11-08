@@ -126,7 +126,7 @@ public class RegistryTests
     [Test]
     [Arguments("map.json", """{"type":"FeatureCollection","features":[]}""", "geojson")]
     [Arguments("map.json", """{"arcs":[],"type":"Topology"}""", "topojson")]
-    [Arguments("data.json", """{"name":"x"}""", null)]
+    [Arguments("data.json", """{"name":"x"}""", "json")]
     [Arguments("a.DOCX", "", "docx")]
     [Arguments("diagram.mmd", "flowchart LR", "mermaid")]
     public async Task Detect(string fileName, string content, string? expected)

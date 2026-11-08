@@ -436,6 +436,37 @@ body.dragging .drop-zone {
     overflow-wrap: anywhere;
 }
 
+.table-preview {
+    max-height: 70vh;
+    overflow: auto;
+    border: 1px solid var(--convert-border, #dee2e6);
+    border-radius: 6px;
+}
+
+.table-preview table {
+    border-collapse: collapse;
+    font-size: 0.8rem;
+    width: max-content;
+    min-width: 100%;
+}
+
+.table-preview th,
+.table-preview td {
+    padding: 0.3rem 0.6rem;
+    border-bottom: 1px solid var(--convert-border, #dee2e6);
+    text-align: left;
+    white-space: nowrap;
+    max-width: 24rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.table-preview th {
+    position: sticky;
+    top: 0;
+    background: var(--convert-background, #f8f9fa);
+}
+
 .image-preview {
     display: flex;
     justify-content: center;

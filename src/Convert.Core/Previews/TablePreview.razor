@@ -1,0 +1,33 @@
+@namespace Convert
+@inherits PreviewBase
+
+<div class="table-preview">
+    @if (header is not null)
+    {
+        <table>
+            <thead>
+                <tr>
+                    @foreach (var cell in header)
+                    {
+                        <th>@cell</th>
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var row in rows)
+                {
+                    <tr>
+                        @foreach (var cell in row)
+                        {
+                            <td>@cell</td>
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>
+@if (truncated)
+{
+    <p class="preview-note">Showing the first @limit.ToString("N0") rows.</p>
+}

@@ -223,7 +223,7 @@ public class LazyLoadTests
     [Test]
     public async Task StartupSourceHasNoHeavyUsings()
     {
-        string[] heavy = ["Morph", "Naiad", "GeoConvert", "Markdig", "OpenXmlHtml", "OfficeIMO", "SixLabors", "DocumentFormat", "AngleSharp"];
+        string[] heavy = ["Morph", "Naiad", "GeoConvert", "Markdig", "OpenXmlHtml", "OfficeIMO", "SixLabors", "DocumentFormat", "AngleSharp", "SkiaSharp", "Svg", "YamlDotNet", "Tomlyn"];
         var problems = new List<string>();
         foreach (var project in Directory.GetDirectories(Fixtures.SrcDirectory, "Convert.*"))
         {

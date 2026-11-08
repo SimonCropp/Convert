@@ -1,8 +1,8 @@
 namespace Convert;
 
 /// <summary>
-/// The 13 routes OfficeIMO proves in the browser: Office and Publisher to PDF, HTML to PDF, PDF to Office,
-/// HTML and PNG, and Markdown to and from HTML and Word.
+/// The routes OfficeIMO proves in the browser: Office and Publisher to PDF, HTML to PDF, PDF to Office,
+/// HTML and PNG, Markdown to and from HTML and Word, and worksheets to and from CSV and TSV.
 /// </summary>
 public sealed class OfficeImoPack : IPack
 {
@@ -36,10 +36,13 @@ public sealed class OfficeImoPack : IPack
     internal static IReadOnlyList<string> PdfPowerPoint { get; } = [core, powerPoint, .. openXml, pdf, "OfficeIMO.Pdf.PowerPoint.wasm"];
     internal static IReadOnlyList<string> PdfHtml { get; } = [core, pdf, .. html, "OfficeIMO.Html.Pdf.wasm"];
     internal static IReadOnlyList<string> PdfPng { get; } = [core, pdf];
+    internal static IReadOnlyList<string> ExcelData { get; } = [core, excel, .. openXml];
 
     public void Register(ConversionRegistry registry)
     {
         registry.Add(FileTypes.Pub);
+        registry.Add(FileTypes.Csv);
+        registry.Add(FileTypes.Tsv);
 
         registry.Add(new ToPdf(FileTypes.Docx, WordPdf, "Word's own layout model rebuilt as PDF, with a fidelity report."));
         registry.Add(new ToPdf(FileTypes.Xlsx, ExcelPdf, "Each worksheet as printed pages, with a fidelity report."));
@@ -56,6 +59,11 @@ public sealed class OfficeImoPack : IPack
         registry.Add(new FromPdf(FileTypes.Pptx, PdfPowerPoint, "One slide per page: editable, as images, or both."));
         registry.Add(new FromPdf(FileTypes.Html, PdfHtml, "Positioned HTML for review, with links and form fields."));
         registry.Add(new FromPdf(FileTypes.Png, PdfPng, "Each page drawn in .NET at the chosen resolution."));
+
+        registry.Add(new DelimitedToXlsx(FileTypes.Csv));
+        registry.Add(new DelimitedToXlsx(FileTypes.Tsv));
+        registry.Add(new XlsxToDelimited(FileTypes.Csv));
+        registry.Add(new XlsxToDelimited(FileTypes.Tsv));
     }
 
     public void Loaded(IServiceProvider services) =>

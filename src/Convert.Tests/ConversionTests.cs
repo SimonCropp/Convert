@@ -51,6 +51,15 @@ public class ConversionTests
     [Arguments("geojson-wkt-geoconvert")]
     [Arguments("docx-md-morph")]
     [Arguments("html-md-officeimo")]
+    [Arguments("json-yaml-yamldotnet")]
+    [Arguments("json-toml-tomlyn")]
+    [Arguments("json-xml-dotnet")]
+    [Arguments("json-csv-dotnet")]
+    [Arguments("yaml-json-yamldotnet")]
+    [Arguments("toml-json-tomlyn")]
+    [Arguments("xml-json-dotnet")]
+    [Arguments("tsv-json-dotnet")]
+    [Arguments("xlsx-csv-officeimo")]
     public async Task TextOutput(string id)
     {
         var conversion = Registry.Conversions.Single(_ => _.Id == id);
@@ -100,6 +109,8 @@ static class Inputs
                 return Sample("_content/Convert.Markdig/samples/readme.md", type);
             case "mermaid":
                 return Sample("_content/Convert.Naiad/samples/flowchart.mmd", type);
+            case "json" or "yaml" or "toml" or "xml" or "tsv":
+                return Sample($"_content/Convert.Data/samples/planets{type.Extension}", type);
             case "geojson":
                 return Sample("_content/Convert.Geo/samples/capitals.geojson", type);
             case "html":

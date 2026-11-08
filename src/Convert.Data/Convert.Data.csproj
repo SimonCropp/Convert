@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+  </PropertyGroup>
+
+  <!--
+    Structured data through one tree (System.Text.Json.Nodes, part of the boot payload): every format
+    reads into a JsonNode and writes from one. YAML and TOML are the only libraries; CSV, TSV, JSON and
+    XML are the BCL.
+  -->
+  <ItemGroup>
+    <ProjectReference Include="..\Convert.Core\Convert.Core.csproj" />
+    <PackageReference Include="YamlDotNet" />
+    <PackageReference Include="Tomlyn" />
+    <PackageReference Include="IconifyBundle.Blazor" />
+    <PackageReference Include="IconifyBundle.Lucide" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" />
+    <PackageReference Include="ProjectDefaults" PrivateAssets="all" />
+  </ItemGroup>
+
+</Project>

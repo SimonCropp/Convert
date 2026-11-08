@@ -1,0 +1,7 @@
+global using System.Globalization;
+global using System.Text.Json;
+global using System.Text.Json.Nodes;
+global using System.Xml;
+global using System.Xml.Linq;
+global using IconifyBundle;
+global using Microsoft.AspNetCore.Components;

@@ -1,0 +1,11 @@
+@namespace Convert
+@inherits OptionsPanel<DataOptions>
+
+@if (Options.ShowInference)
+{
+    <FlagOption Label="Detect numbers, true and false" Hint="Off keeps every value as text." @bind-Value="Options.InferTypes" @bind-Value:after="NotifyAsync" />
+}
+@if (Options.ShowIndent)
+{
+    <FlagOption Label="Indent" Hint="Off writes the JSON on one line." @bind-Value="Options.Indent" @bind-Value:after="NotifyAsync" />
+}

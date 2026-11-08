@@ -1,6 +1,6 @@
 namespace Convert;
 
-/// <summary>Mermaid diagrams to SVG and PNG with Naiad, a managed Mermaid renderer.</summary>
+/// <summary>Mermaid diagrams to SVG, PNG and PDF with Naiad, a managed Mermaid renderer (PDF drawn by Skia).</summary>
 public sealed class NaiadPack : IPack
 {
     public static Tool Tool { get; } = new(
@@ -22,6 +22,8 @@ public sealed class NaiadPack : IPack
         "System.IO.Hashing.wasm"
     ];
 
+    internal static IReadOnlyList<string> PdfAssemblies { get; } = [.. SvgAssemblies, .. SkiaPack.SvgAssemblies];
+
     static readonly string[] samples = ["Flowchart", "Sequence", "Class", "State", "Pie", "Gantt"];
 
     public void Register(ConversionRegistry registry)
@@ -29,6 +31,7 @@ public sealed class NaiadPack : IPack
         registry.Add(FileTypes.Mermaid);
         registry.Add(new MermaidToSvg());
         registry.Add(new MermaidToPng());
+        registry.Add(new MermaidToPdf());
         registry.Add(new Preview(FileTypes.Mermaid, SvgAssemblies, typeof(MermaidPreview)));
         foreach (var sample in samples)
         {
@@ -36,4 +39,8 @@ public sealed class NaiadPack : IPack
             registry.Add(new Sample(sample, Lucide.Workflow, $"_content/Convert.Naiad/samples/{file}", file, "Mermaid"));
         }
     }
+
+    // Mermaid to PDF reads the Aptos faces through Skia's font loader.
+    public void Loaded(IServiceProvider services) =>
+        SkiaFonts.Initialize(services.GetRequiredService<HttpClient>());
 }

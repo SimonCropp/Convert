@@ -15,12 +15,17 @@ the device: every conversion runs in .NET on WebAssembly.
 | PDF | Word, Excel, PowerPoint, HTML, PNG | OfficeIMO |
 | HTML | PDF, Word, Markdown | OfficeIMO, OpenXmlHtml |
 | Markdown | HTML, Word | Markdig, OfficeIMO |
-| Mermaid | SVG, PNG | Naiad |
+| Mermaid | SVG, PNG, PDF | Naiad (PDF drawn by Skia) |
 | GeoJSON, TopoJSON, KML, KMZ, GPX, WKT, WKB, CSV, FlatGeobuf, GeoParquet | each other, PNG, SVG | GeoConvert |
 | SVG, PNG, JPEG, WebP | PNG, JPEG, WebP | the browser's canvas |
 | PNG, JPEG, WebP, GIF, BMP, TIFF, ICO, CUR, ANI, TGA, QOI, Netpbm, OpenEXR | each other | ImageSharp |
 | PNG, JPEG, WebP, GIF, BMP, ICO, WBMP | PNG, JPEG, WebP, PDF | Skia |
-| SVG | PNG, JPEG, WebP, PDF | Skia (Svg.Skia) |
+| SVG | PNG, JPEG, WebP, PDF, ICO | Skia (Svg.Skia) |
+| SVG, PNG, JPEG, WebP, GIF, BMP, ICO, WBMP | Favicon set (ICO, Apple touch and manifest PNGs, webmanifest, HTML) | Skia |
+| JSON, YAML, TOML, XML, CSV, TSV | each other | .NET, YamlDotNet, Tomlyn |
+| CSV, TSV | Excel | OfficeIMO |
+| Excel | CSV, TSV (one per worksheet) | OfficeIMO |
+| SVG, PNG, JPEG, WebP, GIF, BMP, ICO | Data URI | .NET |
 
 The full list, with each route's lazy assemblies, is [docs/catalogue.md](docs/catalogue.md) (generated
 by a test). Text formats can be pasted and edited with a live preview; Word documents can be edited in

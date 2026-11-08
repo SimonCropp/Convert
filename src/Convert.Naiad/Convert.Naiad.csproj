@@ -7,6 +7,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Convert.Core\Convert.Core.csproj" />
+    <!-- Mermaid to PDF: Skia draws the SVG into its PDF backend. -->
+    <ProjectReference Include="..\Convert.Skia\Convert.Skia.csproj" />
     <PackageReference Include="Naiad" />
     <PackageReference Include="Naiad.ImageSharp" />
     <PackageReference Include="IconifyBundle.Blazor" />

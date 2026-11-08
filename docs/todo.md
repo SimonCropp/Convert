@@ -52,7 +52,11 @@ path-finding with per-hop options.
   serve the previous managed SkiaSharp.wasm with the new native ("native libSkiaSharp library (155.0) is
   incompatible").
 - Skia decodes only the first frame of an animated GIF; ImageSharp keeps the frames.
-- HEIF, AVIF and RAW (DNG) are not offered: whether Skia's wasm build has those decoders is untested.
+- HEIF, AVIF and RAW (DNG) are not offered: SkiaSharp's wasm archive links none of those codecs (no
+  SkHeifCodec, SkAvifCodec or SkRawCodec in libSkiaSharp.a), only PNG, JPEG, WebP, GIF, BMP, ICO and WBMP.
+- Data: CSV and TSV read flat (a dotted header such as orbit.au stays one key, though writing nested
+  data produces one). XML keeps no types, so XML to JSON infers numbers and true/false (an option).
+- Data: the table preview wins for CSV, so a CSV of coordinates previews as a table, not GeoConvert's map.
 
 ## Runtime
 

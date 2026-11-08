@@ -40,5 +40,17 @@ public static class FileTypes
     public static readonly FileType Csv = new("csv", "CSV", [".csv"], "text/csv", FileKind.Text, Lucide.Table, FileGroup.Data);
     public static readonly FileType FlatGeobuf = new("fgb", "FlatGeobuf", [".fgb"], "application/octet-stream", FileKind.Binary, Lucide.Map, FileGroup.Data);
     public static readonly FileType GeoParquet = new("geoparquet", "GeoParquet", [".parquet", ".geoparquet"], "application/vnd.apache.parquet", FileKind.Binary, Lucide.Sheet, FileGroup.Data);
-    public static readonly FileType Zip = new("zip", "ZIP archive", [".zip"], "application/zip", FileKind.Binary, Lucide.FileArchive, FileGroup.Data);
+    public static readonly FileType Tsv = new("tsv", "TSV", [".tsv", ".tab"], "text/tab-separated-values", FileKind.Text, Lucide.Table, FileGroup.Data);
+    public static readonly FileType Json = new("json", "JSON", [".json"], "application/json", FileKind.Text, Lucide.Braces, FileGroup.Data);
+    public static readonly FileType Yaml = new("yaml", "YAML", [".yaml", ".yml"], "application/yaml", FileKind.Text, Lucide.FileCog, FileGroup.Data);
+    public static readonly FileType Toml = new("toml", "TOML", [".toml"], "application/toml", FileKind.Text, Lucide.FileCog, FileGroup.Data);
+    public static readonly FileType Xml = new("xml", "XML", [".xml"], "application/xml", FileKind.Text, Lucide.FileCode, FileGroup.Data);
+
+    /// <summary>A <c>data:</c> URL holding a whole file, for pasting into HTML or CSS. Written, never read.</summary>
+    public static readonly FileType DataUri = new("datauri", "Data URI", [".txt"], "text/plain", FileKind.Text, Lucide.Link, FileGroup.Text, Abbreviation: "DATA URI");
+
+    /// <summary>A zip of every icon a site needs, with the HTML that links them. Written, never read.</summary>
+    public static readonly FileType Favicons = new("favicons", "Favicon set", [".zip"], "application/zip", FileKind.Binary, Lucide.AppWindow, FileGroup.Images, Abbreviation: "FAVICONS");
+
+    public static readonly FileType Zip =new("zip", "ZIP archive", [".zip"], "application/zip", FileKind.Binary, Lucide.FileArchive, FileGroup.Data);
 }

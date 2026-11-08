@@ -1,0 +1,65 @@
+﻿planets:
+- name: Mercury
+  type: Terrestrial
+  radiusKm: 2439.7
+  moons: 0
+  rings: false
+  orbit:
+    au: 0.387
+    days: 87.97
+- name: Venus
+  type: Terrestrial
+  radiusKm: 6051.8
+  moons: 0
+  rings: false
+  orbit:
+    au: 0.723
+    days: 224.7
+- name: Earth
+  type: Terrestrial
+  radiusKm: 6371
+  moons: 1
+  rings: false
+  orbit:
+    au: 1
+    days: 365.26
+- name: Mars
+  type: Terrestrial
+  radiusKm: 3389.5
+  moons: 2
+  rings: false
+  orbit:
+    au: 1.524
+    days: 686.98
+- name: Jupiter
+  type: Gas giant
+  radiusKm: 69911
+  moons: 95
+  rings: true
+  orbit:
+    au: 5.203
+    days: 4332.59
+- name: Saturn
+  type: Gas giant
+  radiusKm: 58232
+  moons: 146
+  rings: true
+  orbit:
+    au: 9.537
+    days: 10759.22
+- name: Uranus
+  type: Ice giant
+  radiusKm: 25362
+  moons: 28
+  rings: true
+  orbit:
+    au: 19.191
+    days: 30688.5
+- name: Neptune
+  type: Ice giant
+  radiusKm: 24622
+  moons: 16
+  rings: true
+  orbit:
+    au: 30.069
+    days: 60182

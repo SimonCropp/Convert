@@ -28,6 +28,7 @@ public enum FileGroup
 /// <param name="Icon">Lucide icon shown beside the format.</param>
 /// <param name="Group">Heading in the target picker.</param>
 /// <param name="PageNoun">What one rendered page is called ("slide" for a deck).</param>
+/// <param name="Abbreviation">The chip label, when the extension would mislead (a favicon set is a .zip).</param>
 public sealed record FileType(
     string Id,
     string DisplayName,
@@ -36,13 +37,14 @@ public sealed record FileType(
     FileKind Kind,
     Icon Icon,
     FileGroup Group,
-    string PageNoun = "page")
+    string PageNoun = "page",
+    string? Abbreviation = null)
 {
     /// <summary>The canonical extension, including the dot.</summary>
     public string Extension => Extensions[0];
 
     /// <summary>Short label for chips, e.g. "DOCX".</summary>
-    public string ShortName => Extension.TrimStart('.').ToUpperInvariant();
+    public string ShortName => Abbreviation ?? Extension.TrimStart('.').ToUpperInvariant();
 
     public bool Equals(FileType? other) =>
         other is not null &&

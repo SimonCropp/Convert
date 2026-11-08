@@ -3,13 +3,16 @@ using Svg.Skia.TypefaceProviders;
 
 namespace Convert;
 
-/// <summary>SVG routes, through Svg.Skia. Kept apart from <see cref="SkiaRunner"/> so raster routes never load Svg.*.</summary>
-static class SvgRunner
+/// <summary>
+/// SVG routes, through Svg.Skia (and Mermaid to PDF, in the Naiad pack). Kept apart from
+/// <see cref="SkiaRunner"/> so raster routes never load Svg.*.
+/// </summary>
+public static class SvgRunner
 {
     // CSS pixels to PDF points.
     const float pointsPerPixel = 72f / 96f;
 
-    public static byte[] Raster(string text, FileType target, RasterOptions options, SkiaFonts.Faces fonts)
+    internal static byte[] Raster(string text, FileType target, RasterOptions options, SkiaFonts.Faces fonts)
     {
         using var typefaces = new AptosTypefaces(fonts);
         using var svg = Load(text, typefaces);
@@ -39,6 +42,33 @@ static class SvgRunner
             _.Scale(pointsPerPixel);
             _.Translate(-bounds.Left, -bounds.Top);
             _.DrawPicture(picture);
+        });
+    }
+
+    internal static byte[] Ico(string text, SkiaFonts.Faces fonts)
+    {
+        using var typefaces = new AptosTypefaces(fonts);
+        using var svg = Load(text, typefaces);
+        return IconPackager.Ico([.. IconPackager.IcoSizes.Select(_ => (_, Square(svg.Picture!, _, false)))]);
+    }
+
+    /// <summary>The favicon set, with the SVG itself as icon.svg for browsers that take one.</summary>
+    internal static byte[] Favicons(string text, SkiaFonts.Faces fonts, string name)
+    {
+        using var typefaces = new AptosTypefaces(fonts);
+        using var svg = Load(text, typefaces);
+        var picture = svg.Picture!;
+        return IconPackager.Favicons((size, opaque) => Square(picture, size, opaque), text, name);
+    }
+
+    static byte[] Square(SKPicture picture, int size, bool opaque)
+    {
+        var bounds = picture.CullRect;
+        return SkiaRunner.Square(size, opaque, bounds.Width, bounds.Height, (canvas, scale) =>
+        {
+            canvas.Scale(scale);
+            canvas.Translate(-bounds.Left, -bounds.Top);
+            canvas.DrawPicture(picture);
         });
     }
 

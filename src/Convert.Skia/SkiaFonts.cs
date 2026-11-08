@@ -14,10 +14,10 @@ public static class SkiaFonts
     /// <summary>Reads a font by its path relative to the app base. Set by the pack, or by a desktop host.</summary>
     public static Func<string, Task<byte[]>>? Fetch { get; set; }
 
-    internal static void Initialize(HttpClient http) =>
+    public static void Initialize(HttpClient http) =>
         Fetch ??= http.GetByteArrayAsync;
 
-    internal static Task<Faces> EnsureAsync()
+    public static Task<Faces> EnsureAsync()
     {
         if (load is { IsCompleted: true, IsCompletedSuccessfully: false })
         {
@@ -34,5 +34,5 @@ public static class SkiaFonts
         return new(faces[0], faces[1], faces[2], faces[3]);
     }
 
-    internal sealed record Faces(byte[] Regular, byte[] Bold, byte[] Italic, byte[] BoldItalic);
+    public sealed record Faces(byte[] Regular, byte[] Bold, byte[] Italic, byte[] BoldItalic);
 }

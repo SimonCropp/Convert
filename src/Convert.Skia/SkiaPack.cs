@@ -2,7 +2,8 @@ namespace Convert;
 
 /// <summary>
 /// Raster images and SVG through Skia (SkiaSharp, and Svg.Skia for SVG): every format Skia decodes to
-/// PNG, JPEG and WebP (the formats it encodes) and to PDF, and SVG to all four.
+/// PNG, JPEG and WebP (the formats it encodes) and to PDF, SVG to all four and to ICO, and any of them
+/// to a website's favicon set.
 /// </summary>
 public sealed class SkiaPack : IPack
 {
@@ -12,9 +13,9 @@ public sealed class SkiaPack : IPack
         "Google's 2D graphics library (SkiaSharp, and Svg.Skia for SVG): raster codecs, SVG rendering and PDF.",
         "https://github.com/mono/SkiaSharp");
 
-    internal static IReadOnlyList<string> RasterAssemblies { get; } = ["SkiaSharp.wasm"];
+    public static IReadOnlyList<string> RasterAssemblies { get; } = ["SkiaSharp.wasm"];
 
-    internal static IReadOnlyList<string> SvgAssemblies { get; } =
+    public static IReadOnlyList<string> SvgAssemblies { get; } =
     [
         .. RasterAssemblies,
         "Svg.Skia.wasm",
@@ -69,6 +70,15 @@ public sealed class SkiaPack : IPack
         }
 
         registry.Add(new SvgPdfConversion());
+        registry.Add(new SvgIcoConversion());
+
+        registry.Add(new FaviconConversion(FileTypes.Svg));
+        foreach (var source in Decodes)
+        {
+            registry.Add(new FaviconConversion(source));
+        }
+
+        registry.Add(new Preview(FileTypes.Favicons, [], typeof(ZipPreview)));
     }
 
     public void Loaded(IServiceProvider services) =>
