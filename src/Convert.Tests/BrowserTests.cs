@@ -295,6 +295,24 @@ public class BrowserTests
         await Assert.That(await page.Locator(".split-preview .error").CountAsync()).IsEqualTo(0);
     }
 
+    // Wide, text whose preview is the text again is one panel, with Preview and Edit tabs.
+    [Test]
+    public async Task JsonIsOnePanel()
+    {
+        var page = await browser!.NewPageAsync();
+        await page.SetViewportSizeAsync(1400, 900);
+        await page.GotoAsync(Url);
+        await SettleAsync(page);
+        await ChooseSampleAsync(page, "Data/JSON");
+        await page.WaitForSelectorAsync(".text-preview", new() {Timeout = 60000});
+        await Assert.That(await page.Locator(".split").CountAsync()).IsEqualTo(0);
+        await Assert.That(await page.Locator(".text-preview").CountAsync()).IsEqualTo(1);
+
+        await page.ClickAsync("[role=tab]:text-is('Edit')");
+        await page.WaitForSelectorAsync("textarea", new() {Timeout = 60000});
+        await Assert.That(await page.Locator(".text-preview").CountAsync()).IsEqualTo(0);
+    }
+
     // Text typed in the Edit tab becomes the session's source: the next conversion has it.
     [Test]
     public async Task EditedDocxConvertsWithTheEdit()

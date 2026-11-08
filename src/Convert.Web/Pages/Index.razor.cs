@@ -62,13 +62,21 @@ public partial class Index
     void Show(View next) => view = next;
 
     /// <summary>
-    /// Text with a render of its own (Mermaid, Markdown, HTML, the text geo formats): edited beside its
-    /// preview. Plain text, whose preview is the text again, is not.
+    /// Text with a render of its own (Mermaid, Markdown, HTML, a CSV's table, the text geo formats):
+    /// edited beside its preview. Text whose preview is the text again (plain text, JSON, YAML, TOML, XML)
+    /// is one panel.
     /// </summary>
-    bool Splits(Document source) =>
-        source.Type.Kind == FileKind.Text &&
-        Session.Registry.EditorsFor(source.Type).Count > 0 &&
-        Session.Registry.PreviewsFor(source).Count > 0;
+    bool Splits(Document source)
+    {
+        if (source.Type.Kind != FileKind.Text ||
+            Session.Registry.EditorsFor(source.Type).Count == 0)
+        {
+            return false;
+        }
+
+        var previews = Session.Registry.PreviewsFor(source);
+        return previews.Count > 0 && previews[0].Component != typeof(TextPreview);
+    }
 
     void OnTargetSelected(FileType target)
     {
