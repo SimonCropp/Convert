@@ -24,7 +24,26 @@ public sealed class NaiadPack : IPack
 
     internal static IReadOnlyList<string> PdfAssemblies { get; } = [.. SvgAssemblies, .. SkiaPack.SvgAssemblies];
 
-    static readonly string[] samples = ["Flowchart", "Sequence", "Class", "State", "Pie", "Gantt"];
+    static readonly string[] samples =
+    [
+        "Flowchart",
+        "Sequence",
+        "Class",
+        "State",
+        "Pie",
+        "Gantt",
+        "Ishikawa",
+        "ZenUML",
+        "Tree View",
+        "Wardley Map",
+        "Venn",
+        "Swimlane",
+        "Event Modeling",
+        "Use Case",
+        "Cynefin",
+        "Agent Flow",
+        "Railroad"
+    ];
 
     public void Register(ConversionRegistry registry)
     {
@@ -35,7 +54,7 @@ public sealed class NaiadPack : IPack
         registry.Add(new Preview(FileTypes.Mermaid, SvgAssemblies, typeof(MermaidPreview)));
         foreach (var sample in samples)
         {
-            var file = sample.ToLowerInvariant() + ".mmd";
+            var file = sample.ToLowerInvariant().Replace(' ', '-') + ".mmd";
             registry.Add(new Sample(sample, Lucide.Workflow, $"_content/Convert.Naiad/samples/{file}", file, "Mermaid"));
         }
     }

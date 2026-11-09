@@ -212,6 +212,16 @@ body.dragging .drop-zone {
     box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 15%);
 }
 
+/* A long menu (Mermaid's, a sample per diagram type) is two columns, top to bottom, so it stays short. */
+.sample-menu-items:has(> li:nth-child(13)) {
+    column-count: 2;
+    column-gap: 0.25rem;
+}
+
+.sample-menu-items > li {
+    break-inside: avoid;
+}
+
 .sample-menu-item {
     display: block;
     width: 100%;

@@ -1,0 +1,14 @@
+usecase-beta
+direction LR
+actor Customer
+actor Admin
+systemBoundary "Online shop"
+  Browse("Browse products")
+  Checkout("Place order")
+  Payment("Pay")
+  Manage("Manage catalogue")
+end
+Customer --> Browse
+Customer --> Checkout
+Admin --> Manage
+Checkout ..> : include Payment
