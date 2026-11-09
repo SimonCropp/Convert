@@ -9,7 +9,7 @@ sealed class MermaidToPdf : Conversion<MermaidOptions>
     public override Tool Tool => NaiadPack.Tool;
     public override string Summary => "Vector PDF, one page the size of the diagram, drawn by Skia.";
     public override string Expect => "Labels use the bundled font; HTML labels are drawn as plain text.";
-    public override IReadOnlyList<string> Assemblies => NaiadPack.PdfAssemblies;
+    public override IReadOnlyList<string> Assemblies => NaiadPack.SkiaAssemblies;
     public override Type OptionsComponent => typeof(MermaidOptionsPanel);
 
     protected override async Task<ConversionOutput> RunAsync(Document source, MermaidOptions options, IProgress<ConversionProgress> progress, Cancel cancel)

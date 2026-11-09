@@ -59,7 +59,7 @@
     Rooted whole. Every Convert.* pack is tiny glue whose components are reached only through
     DynamicComponent (a Type), which the trimmer cannot follow. OpenXmlHtml and OpenXmlKit are not
     verified trim-safe. Morph.Blazor's buildTransitive targets root OpenXml, AngleSharp and the SixLabors
-    set, which also covers OfficeIMO, OpenXmlHtml and Naiad.ImageSharp. Rooting is an ILLink input and
+    set, which also covers OfficeIMO and OpenXmlHtml. Rooting is an ILLink input and
     lazy loading a manifest input, so an assembly can be both.
   -->
   <ItemGroup Condition="'$(PublishTrimmed)' == 'true'">
@@ -107,7 +107,6 @@
     <BlazorWebAssemblyLazyLoad Include="Markdig.wasm" />
     <!-- Naiad. -->
     <BlazorWebAssemblyLazyLoad Include="Naiad.wasm" />
-    <BlazorWebAssemblyLazyLoad Include="Naiad.ImageSharp.wasm" />
     <BlazorWebAssemblyLazyLoad Include="Parlot.wasm" />
     <!-- GeoConvert. -->
     <BlazorWebAssemblyLazyLoad Include="GeoConvert.wasm" />

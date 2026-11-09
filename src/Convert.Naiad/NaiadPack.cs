@@ -1,6 +1,6 @@
 namespace Convert;
 
-/// <summary>Mermaid diagrams to SVG, PNG and PDF with Naiad, a managed Mermaid renderer (PDF drawn by Skia).</summary>
+/// <summary>Mermaid diagrams to SVG, PNG and PDF with Naiad, a managed Mermaid renderer (PNG and PDF drawn by Skia).</summary>
 public sealed class NaiadPack : IPack
 {
     public static Tool Tool { get; } = new(
@@ -11,18 +11,9 @@ public sealed class NaiadPack : IPack
 
     internal static IReadOnlyList<string> SvgAssemblies { get; } = ["Naiad.wasm", "Parlot.wasm"];
 
-    internal static IReadOnlyList<string> PngAssemblies { get; } =
-    [
-        .. SvgAssemblies,
-        "Naiad.ImageSharp.wasm",
-        "SixLabors.ImageSharp.wasm",
-        "SixLabors.ImageSharp.Drawing.wasm",
-        "SixLabors.Fonts.wasm",
-        "SixLabors.PolygonClipper.wasm",
-        "System.IO.Hashing.wasm"
-    ];
-
-    internal static IReadOnlyList<string> PdfAssemblies { get; } = [.. SvgAssemblies, .. SkiaPack.SvgAssemblies];
+    // PNG and PDF: Naiad's SVG drawn by Svg.Skia with the bundled Aptos. Naiad.ImageSharp is not used: it reads
+    // only system fonts, and the browser has none.
+    internal static IReadOnlyList<string> SkiaAssemblies { get; } = [.. SvgAssemblies, .. SkiaPack.SvgAssemblies];
 
     static readonly string[] samples =
     [
@@ -59,7 +50,7 @@ public sealed class NaiadPack : IPack
         }
     }
 
-    // Mermaid to PDF reads the Aptos faces through Skia's font loader.
+    // Mermaid to PNG and PDF read the Aptos faces through Skia's font loader.
     public void Loaded(IServiceProvider services) =>
         SkiaFonts.Initialize(services.GetRequiredService<HttpClient>());
 }

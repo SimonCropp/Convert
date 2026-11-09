@@ -12,7 +12,7 @@ public static class SvgRunner
     // CSS pixels to PDF points.
     const float pointsPerPixel = 72f / 96f;
 
-    internal static byte[] Raster(string text, FileType target, RasterOptions options, SkiaFonts.Faces fonts)
+    public static byte[] Raster(string text, FileType target, RasterOptions options, SkiaFonts.Faces fonts)
     {
         using var typefaces = new AptosTypefaces(fonts);
         using var svg = Load(text, typefaces);

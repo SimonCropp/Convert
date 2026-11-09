@@ -12,16 +12,6 @@ static class MermaidRunner
         return Guard(() => Mermaid.Render(mermaid, render));
     }
 
-    public static byte[] Png(string mermaid, MermaidOptions options)
-    {
-        var render = Map(options);
-        // Drawn by ImageSharp, which has no HTML layout: plain-text labels.
-        render.AllowHtmlElements = false;
-        render.Png.Scale = options.PngScale;
-        render.Png.Background = options.PngBackground;
-        return Guard(() => ImageSharpRenderer.RenderPng(mermaid, render));
-    }
-
     /// <summary>For drawing outside a browser (Skia): plain-text labels, since there is no HTML layout.</summary>
     public static string PlainSvg(string mermaid, MermaidOptions options)
     {
