@@ -135,6 +135,18 @@ public class RegistryTests
         await Assert.That(type?.Id).IsEqualTo(expected);
     }
 
+    // Mermaid is laid out by Naiad, loaded first like the preview: PrettyPrint has no layout of its own for it.
+    [Test]
+    public async Task MermaidFormatter()
+    {
+        var formatter = Registry.FormatterFor(FileTypes.Mermaid);
+        await Assert.That(formatter).IsNotNull();
+        await Assert.That(formatter!.Assemblies).Contains("Naiad.wasm");
+        await Assert.That(PrettyPrint.Supports(FileTypes.Mermaid)).IsFalse();
+        await Assert.That(formatter.Format("flowchart TD\nsubgraph one\nA --> B\nend\n")).IsEqualTo(
+            "flowchart TD\n    subgraph one\n        A --> B\n    end\n");
+    }
+
     [Test]
     public async Task DuplicateConversionIdsThrow()
     {

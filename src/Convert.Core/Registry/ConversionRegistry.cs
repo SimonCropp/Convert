@@ -10,6 +10,7 @@ public sealed class ConversionRegistry
     List<Conversion> conversions = [];
     List<Preview> previews = [];
     List<Editor> editors = [];
+    List<Formatter> formatters = [];
     List<Sniffer> sniffers = [];
     List<Sample> samples = [];
     List<IPack> packs = [];
@@ -79,6 +80,18 @@ public sealed class ConversionRegistry
         editor.Pack = current;
         editors.RemoveAll(_ => _.Type == editor.Type && _.Component == typeof(TextEditor));
         editors.Add(editor);
+    }
+
+    /// <summary>Adds a formatter. A type has at most one.</summary>
+    public void Add(Formatter formatter)
+    {
+        if (formatters.Any(_ => _.Type == formatter.Type))
+        {
+            throw new InvalidOperationException($"File type '{formatter.Type.Id}' already has a formatter.");
+        }
+
+        formatter.Pack = current;
+        formatters.Add(formatter);
     }
 
     public void Add(Sniffer sniffer) =>
@@ -156,6 +169,10 @@ public sealed class ConversionRegistry
     public IReadOnlyList<Editor> EditorsFor(FileType type) =>
         [.. editors.Where(_ => _.Type == type)];
 
+    /// <summary>The pack formatter for <paramref name="type"/>, or null when it has none.</summary>
+    public Formatter? FormatterFor(FileType type) =>
+        formatters.FirstOrDefault(_ => _.Type == type);
+
     /// <summary>Every readable extension, for <c>&lt;InputFile accept&gt;</c>.</summary>
     public string Accept =>
         string.Join(',', types.SelectMany(_ => _.Extensions).Append(".json").Distinct(StringComparer.OrdinalIgnoreCase));
@@ -166,6 +183,7 @@ public sealed class ConversionRegistry
         .. conversions.SelectMany(_ => _.Assemblies)
             .Concat(previews.SelectMany(_ => _.Assemblies))
             .Concat(editors.SelectMany(_ => _.Assemblies))
+            .Concat(formatters.SelectMany(_ => _.Assemblies))
             .Distinct(StringComparer.Ordinal)
             .Order(StringComparer.Ordinal)
     ];

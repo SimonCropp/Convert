@@ -14,9 +14,12 @@ public static class PrettyPrint
 {
     const string indentUnit = "  ";
 
-    /// <summary>Whether <see cref="Apply(Document, bool)"/> has a layout for <paramref name="type"/>.</summary>
+    /// <summary>
+    /// Whether <see cref="Apply(Document, bool)"/> has a layout for <paramref name="type"/>. Types laid out by
+    /// a pack's own tool (Mermaid, by Naiad) register a <see cref="Formatter"/> instead.
+    /// </summary>
     public static bool Supports(FileType type) =>
-        IsJson(type) || IsXml(type) || type == FileTypes.Html || type == FileTypes.Mermaid;
+        IsJson(type) || IsXml(type) || type == FileTypes.Html;
 
     static bool IsJson(FileType type) =>
         type == FileTypes.Json || type == FileTypes.GeoJson || type == FileTypes.TopoJson;
@@ -26,7 +29,7 @@ public static class PrettyPrint
 
     /// <summary>
     /// Lays out <paramref name="document"/> by its type. Off (<paramref name="pretty"/> false), JSON and XML
-    /// are written compact; HTML, Mermaid and other types are left as the tool wrote them.
+    /// are written compact; HTML and other types are left as the tool wrote them.
     /// </summary>
     public static Document Apply(Document document, bool pretty)
     {
@@ -44,10 +47,6 @@ public static class PrettyPrint
         else if (type == FileTypes.Html && pretty)
         {
             text = Html(source);
-        }
-        else if (type == FileTypes.Mermaid && pretty)
-        {
-            text = Mermaid(source);
         }
 
         return text is null ? document : document with { Bytes = Encoding.UTF8.GetBytes(text) };
@@ -372,197 +371,6 @@ public static class PrettyPrint
         }
 
         return builder.ToString();
-    }
-
-    const string mermaidIndent = "    ";
-
-    // Diagrams whose indentation means nothing, so it can be laid out again. Others (mindmap, kanban,
-    // treemap, block, …) read structure from indentation, and are left as written.
-    static readonly HashSet<string> mermaidLayouts =
-    [
-        with(StringComparer.Ordinal),
-        "graph", "flowchart", "flowchart-elk", "sequenceDiagram", "classDiagram", "classDiagram-v2",
-        "stateDiagram", "stateDiagram-v2", "erDiagram", "gantt", "journey", "timeline", "gitGraph", "pie",
-        "requirementDiagram", "quadrantChart", "xychart", "xychart-beta",
-        "C4Context", "C4Container", "C4Component", "C4Dynamic", "C4Deployment"
-    ];
-
-    // Sequence diagram blocks, closed by `end`, and the lines that divide them.
-    static readonly HashSet<string> sequenceBlocks =
-        ["loop", "alt", "opt", "par", "par_over", "critical", "break", "rect", "box"];
-
-    static readonly HashSet<string> sequenceDividers = ["else", "and", "option"];
-
-    // Diagrams whose `section` lines head the lines after them.
-    static readonly HashSet<string> sectioned = ["gantt", "journey", "timeline"];
-
-    /// <summary>
-    /// Mermaid with the diagram's body indented under its header and each block (<c>subgraph</c>,
-    /// <c>loop</c>/<c>alt</c>, <c>{ … }</c>, <c>section</c>) indented within it; trailing whitespace and
-    /// runs of blank lines removed. Front matter and multi-line strings are kept as written, and a diagram
-    /// that reads structure from indentation (mindmap, kanban, …) is returned unchanged.
-    /// </summary>
-    public static string Mermaid(string text)
-    {
-        var lines = text.ReplaceLineEndings("\n").Split('\n');
-        var builder = new StringBuilder(text.Length + text.Length / 4);
-        var index = 0;
-
-        // Front matter (YAML between --- lines), as written.
-        while (index < lines.Length && string.IsNullOrWhiteSpace(lines[index]))
-        {
-            index++;
-        }
-
-        if (index < lines.Length && lines[index].Trim() == "---")
-        {
-            builder.Append("---\n");
-            index++;
-            while (index < lines.Length)
-            {
-                var line = lines[index++];
-                builder.Append(line.TrimEnd()).Append('\n');
-                if (line.Trim() == "---")
-                {
-                    break;
-                }
-            }
-        }
-
-        // Directives and comments before the header stay at the margin.
-        string? diagram = null;
-        while (index < lines.Length)
-        {
-            var line = lines[index++].Trim();
-            if (line.Length == 0)
-            {
-                continue;
-            }
-
-            builder.Append(line).Append('\n');
-            if (!line.StartsWith("%%"))
-            {
-                diagram = FirstWord(line);
-                break;
-            }
-        }
-
-        if (diagram is null || !mermaidLayouts.Contains(diagram))
-        {
-            return text;
-        }
-
-        var isSequence = diagram == "sequenceDiagram";
-        var isFlowchart = diagram is "graph" or "flowchart" or "flowchart-elk";
-        var isState = diagram.StartsWith("stateDiagram");
-        var hasSections = sectioned.Contains(diagram);
-        var depth = 1;
-        var inSection = false;
-        var blank = false;
-        // Inside a quoted string left open at the end of a line (a multi-line label): copied as written.
-        var inString = false;
-
-        for (; index < lines.Length; index++)
-        {
-            var raw = lines[index];
-            if (inString)
-            {
-                builder.Append(raw.TrimEnd()).Append('\n');
-                inString = OpensString(raw, true);
-                continue;
-            }
-
-            var line = raw.Trim();
-            if (line.Length == 0)
-            {
-                blank = true;
-                continue;
-            }
-
-            if (blank)
-            {
-                builder.Append('\n');
-                blank = false;
-            }
-
-            var word = FirstWord(line);
-            var lineDepth = depth;
-            var comment = line.StartsWith("%%");
-            if (!comment)
-            {
-                if (word == "end" || line.StartsWith('}'))
-                {
-                    depth = Math.Max(1, depth - 1);
-                    lineDepth = depth;
-                }
-                else if ((isSequence && sequenceDividers.Contains(word)) ||
-                         (isState && line == "--"))
-                {
-                    lineDepth = Math.Max(1, depth - 1);
-                }
-                else if (hasSections && word == "section")
-                {
-                    if (inSection)
-                    {
-                        depth--;
-                    }
-
-                    lineDepth = depth;
-                    inSection = true;
-                    depth++;
-                }
-            }
-
-            for (var i = 0; i < lineDepth; i++)
-            {
-                builder.Append(mermaidIndent);
-            }
-
-            builder.Append(line).Append('\n');
-            if (comment)
-            {
-                continue;
-            }
-
-            if (line.EndsWith('{') ||
-                (isSequence && sequenceBlocks.Contains(word)) ||
-                (isFlowchart && word == "subgraph"))
-            {
-                depth++;
-            }
-
-            inString = OpensString(line, false);
-        }
-
-        return builder.ToString();
-    }
-
-    // The diagram keyword or statement keyword: up to the first space, ';' or ':'.
-    static string FirstWord(string line)
-    {
-        var end = line.AsSpan().IndexOfAny(' ', '\t', ';');
-        var word = end < 0 ? line : line[..end];
-        var colon = word.IndexOf(':');
-        if (colon > 0)
-        {
-            return word[..colon];
-        }
-
-        return word;
-    }
-
-    // Whether a double-quoted string is still open at the end of the line, given whether it started open.
-    static bool OpensString(string line, bool open)
-    {
-        foreach (var ch in line)
-        {
-            if (ch == '"')
-            {
-                open = !open;
-            }
-        }
-
-        return open;
     }
 
     static string TagName(CharSpan afterBracket)

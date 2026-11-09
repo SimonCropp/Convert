@@ -7,6 +7,10 @@ namespace Convert;
 /// <summary>The only place Naiad's namespace is used. A parse error is the user's input, not a bug.</summary>
 static class MermaidRunner
 {
+    /// <summary>The source laid out by Naiad. Text it cannot lay out, or that would no longer parse, comes back as it is.</summary>
+    public static string Format(string mermaid) =>
+        Mermaid.Format(mermaid);
+
     public static string Svg(string mermaid, MermaidOptions options)
     {
         var render = Map(options);

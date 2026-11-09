@@ -3,9 +3,9 @@
     <textarea spellcheck="false" aria-label="@($"Edit {Document.FileName}")" value="@text" @oninput="OnInput"></textarea>
     <div class="editor-actions">
         <p class="preview-note">@(pending ? "Editing…" : "The preview and every conversion use this text.")</p>
-        @if (PrettyPrint.Supports(Document.Type))
+        @if (CanFormat)
         {
-            <button type="button" class="button" @onclick="PrettyPrintAsync">Pretty print</button>
+            <button type="button" class="button" disabled="@formatting" @onclick="PrettyPrintAsync">Pretty print</button>
         }
     </div>
 </div>

@@ -43,6 +43,7 @@ public sealed class NaiadPack : IPack
         registry.Add(new MermaidToPng());
         registry.Add(new MermaidToPdf());
         registry.Add(new Preview(FileTypes.Mermaid, SvgAssemblies, typeof(MermaidPreview)));
+        registry.Add(new Formatter(FileTypes.Mermaid, SvgAssemblies, MermaidRunner.Format));
         foreach (var sample in samples)
         {
             var file = sample.ToLowerInvariant().Replace(' ', '-') + ".mmd";

@@ -48,6 +48,16 @@ public sealed record Editor(FileType Type, IReadOnlyList<string> Assemblies, Typ
     internal IPack? Pack { get; set; }
 }
 
+/// <summary>
+/// Lays out the source text of a <see cref="FileType"/> that <see cref="PrettyPrint"/> has no layout for,
+/// with a pack's own tool. <see cref="Format"/> runs once <see cref="Assemblies"/> are loaded, and returns
+/// text it cannot lay out unchanged.
+/// </summary>
+public sealed record Formatter(FileType Type, IReadOnlyList<string> Assemblies, Func<string, string> Format)
+{
+    internal IPack? Pack { get; set; }
+}
+
 /// <summary>A bundled example file offered on the empty screen, fetched only when chosen.</summary>
 /// <param name="DisplayName">Button label, or the menu item's within a group.</param>
 /// <param name="Icon">Button icon. A group's button takes its first sample's.</param>
