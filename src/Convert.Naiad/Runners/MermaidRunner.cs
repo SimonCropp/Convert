@@ -1,3 +1,5 @@
+using System.Security;
+using System.Text.RegularExpressions;
 using Naiad;
 
 namespace Convert;
@@ -9,7 +11,8 @@ static class MermaidRunner
     {
         var render = Map(options);
         render.PrettyPrint = options.PrettyPrint;
-        return Guard(() => Mermaid.Render(mermaid, render));
+        var svg = Guard(() => Mermaid.Render(mermaid, render));
+        return WithBackground(svg, options.Fill, options.PrettyPrint);
     }
 
     /// <summary>For drawing outside a browser (Skia): plain-text labels, since there is no HTML layout.</summary>
@@ -17,12 +20,72 @@ static class MermaidRunner
     {
         var render = Map(options);
         render.AllowHtmlElements = false;
-        return Guard(() => Mermaid.Render(mermaid, render));
+        var svg = Guard(() => Mermaid.Render(mermaid, render));
+        return WithBackground(svg, options.Fill, false);
     }
 
-    /// <summary>The preview: offline-safe, with no Font Awesome import.</summary>
-    public static string Preview(string mermaid) =>
-        Guard(() => Mermaid.Render(mermaid, new() { AllowHtmlElements = false }));
+    /// <summary>The preview: offline-safe, with no Font Awesome import, on the default background.</summary>
+    public static string Preview(string mermaid)
+    {
+        var svg = Guard(() => Mermaid.Render(mermaid, new() { AllowHtmlElements = false }));
+        return WithBackground(svg, new MermaidOptions().Fill, false);
+    }
+
+    /// <summary>
+    /// Naiad draws no canvas, so a viewer shows whatever is behind the SVG. A rect over the whole
+    /// viewBox, first so it sits under everything. The fill is an inline style so Naiad's own
+    /// <c>rect{…}</c> rules can't restyle it.
+    /// </summary>
+    internal static string WithBackground(string svg, string? fill, bool prettyPrint)
+    {
+        if (string.IsNullOrWhiteSpace(fill))
+        {
+            return svg;
+        }
+
+        var start = svg.IndexOf("<svg", StringComparison.Ordinal);
+        if (start < 0)
+        {
+            return svg;
+        }
+
+        var end = svg.IndexOf('>', start);
+        if (end < 0)
+        {
+            return svg;
+        }
+
+        var tag = svg[start..end];
+        var match = viewBox.Match(tag);
+        if (!match.Success)
+        {
+            return svg;
+        }
+
+        var box = match.Groups["box"].Value.Split([' ', ','], StringSplitOptions.RemoveEmptyEntries);
+        if (box.Length != 4)
+        {
+            return svg;
+        }
+
+        var style = $"fill:{SecurityElement.Escape(fill.Trim())};stroke:none;";
+        return svg.Insert(end + 1, Rect(box, style, prettyPrint, svg.AsSpan(end + 1)));
+    }
+
+    static string Rect(string[] box, string style, bool prettyPrint, ReadOnlySpan<char> after)
+    {
+        var rect = $"<rect x='{box[0]}' y='{box[1]}' width='{box[2]}' height='{box[3]}' style='{style}'/>";
+        if (!prettyPrint)
+        {
+            return rect;
+        }
+
+        // On its own line, indented as Naiad's pretty print lays out the root's children.
+        var newline = after.StartsWith("\r\n") ? "\r\n" : "\n";
+        return $"{newline}  {rect}";
+    }
+
+    static readonly Regex viewBox = new("""viewBox\s*=\s*['"](?<box>[^'"]+)['"]""", RegexOptions.Compiled);
 
     static RenderOptions Map(MermaidOptions options) =>
         new()

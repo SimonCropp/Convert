@@ -20,7 +20,17 @@ public sealed class MermaidOptions
 
     public double PngScale { get; set; } = 2;
 
-    public string PngBackground { get; set; } = "#ffffff";
+    /// <summary>
+    /// Fill behind the diagram, <c>#rrggbb</c>. Naiad draws no canvas and its colours assume a light
+    /// page, so every export gets one unless <see cref="TransparentBackground"/> is set.
+    /// </summary>
+    public string Background { get; set; } = "#ffffff";
+
+    /// <summary>Leave the canvas transparent, as Naiad renders it.</summary>
+    public bool TransparentBackground { get; set; }
+
+    /// <summary>The background to draw, or null for none.</summary>
+    public string? Fill => TransparentBackground ? null : Background;
 
     /// <summary>Set by the conversion: show the PNG-only settings.</summary>
     public bool Png { get; set; }

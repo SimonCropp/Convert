@@ -309,10 +309,10 @@ header:has(+ .container .viewer) {
 
 footer {
     text-align: center;
-    padding: 1rem;
+    /* The container's own bottom padding already separates it from the page above. */
+    padding: 0.5rem 1rem 1rem;
     color: var(--muted-color);
     font-size: 0.875rem;
-    margin-top: 2rem;
 }
 
 footer a {

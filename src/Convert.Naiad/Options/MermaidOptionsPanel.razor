@@ -4,7 +4,11 @@
 @if (Options.Png)
 {
     <NumberOption TValue="double" Label="Scale" Hint="2 renders at twice the diagram's size." Min="0.25" Max="8" Step="0.25" @bind-Value="Options.PngScale" @bind-Value:after="NotifyAsync" />
-    <TextOption Label="Background" Color="true" @bind-Value="Options.PngBackground" @bind-Value:after="NotifyAsync" />
+}
+<FlagOption Label="Keep transparency" @bind-Value="Options.TransparentBackground" @bind-Value:after="NotifyAsync" />
+@if (!Options.TransparentBackground)
+{
+    <TextOption Label="Background" Color="true" @bind-Value="Options.Background" @bind-Value:after="NotifyAsync" />
 }
 @if (Options.Svg)
 {
