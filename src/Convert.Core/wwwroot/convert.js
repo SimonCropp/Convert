@@ -76,3 +76,9 @@ export function acceptDrops(input) {
         input.dispatchEvent(new Event('change', { bubbles: true }));
     });
 }
+
+// Sets the URL fragment without adding a history entry or a navigation. Empty clears it.
+export function replaceHash(fragment) {
+    const url = location.pathname + location.search + (fragment ? '#' + fragment : '');
+    history.replaceState(history.state, '', url);
+}

@@ -19,7 +19,11 @@ public static class SkiaFonts
 
     public static Task<Faces> EnsureAsync()
     {
-        if (load is { IsCompleted: true, IsCompletedSuccessfully: false })
+        if (load is
+            {
+                IsCompleted: true,
+                IsCompletedSuccessfully: false
+            })
         {
             load = null;
         }

@@ -40,6 +40,13 @@ public sealed class BrowserInterop(IJSRuntime runtime) : IAsyncDisposable
         await module.InvokeVoidAsync("acceptDrops", input);
     }
 
+    /// <summary>Sets the URL fragment in place (no history entry, no navigation). Null or empty clears it.</summary>
+    public async Task ReplaceHashAsync(string? fragment)
+    {
+        var module = await Module;
+        await module.InvokeVoidAsync("replaceHash", fragment ?? "");
+    }
+
     public async Task<string?> UserAgentAsync()
     {
         var module = await Module;

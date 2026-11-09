@@ -12,8 +12,12 @@ public partial class Index
     [Inject]
     BrowserInterop Interop { get; set; } = default!;
 
+    [Inject]
+    NavigationManager Navigation { get; set; } = default!;
+
     View view = View.Source;
     Document? lastSource;
+    string? sharedFragment;
 
     enum View
     {
@@ -39,8 +43,59 @@ public partial class Index
         }
     }
 
-    protected override void OnInitialized() =>
+    protected override async Task OnInitializedAsync()
+    {
         Session.Changed += OnSessionChanged;
+        Navigation.LocationChanged += OnLocationChanged;
+        await OpenSharedAsync(Navigation.Uri);
+    }
+
+    // A link pasted into an open tab changes only the fragment: no reload, so open it here too.
+    void OnLocationChanged(object? sender, LocationChangedEventArgs args) =>
+        InvokeAsync(() => OpenSharedAsync(args.Location));
+
+    /// <summary>A shared link carries its file in the fragment: open it, unless it is the one already open.</summary>
+    async Task OpenSharedAsync(string uri)
+    {
+        var fragment = new Uri(uri).Fragment.TrimStart('#');
+        if (fragment == sharedFragment ||
+            !ShareLink.TryDecode(fragment, out var fileName, out var bytes, out var minified))
+        {
+            return;
+        }
+
+        sharedFragment = fragment;
+        // Sent compact to fit the link: laid out again so it reads like a file.
+        if (minified &&
+            Session.Registry.Detect(fileName, bytes) is { } type)
+        {
+            bytes = PrettyPrint.Apply(new Document(fileName, bytes, type), true).Bytes;
+        }
+
+        await Session.LoadAsync(fileName, bytes);
+    }
+
+    /// <summary>
+    /// Keeps the address bar a link to the current file while it is small enough to fit, so copying the
+    /// URL shares it. A larger file, or none, clears the fragment.
+    /// </summary>
+    async Task UpdateShareLinkAsync(Document? source)
+    {
+        string? fragment = null;
+        if (source is not null &&
+            source.Bytes.Length <= 256 * 1024)
+        {
+            fragment = ShareLink.Encode(source);
+        }
+
+        if (fragment == sharedFragment)
+        {
+            return;
+        }
+
+        sharedFragment = fragment;
+        await Interop.ReplaceHashAsync(fragment);
+    }
 
     void OnSessionChanged()
     {
@@ -55,8 +110,13 @@ public partial class Index
             view = View.Source;
         }
 
+        var sourceChanged = !ReferenceEquals(lastSource, Session.Source);
         lastSource = Session.Source;
         InvokeAsync(StateHasChanged);
+        if (sourceChanged)
+        {
+            InvokeAsync(() => UpdateShareLinkAsync(Session.Source));
+        }
     }
 
     void Show(View next) => view = next;
@@ -136,6 +196,9 @@ public partial class Index
         Session.Reset();
     }
 
-    public void Dispose() =>
+    public void Dispose()
+    {
         Session.Changed -= OnSessionChanged;
+        Navigation.LocationChanged -= OnLocationChanged;
+    }
 }
