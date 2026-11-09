@@ -178,7 +178,7 @@ public class BrowserTests
             {
                 Name = "people.csv",
                 MimeType = "text/csv",
-                Buffer = Encoding.UTF8.GetBytes("name,age\nAda,36\n\"Smith, J\",41\n")
+                Buffer = "name,age\nAda,36\n\"Smith, J\",41\n"u8.ToArray()
             });
         await page.WaitForSelectorAsync(".table-preview td:text-is('Smith, J')", new() {Timeout = 60000});
         await Assert.That(await page.Locator(".chip:text-is('GEOJSON')").CountAsync()).IsEqualTo(0);

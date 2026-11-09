@@ -24,4 +24,7 @@ public sealed class MermaidOptions
 
     /// <summary>Set by the conversion: show the PNG-only settings.</summary>
     public bool Png { get; set; }
+
+    /// <summary>Set by the conversion: show the SVG-only settings (layout, HTML labels).</summary>
+    public bool Svg { get; set; }
 }

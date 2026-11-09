@@ -1,0 +1,18 @@
+@namespace Convert
+@inherits OptionControl<bool>
+
+<fieldset class="option option-radios">
+    <legend>@Label</legend>
+    <label>
+        <input type="radio" name="@Id" checked="@Value" @onchange="() => SetAsync(true)" />
+        Indented
+    </label>
+    <label>
+        <input type="radio" name="@Id" checked="@(!Value)" @onchange="() => SetAsync(false)" />
+        Compact
+    </label>
+    @if (Hint is not null)
+    {
+        <p class="option-hint">@Hint</p>
+    }
+</fieldset>

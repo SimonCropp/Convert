@@ -6,9 +6,9 @@ namespace Convert;
 /// </summary>
 static class GeoCsv
 {
-    static readonly HashSet<string> wkt = new(["wkt", "geometry", "geom", "the_geom"], StringComparer.OrdinalIgnoreCase);
-    static readonly HashSet<string> longitude = new(["x", "lon", "lng", "longitude"], StringComparer.OrdinalIgnoreCase);
-    static readonly HashSet<string> latitude = new(["y", "lat", "latitude"], StringComparer.OrdinalIgnoreCase);
+    static HashSet<string> wkt = [with(StringComparer.OrdinalIgnoreCase), "wkt", "geometry", "geom", "the_geom"];
+    static HashSet<string> longitude = [with(StringComparer.OrdinalIgnoreCase), "x", "lon", "lng", "longitude"];
+    static HashSet<string> latitude = [with(StringComparer.OrdinalIgnoreCase), "y", "lat", "latitude"];
 
     public static bool HasGeometry(Document document)
     {

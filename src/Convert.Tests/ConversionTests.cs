@@ -77,7 +77,7 @@ public class ConversionTests
     // Morph sizes a sheet's page from its column widths, which Excel counts in the default font's
     // characters: the width depends on whether Calibri is installed (it is not on CI runners).
     static string ScrubPageWidth(string text) =>
-        System.Text.RegularExpressions.Regex.Replace(text, @"(<body [^>]*max-width: )[\d.]+pt", "$1{scrubbed}");
+        Regex.Replace(text, @"(<body [^>]*max-width: )[\d.]+pt", "$1{scrubbed}");
 
     [Test]
     public async Task MermaidParseErrorIsUserInput()

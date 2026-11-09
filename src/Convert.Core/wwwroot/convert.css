@@ -266,6 +266,14 @@ body.dragging .drop-zone {
     min-height: 24rem;
 }
 
+.editor-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
 .paste-actions {
     display: flex;
     align-items: center;
@@ -394,6 +402,31 @@ body.dragging .drop-zone {
 
 .option-flag .option-hint {
     grid-column: 1 / -1;
+}
+
+.option-radios {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem 1rem;
+}
+
+.option-radios legend {
+    padding: 0;
+    margin-bottom: 0.3rem;
+    font-size: 0.85rem;
+}
+
+.option-radios label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.option-radios .option-hint {
+    flex-basis: 100%;
 }
 
 .option input[type="color"] {

@@ -1,3 +1,8 @@
 ﻿<div class="options-host options-grid"><div class="option option-flag"><input id="option-detect-numbers--true-and-false" type="checkbox" checked blazor:onchange="1" />
-    <label for="option-detect-numbers--true-and-false">Detect numbers, true and false</label><p class="option-hint">Off keeps every value as text.</p></div><div class="option option-flag"><input id="option-pretty-print" type="checkbox" checked blazor:onchange="2" />
-    <label for="option-pretty-print">Pretty print</label><p class="option-hint">Indent the output, one element per line.</p></div></div>
+    <label for="option-detect-numbers--true-and-false">Detect numbers, true and false</label><p class="option-hint">Off keeps every value as text.</p></div><fieldset class="option option-radios"><legend>Layout</legend>
+    <label><input type="radio" name="option-layout" checked blazor:onchange="2" />
+        Indented
+    </label>
+    <label><input type="radio" name="option-layout" blazor:onchange="3" />
+        Compact
+    </label></fieldset></div>

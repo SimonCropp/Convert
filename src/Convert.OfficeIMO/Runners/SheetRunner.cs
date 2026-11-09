@@ -39,7 +39,7 @@ static class SheetRunner
             {
                 for (var column = 0; column < records[0].Count; column++)
                 {
-                    sheet.Cell(1, column + 1).SetBold(true);
+                    sheet.Cell(1, column + 1).SetBold();
                 }
             }
 

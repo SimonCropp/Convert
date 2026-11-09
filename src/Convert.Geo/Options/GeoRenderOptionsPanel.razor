@@ -8,7 +8,7 @@
 <TextOption Label="Stroke" Color="true" @bind-Value="Options.Stroke" @bind-Value:after="NotifyAsync" />
 @if (Options.Svg)
 {
-    <FlagOption Label="Pretty print" Hint="Indent the output, one element per line." @bind-Value="Options.PrettyPrint" @bind-Value:after="NotifyAsync" />
+    <LayoutOption Label="Layout" @bind-Value="Options.PrettyPrint" @bind-Value:after="NotifyAsync" />
 }
 <AdvancedOptions>
     <NumberOption TValue="int" Label="Fill opacity (0–255)" Min="0" Max="255" Step="5" @bind-Value="Options.FillOpacity" @bind-Value:after="NotifyAsync" />

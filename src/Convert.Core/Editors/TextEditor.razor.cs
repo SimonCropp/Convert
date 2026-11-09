@@ -61,6 +61,17 @@ public partial class TextEditor : IDisposable
         await Changed.InvokeAsync(edited);
     }
 
+    // Rewrites the text laid out by PrettyPrint. Text that does not parse is left as it is.
+    Task PrettyPrintAsync()
+    {
+        debounce?.Cancel();
+        pending = false;
+        var edited = PrettyPrint.Apply(Document with { Bytes = Encoding.UTF8.GetBytes(text) }, true);
+        text = edited.Text;
+        shown = edited;
+        return Changed.InvokeAsync(edited);
+    }
+
     public void Dispose()
     {
         debounce?.Cancel();

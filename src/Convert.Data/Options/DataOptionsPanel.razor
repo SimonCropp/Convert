@@ -7,5 +7,5 @@
 }
 @if (Options.ShowPrettyPrint)
 {
-    <FlagOption Label="Pretty print" Hint="Indent the output, one element per line." @bind-Value="Options.PrettyPrint" @bind-Value:after="NotifyAsync" />
+    <LayoutOption Label="Layout" @bind-Value="Options.PrettyPrint" @bind-Value:after="NotifyAsync" />
 }

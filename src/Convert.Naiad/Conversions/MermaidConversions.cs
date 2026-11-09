@@ -10,6 +10,8 @@ sealed class MermaidToSvg : Conversion<MermaidOptions>
     public override IReadOnlyList<string> Assemblies => NaiadPack.SvgAssemblies;
     public override Type OptionsComponent => typeof(MermaidOptionsPanel);
 
+    public override object CreateOptions() => new MermaidOptions { Svg = true };
+
     protected override Task<ConversionOutput> RunAsync(Document source, MermaidOptions options, IProgress<ConversionProgress> progress, Cancel cancel)
     {
         var svg = MermaidRunner.Svg(source.Text, options);

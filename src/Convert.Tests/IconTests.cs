@@ -1,4 +1,3 @@
-using System.IO.Compression;
 using SixLabors.ImageSharp;
 
 /// <summary>The favicon set holds every file its HTML links, and the ICO every size.</summary>
@@ -26,9 +25,9 @@ public class IconTests
         }
 
         await Assert.That(archive.Entries.Select(_ => _.FullName)).IsEquivalentTo(expected);
-        foreach (var (name, size) in new[] { ("apple-touch-icon.png", 180), ("icon-192.png", 192), ("icon-512.png", 512) })
+        foreach (var (name, size) in new[] {("apple-touch-icon.png", 180), ("icon-192.png", 192), ("icon-512.png", 512)})
         {
-            await using var stream = archive.GetEntry(name)!.Open();
+            await using var stream = await archive.GetEntry(name)!.OpenAsync();
             using var image = await Image.LoadAsync(stream);
             await Assert.That((image.Width, image.Height)).IsEqualTo((size, size));
         }

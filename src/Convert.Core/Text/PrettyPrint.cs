@@ -192,25 +192,28 @@ public static class PrettyPrint
     }
 
     // Block-level elements: whitespace beside these is not rendered, so they may start their own line.
-    static readonly HashSet<string> blocks = new(StringComparer.OrdinalIgnoreCase)
-    {
+    static readonly HashSet<string> blocks =
+    [
+        with(StringComparer.OrdinalIgnoreCase),
         "html", "head", "body", "title", "meta", "link", "base", "style", "script", "noscript", "template",
         "header", "footer", "main", "nav", "section", "article", "aside", "address", "hgroup", "search",
         "div", "p", "h1", "h2", "h3", "h4", "h5", "h6", "hr", "pre", "blockquote", "figure", "figcaption",
         "ul", "ol", "li", "dl", "dt", "dd", "menu", "details", "summary", "form", "fieldset", "legend",
         "table", "caption", "colgroup", "col", "thead", "tbody", "tfoot", "tr", "td", "th"
-    };
+    ];
 
-    static readonly HashSet<string> voids = new(StringComparer.OrdinalIgnoreCase)
-    {
+    static readonly HashSet<string> voids =
+    [
+        with(StringComparer.OrdinalIgnoreCase),
         "area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "source", "track", "wbr"
-    };
+    ];
 
     // Copied verbatim to their closing tag: whitespace inside them is content.
-    static readonly HashSet<string> verbatim = new(StringComparer.OrdinalIgnoreCase)
-    {
+    static readonly HashSet<string> verbatim =
+    [
+        with(StringComparer.OrdinalIgnoreCase),
         "pre", "textarea", "script", "style"
-    };
+    ];
 
     /// <summary>
     /// HTML with each block-level element on its own line, indented by nesting. Only the whitespace
@@ -367,7 +370,7 @@ public static class PrettyPrint
         return builder.ToString();
     }
 
-    static string TagName(ReadOnlySpan<char> afterBracket)
+    static string TagName(CharSpan afterBracket)
     {
         var length = 0;
         while (length < afterBracket.Length && (char.IsLetterOrDigit(afterBracket[length]) || afterBracket[length] is '-' or ':'))

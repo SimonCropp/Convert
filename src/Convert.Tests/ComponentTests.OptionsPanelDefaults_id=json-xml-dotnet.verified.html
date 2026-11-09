@@ -1,2 +1,7 @@
-﻿<div class="options-host options-grid"><div class="option option-flag"><input id="option-pretty-print" type="checkbox" checked blazor:onchange="1" />
-    <label for="option-pretty-print">Pretty print</label><p class="option-hint">Indent the output, one element per line.</p></div></div>
+﻿<div class="options-host options-grid"><fieldset class="option option-radios"><legend>Layout</legend>
+    <label><input type="radio" name="option-layout" checked blazor:onchange="1" />
+        Indented
+    </label>
+    <label><input type="radio" name="option-layout" blazor:onchange="2" />
+        Compact
+    </label></fieldset></div>

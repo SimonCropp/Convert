@@ -2,7 +2,7 @@
 @inherits OptionsPanel<MarkdownHtmlOptions>
 
 <FlagOption Label="Full HTML document" Hint="With <html>, <head> and a readable stylesheet; off for a body fragment." @bind-Value="Options.FullDocument" @bind-Value:after="NotifyAsync" />
-<FlagOption Label="Pretty print" Hint="Indent the output, one element per line." @bind-Value="Options.PrettyPrint" @bind-Value:after="NotifyAsync" />
+<LayoutOption Label="Layout" @bind-Value="Options.PrettyPrint" @bind-Value:after="NotifyAsync" />
 <AdvancedOptions>
     <FlagOption Label="Advanced extensions" Hint="Tables, footnotes, task lists, auto-links and more." @bind-Value="Options.AdvancedExtensions" @bind-Value:after="NotifyAsync" />
     <FlagOption Label="Pipe tables" @bind-Value="Options.PipeTables" @bind-Value:after="NotifyAsync" />

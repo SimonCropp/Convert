@@ -11,7 +11,7 @@ static class XmlFormat
     const string rootName = "root";
     const string itemName = "item";
 
-    public static JsonNode? Read(string text, bool infer)
+    public static JsonNode Read(string text, bool infer)
     {
         XDocument document;
         try
