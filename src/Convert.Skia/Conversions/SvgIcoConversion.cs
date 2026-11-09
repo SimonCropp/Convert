@@ -18,6 +18,6 @@ sealed class SvgIcoConversion : Conversion<NoOptions>
         var fonts = await SkiaFonts.EnsureAsync();
         progress.Report(new("Drawing", "ICO"));
         var bytes = SvgRunner.Ico(document.Text, fonts);
-        return new(new Document(FileTypes.Ico.FileNameFor(document.FileName), bytes, FileTypes.Ico));
+        return new(new(FileTypes.Ico.FileNameFor(document.FileName), bytes, FileTypes.Ico));
     }
 }

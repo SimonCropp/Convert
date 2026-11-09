@@ -19,6 +19,6 @@ sealed class MermaidToPdf : Conversion<MermaidOptions>
         progress.Report(new("Drawing", "PDF"));
         var svg = MermaidRunner.PlainSvg(source.Text, options);
         var bytes = SvgRunner.Pdf(svg, fonts);
-        return new(new Document(FileTypes.Pdf.FileNameFor(source.FileName), bytes, FileTypes.Pdf));
+        return new(new(FileTypes.Pdf.FileNameFor(source.FileName), bytes, FileTypes.Pdf));
     }
 }

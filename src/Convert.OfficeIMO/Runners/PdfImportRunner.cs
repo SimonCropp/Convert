@@ -68,7 +68,7 @@ static class PdfImportRunner
     static ConversionOutput Html(PdfDocument pdf, string name, Cancel cancel)
     {
         var html = pdf.ToHtml(
-            new PdfHtmlExportOptions
+            new()
             {
                 FailOnLoss = false,
                 Profile = PdfHtmlProfile.PositionedReview,
@@ -112,7 +112,7 @@ static class PdfImportRunner
     static ConversionOutput Png(PdfDocument pdf, Document document, int dpi, OfficeImoFonts.FontSet fonts, Cancel cancel)
     {
         var images = pdf.ExportImages(
-            new PdfImageExportOptions
+            new()
             {
                 FailOnLoss = false,
                 Format = OfficeImageExportFormat.Png,

@@ -46,6 +46,6 @@ sealed class MermaidToPng : Conversion<MermaidOptions>
             TransparentBackground = options.TransparentBackground
         };
         var png = SvgRunner.Raster(svg, FileTypes.Png, raster, fonts);
-        return new(new Document(FileTypes.Png.FileNameFor(source.FileName), png, FileTypes.Png));
+        return new(new(FileTypes.Png.FileNameFor(source.FileName), png, FileTypes.Png));
     }
 }

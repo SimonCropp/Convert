@@ -378,7 +378,7 @@ public class BrowserTests
         await page.WaitForSelectorAsync(".editor-dirty", new() {Timeout = 60000});
 
         var download = await ConvertAndDownloadAsync(page, "TXT", null, ".txt");
-        var text = await File.ReadAllTextAsync((await download.PathAsync()));
+        var text = await File.ReadAllTextAsync(await download.PathAsync());
         // The heading is "pta" in all-caps style; text output drops the style.
         await Assert.That(text).Contains("pta EDITED");
     }

@@ -1,6 +1,3 @@
-using Tomlyn;
-using Tomlyn.Model;
-
 namespace Convert;
 
 /// <summary>
@@ -58,8 +55,14 @@ static class TomlFormat
         {
             JsonObject value => Table(value),
             null => new(),
-            JsonArray => new TomlTable { ["items"] = Value(tree)! },
-            _ => new TomlTable { ["value"] = Value(tree)! }
+            JsonArray => new()
+            {
+                ["items"] = Value(tree)!
+            },
+            _ => new()
+            {
+                ["value"] = Value(tree)!
+            }
         };
         return TomlSerializer.Serialize(root);
     }
@@ -94,7 +97,7 @@ static class TomlFormat
                     var tables = new TomlTableArray();
                     foreach (var item in items)
                     {
-                        tables.Add(Table((JsonObject) item!));
+                        tables.Add(Table((JsonObject)item!));
                     }
 
                     return tables;

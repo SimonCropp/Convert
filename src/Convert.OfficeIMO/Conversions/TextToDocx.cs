@@ -10,5 +10,5 @@ sealed class TextToDocx : Conversion<NoOptions>
     public override IReadOnlyList<string> Assemblies => OfficeImoPack.TextWord;
 
     protected override Task<ConversionOutput> RunAsync(Document source, NoOptions options, IProgress<ConversionProgress> progress, Cancel cancel) =>
-        Task.FromResult(new ConversionOutput(new Document(FileTypes.Docx.FileNameFor(source.FileName), TextRunner.ToDocx(source.Text, cancel), FileTypes.Docx)));
+        Task.FromResult(new ConversionOutput(new(FileTypes.Docx.FileNameFor(source.FileName), TextRunner.ToDocx(source.Text, cancel), FileTypes.Docx)));
 }

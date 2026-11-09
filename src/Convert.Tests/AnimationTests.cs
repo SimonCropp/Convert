@@ -21,7 +21,7 @@ public class AnimationTests
     // Three 8×8 frames, red, green and blue.
     static byte[] AnimatedGif()
     {
-        using var image = new Image<Rgba32>(8, 8, new Rgba32(255, 0, 0));
+        using var image = new Image<Rgba32>(8, 8, new(255, 0, 0));
         foreach (var color in new[] { new Rgba32(0, 255, 0), new Rgba32(0, 0, 255) })
         {
             using var frame = new Image<Rgba32>(8, 8, color);

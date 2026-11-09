@@ -72,7 +72,7 @@ static class XmlFormat
         var root = tree is JsonObject { Count: 1 } single
             ? Element(single.First().Key, single.First().Value)
             : Element(rootName, tree);
-        var document = new XDocument(new XDeclaration("1.0", "utf-8", null), root);
+        var document = new XDocument(new("1.0", "utf-8", null), root);
         var writer = new Utf8StringWriter();
         using (var xml = XmlWriter.Create(writer, new() { Indent = indent, IndentChars = "  ", NewLineChars = "\n" }))
         {

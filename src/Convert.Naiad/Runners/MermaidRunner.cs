@@ -72,7 +72,7 @@ static class MermaidRunner
         return svg.Insert(end + 1, Rect(box, style, prettyPrint, svg.AsSpan(end + 1)));
     }
 
-    static string Rect(string[] box, string style, bool prettyPrint, ReadOnlySpan<char> after)
+    static string Rect(string[] box, string style, bool prettyPrint, CharSpan after)
     {
         var rect = $"<rect x='{box[0]}' y='{box[1]}' width='{box[2]}' height='{box[3]}' style='{style}'/>";
         if (!prettyPrint)

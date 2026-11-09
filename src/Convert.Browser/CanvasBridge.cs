@@ -3,8 +3,6 @@ namespace Convert;
 /// <summary>The pack's JavaScript module, <c>_content/Convert.Browser/browser.js</c>, imported on first use.</summary>
 sealed class CanvasBridge
 {
-    Task<IJSObjectReference>? import;
-
     public IJSRuntime? Runtime { get; set; }
 
     Task<IJSObjectReference> Module
@@ -12,7 +10,7 @@ sealed class CanvasBridge
         get
         {
             var runtime = Runtime ?? throw new InvalidOperationException("The browser pack has not been loaded.");
-            return import ??= runtime.InvokeAsync<IJSObjectReference>("import", "./_content/Convert.Browser/browser.js").AsTask();
+            return field ??= runtime.InvokeAsync<IJSObjectReference>("import", "./_content/Convert.Browser/browser.js").AsTask();
         }
     }
 

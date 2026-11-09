@@ -10,5 +10,5 @@ sealed class MarkdownToDocx : Conversion<NoOptions>
     public override IReadOnlyList<string> Assemblies => OfficeImoPack.MarkdownWord;
 
     protected override Task<ConversionOutput> RunAsync(Document source, NoOptions options, IProgress<ConversionProgress> progress, Cancel cancel) =>
-        Task.FromResult(new ConversionOutput(new Document(FileTypes.Docx.FileNameFor(source.FileName), MarkdownRunner.ToDocx(source.Text), FileTypes.Docx)));
+        Task.FromResult(new ConversionOutput(new(FileTypes.Docx.FileNameFor(source.FileName), MarkdownRunner.ToDocx(source.Text), FileTypes.Docx)));
 }

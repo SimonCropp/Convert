@@ -32,7 +32,12 @@ static class MarkdownRunner
     {
         Guard(markdown);
         var document = MarkdownDocument.Parse(markdown);
-        using var word = document.ToWord(new MarkdownWordExportOptions { FailOnLoss = false, PreferNarrativeSingleLineDefinitions = true });
+        using var word = document.ToWord(
+            new()
+            {
+                FailOnLoss = false,
+                PreferNarrativeSingleLineDefinitions = true
+            });
         return word.ToBytes();
     }
 

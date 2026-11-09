@@ -30,8 +30,11 @@ public partial class Index
     {
         get
         {
-            if (Session.Source is { } source &&
-                Session.Target is { } target)
+            if (Session is
+                {
+                    Source: { } source,
+                    Target: { } target
+                })
             {
                 return Session.Registry
                     .TargetsFor(source)
@@ -43,11 +46,11 @@ public partial class Index
         }
     }
 
-    protected override async Task OnInitializedAsync()
+    protected override Task OnInitializedAsync()
     {
         Session.Changed += OnSessionChanged;
         Navigation.LocationChanged += OnLocationChanged;
-        await OpenSharedAsync(Navigation.Uri);
+        return OpenSharedAsync(Navigation.Uri);
     }
 
     // A link pasted into an open tab changes only the fragment: no reload, so open it here too.
@@ -55,13 +58,13 @@ public partial class Index
         InvokeAsync(() => OpenSharedAsync(args.Location));
 
     /// <summary>A shared link carries its file in the fragment: open it, unless it is the one already open.</summary>
-    async Task OpenSharedAsync(string uri)
+    Task OpenSharedAsync(string uri)
     {
         var fragment = new Uri(uri).Fragment.TrimStart('#');
         if (fragment == sharedFragment ||
             !ShareLink.TryDecode(fragment, out var fileName, out var bytes, out var minified))
         {
-            return;
+            return Task.CompletedTask;
         }
 
         sharedFragment = fragment;
@@ -72,14 +75,14 @@ public partial class Index
             bytes = PrettyPrint.Apply(new Document(fileName, bytes, type), true).Bytes;
         }
 
-        await Session.LoadAsync(fileName, bytes);
+        return Session.LoadAsync(fileName, bytes);
     }
 
     /// <summary>
     /// Keeps the address bar a link to the current file while it is small enough to fit, so copying the
     /// URL shares it. A larger file, or none, clears the fragment.
     /// </summary>
-    async Task UpdateShareLinkAsync(Document? source)
+    Task UpdateShareLinkAsync(Document? source)
     {
         string? fragment = null;
         if (source is not null &&
@@ -90,11 +93,11 @@ public partial class Index
 
         if (fragment == sharedFragment)
         {
-            return;
+            return Task.CompletedTask;
         }
 
         sharedFragment = fragment;
-        await Interop.ReplaceHashAsync(fragment);
+        return Interop.ReplaceHashAsync(fragment);
     }
 
     void OnSessionChanged()

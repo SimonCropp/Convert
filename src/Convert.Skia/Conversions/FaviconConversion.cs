@@ -40,6 +40,6 @@ sealed class FaviconConversion(FileType source) : Conversion<NoOptions>
             bytes = SkiaRunner.Favicons(document.Bytes, name);
         }
 
-        return new(new Document($"{name}-favicons.zip", bytes, FileTypes.Favicons));
+        return new(new($"{name}-favicons.zip", bytes, FileTypes.Favicons));
     }
 }

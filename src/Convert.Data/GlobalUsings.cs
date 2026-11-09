@@ -5,3 +5,5 @@ global using System.Xml;
 global using System.Xml.Linq;
 global using IconifyBundle;
 global using Microsoft.AspNetCore.Components;
+global using Tomlyn;
+global using Tomlyn.Model;
