@@ -5,7 +5,7 @@
 /// </summary>
 public class GeoSampleTests
 {
-    static string SamplesDirectory => Path.Combine(Fixtures.SrcDirectory, "Convert.Geo", "wwwroot", "samples");
+    static string SamplesDirectory => Path.Combine(ProjectFiles.SolutionDirectory, "Convert.Geo", "wwwroot", "samples");
 
     [Test]
     public async Task EveryFormatHasASample()

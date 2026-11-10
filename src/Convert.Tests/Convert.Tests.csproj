@@ -26,6 +26,7 @@
     <PackageReference Include="Microsoft.Playwright" />
     <PackageReference Include="DiffEngine" />
     <PackageReference Include="ProjectDefaults" PrivateAssets="all" />
+    <PackageReference Include="ProjectFiles" PrivateAssets="all" />
     <ProjectReference Include="..\Convert.Web\Convert.Web.csproj" />
   </ItemGroup>
 

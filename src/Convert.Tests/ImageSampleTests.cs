@@ -5,9 +5,9 @@
 /// </summary>
 public class ImageSampleTests
 {
-    static string SvgPath => Path.Combine(Fixtures.SrcDirectory, "Convert.Skia", "wwwroot", "samples", "sunset.svg");
+    static string SvgPath => Path.Combine(ProjectFiles.SolutionDirectory, "Convert.Skia", "wwwroot", "samples", "sunset.svg");
 
-    static string SamplesDirectory => Path.Combine(Fixtures.SrcDirectory, "Convert.ImageSharp", "wwwroot", "samples");
+    static string SamplesDirectory => Path.Combine(ProjectFiles.SolutionDirectory, "Convert.ImageSharp", "wwwroot", "samples");
 
     [Test]
     public async Task EveryFormatHasASample()

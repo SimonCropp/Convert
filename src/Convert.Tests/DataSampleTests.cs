@@ -4,7 +4,7 @@
 /// </summary>
 public class DataSampleTests
 {
-    static string SamplesDirectory => Path.Combine(Fixtures.SrcDirectory, "Convert.Data", "wwwroot", "samples");
+    static string SamplesDirectory => Path.Combine(ProjectFiles.SolutionDirectory, "Convert.Data", "wwwroot", "samples");
 
     [Test]
     public async Task EveryFormatHasASample()

@@ -7,22 +7,6 @@ static class Fixtures
     public static string Wwwroot { get; } =
         Path.GetFullPath(Path.Combine(Path.GetDirectoryName(typeof(Fixtures).Assembly.Location)!, "..", "blazor-publish", "wwwroot"));
 
-    public static string RepoRoot { get; } = FindRepoRoot();
-
-    public static string SrcDirectory => Path.Combine(RepoRoot, "src");
-
-    static string FindRepoRoot()
-    {
-        var directory = new DirectoryInfo(AppContext.BaseDirectory);
-        while (directory is not null &&
-               !File.Exists(Path.Combine(directory.FullName, "global.json")))
-        {
-            directory = directory.Parent;
-        }
-
-        return directory?.FullName ?? throw new InvalidOperationException("No global.json above the test output.");
-    }
-
     public static byte[] Asset(string relativeUrl) =>
         File.ReadAllBytes(Path.Combine(Wwwroot, relativeUrl.Replace('/', Path.DirectorySeparatorChar)));
 

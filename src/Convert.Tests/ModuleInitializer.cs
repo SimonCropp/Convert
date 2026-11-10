@@ -15,7 +15,7 @@ static partial class ModuleInitializer
 
         // Blazor emits <!--!--> markers between components; they are noise in html snapshots.
         // Registered after HtmlPrettyPrint with ScrubberLocation.First so it runs before the pretty printer.
-        VerifierSettings.AddScrubber("html", _ => _.Replace("<!--!-->", ""), ScrubberLocation.First);
+        VerifierSettings.AddScrubber("html", _ => _.Replace("<!--!-->", ""));
 
         Fixtures.UseDesktopFonts();
     }

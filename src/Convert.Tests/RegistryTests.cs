@@ -72,7 +72,7 @@ public class RegistryTests
         }
 
         var markdown = builder.ToString().ReplaceLineEndings("\n");
-        await File.WriteAllTextAsync(Path.Combine(Fixtures.RepoRoot, "docs", "catalogue.md"), markdown);
+        await File.WriteAllTextAsync(Path.Combine(ProjectFiles.GitRepoDirectory, "docs", "catalogue.md"), markdown);
         await Verify(markdown, "md");
     }
 

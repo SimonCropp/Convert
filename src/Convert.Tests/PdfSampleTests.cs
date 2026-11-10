@@ -4,7 +4,7 @@
 /// </summary>
 public class PdfSampleTests
 {
-    static string SamplePath => Path.Combine(Fixtures.SrcDirectory, "Convert.Browser", "wwwroot", "samples", "sample.pdf");
+    static string SamplePath => Path.Combine(ProjectFiles.SolutionDirectory, "Convert.Browser", "wwwroot", "samples", "sample.pdf");
 
     [Test]
     public async Task SampleExists()

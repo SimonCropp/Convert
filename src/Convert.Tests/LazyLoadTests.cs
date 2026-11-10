@@ -98,7 +98,7 @@ public class LazyLoadTests
     [Test]
     public async Task CsprojListIsTheUnionOfEveryEntry()
     {
-        var csproj = XDocument.Load(Path.Combine(Fixtures.SrcDirectory, "Convert.Web", "Convert.Web.csproj"));
+        var csproj = XDocument.Load(Path.Combine(ProjectFiles.SolutionDirectory, "Convert.Web", "Convert.Web.csproj"));
         var listed = csproj.Descendants("BlazorWebAssemblyLazyLoad")
             .Select(_ => (string) _.Attribute("Include")!)
             .Order(StringComparer.Ordinal)
@@ -231,7 +231,7 @@ public class LazyLoadTests
     {
         string[] heavy = ["Morph", "Naiad", "GeoConvert", "Markdig", "OpenXmlHtml", "OfficeIMO", "SixLabors", "DocumentFormat", "AngleSharp", "SkiaSharp", "Svg", "YamlDotNet", "Tomlyn"];
         var problems = new List<string>();
-        foreach (var project in Directory.GetDirectories(Fixtures.SrcDirectory, "Convert.*"))
+        foreach (var project in Directory.GetDirectories(ProjectFiles.SolutionDirectory, "Convert.*"))
         {
             var files = Directory.GetFiles(project, "*Pack.cs")
                 .Concat(Folder(project, "Conversions"))
@@ -247,7 +247,7 @@ public class LazyLoadTests
                                        trimmed.StartsWith($"@using {_}", StringComparison.Ordinal) ||
                                        trimmed.StartsWith($"@using global::{_}", StringComparison.Ordinal)))
                     {
-                        problems.Add($"{Path.GetRelativePath(Fixtures.SrcDirectory, file)}: {trimmed}");
+                        problems.Add($"{Path.GetRelativePath(ProjectFiles.SolutionDirectory, file)}: {trimmed}");
                     }
                 }
             }
