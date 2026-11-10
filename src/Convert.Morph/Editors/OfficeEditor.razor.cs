@@ -1,7 +1,7 @@
 namespace Convert;
 
-/// <summary>Edits a Word document in Morph's viewer.</summary>
-public partial class DocxEditor
+/// <summary>Edits a Word document or an Excel workbook in Morph's editor.</summary>
+public partial class OfficeEditor
 {
     /// <summary>The document edited.</summary>
     [Parameter, EditorRequired]

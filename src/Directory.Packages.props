@@ -15,7 +15,7 @@
     <!-- Tools wrapped by the packs. -->
     <PackageVersion Include="Markdig" Version="1.6.0" />
     <PackageVersion Include="OpenXmlHtml" Version="1.7.5" />
-    <PackageVersion Include="Morph.Blazor" Version="1.25.1" />
+    <PackageVersion Include="Morph.Blazor" Version="1.26.0" />
     <PackageVersion Include="Naiad" Version="2.3.0" />
     <PackageVersion Include="GeoConvert" Version="2.1.0" />
     <PackageVersion Include="OfficeIMO.Word.Pdf" Version="3.6.0" />

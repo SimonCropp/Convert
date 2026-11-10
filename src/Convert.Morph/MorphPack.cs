@@ -1,4 +1,4 @@
-/// <summary>Word, Excel and PowerPoint through Morph: the viewer, the docx editor and 15 conversions.</summary>
+/// <summary>Word, Excel and PowerPoint through Morph: the viewer, the docx and xlsx editor and 15 conversions.</summary>
 public sealed class MorphPack : IPack
 {
     public static Tool Tool { get; } = new(
@@ -42,7 +42,8 @@ public sealed class MorphPack : IPack
             registry.Add(new Sample(source.DisplayName, source.Icon, $"_content/Morph.Blazor/sample/sample{source.Extension}", $"sample{source.Extension}", "MS Office"));
         }
 
-        registry.Add(new Editor(FileTypes.Docx, Assemblies, typeof(DocxEditor)));
+        registry.Add(new Editor(FileTypes.Docx, Assemblies, typeof(OfficeEditor)));
+        registry.Add(new Editor(FileTypes.Xlsx, Assemblies, typeof(OfficeEditor)));
     }
 
     public void Loaded(IServiceProvider services) =>

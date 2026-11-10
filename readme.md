@@ -29,8 +29,8 @@ the device: every conversion runs in .NET on WebAssembly.
 | SVG, PNG, JPEG, WebP, GIF, BMP, ICO | Data URI | .NET |
 
 The full list, with each route's lazy assemblies, is [docs/catalogue.md](docs/catalogue.md) (generated
-by a test). Text formats can be pasted and edited with a live preview; Word documents can be edited in
-Morph's viewer.
+by a test). Text formats can be pasted and edited with a live preview; Word documents and Excel workbooks can be
+edited in Morph's editor.
 
 ## Architecture
 
