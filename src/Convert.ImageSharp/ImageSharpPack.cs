@@ -63,5 +63,12 @@ public sealed class ImageSharpPack : IPack
                 registry.Add(new ImageSharpConversion(source, target));
             }
         }
+
+        // SkiaPack's sunset.svg in every format (made by ImageSampleTests).
+        foreach (var format in Formats)
+        {
+            var file = format.FileNameFor("sunset");
+            registry.Add(new Sample(format.DisplayName, format.Icon, $"_content/Convert.ImageSharp/samples/{file}", file, "Image"));
+        }
     }
 }

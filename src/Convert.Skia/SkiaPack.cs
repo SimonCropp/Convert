@@ -79,6 +79,9 @@ public sealed class SkiaPack : IPack
         }
 
         registry.Add(new Preview(FileTypes.Favicons, [], typeof(ZipPreview)));
+
+        // The source of ImageSharpPack's image samples (made from it by ImageSampleTests).
+        registry.Add(new Sample(FileTypes.Svg.DisplayName, FileTypes.Svg.Icon, "_content/Convert.Skia/samples/sunset.svg", "sunset.svg", "Image"));
     }
 
     public void Loaded(IServiceProvider services) =>

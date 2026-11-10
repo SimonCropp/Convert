@@ -1,5 +1,3 @@
-namespace Convert;
-
 /// <summary>Mermaid diagrams to SVG, PNG and PDF with Naiad, a managed Mermaid renderer (PNG and PDF drawn by Skia).</summary>
 public sealed class NaiadPack : IPack
 {

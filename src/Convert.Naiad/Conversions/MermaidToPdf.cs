@@ -1,5 +1,3 @@
-namespace Convert;
-
 /// <summary>Naiad's SVG drawn into Skia's PDF backend: a vector PDF of the diagram.</summary>
 sealed class MermaidToPdf : Conversion<MermaidOptions>
 {

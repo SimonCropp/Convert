@@ -1,5 +1,3 @@
-namespace Convert;
-
 /// <summary>Mirrors Naiad's <c>RenderOptions</c> with BCL types only.</summary>
 public sealed class MermaidOptions
 {

@@ -83,7 +83,7 @@ static class ImageSharpRunner
             "ani" => new AniEncoder(),
             "tga" => new TgaEncoder(),
             "qoi" => new QoiEncoder(),
-            "pnm" => new PbmEncoder(),
+            "pnm" => new PbmEncoder { Encoding = PbmEncoding.Binary },
             "exr" => new ExrEncoder(),
             _ => throw new NotSupportedException($"ImageSharp does not write {target.DisplayName} here.")
         };

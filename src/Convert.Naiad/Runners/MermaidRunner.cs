@@ -1,9 +1,3 @@
-using System.Security;
-using System.Text.RegularExpressions;
-using Naiad;
-
-namespace Convert;
-
 /// <summary>The only place Naiad's namespace is used. A parse error is the user's input, not a bug.</summary>
 static class MermaidRunner
 {
@@ -31,7 +25,11 @@ static class MermaidRunner
     /// <summary>The preview: offline-safe, with no Font Awesome import, on the default background.</summary>
     public static string Preview(string mermaid)
     {
-        var svg = Guard(() => Mermaid.Render(mermaid, new() { AllowHtmlElements = false }));
+        var svg = Guard(() => Mermaid.Render(
+            mermaid, new()
+            {
+                AllowHtmlElements = false
+            }));
         return WithBackground(svg, new MermaidOptions().Fill, false);
     }
 
@@ -89,7 +87,7 @@ static class MermaidRunner
         return $"{newline}  {rect}";
     }
 
-    static readonly Regex viewBox = new("""viewBox\s*=\s*['"](?<box>[^'"]+)['"]""", RegexOptions.Compiled);
+    static Regex viewBox = new("""viewBox\s*=\s*['"](?<box>[^'"]+)['"]""", RegexOptions.Compiled);
 
     static RenderOptions Map(MermaidOptions options) =>
         new()
