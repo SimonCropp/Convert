@@ -6,7 +6,7 @@
     <AssemblyVersion>1.0.0</AssemblyVersion>
     <RootNamespace>Convert</RootNamespace>
     <LangVersion>preview</LangVersion>
-    <Description>Convert, edit and render files entirely in the browser</Description>
+    <Description>Convert and render files entirely in the browser</Description>
     <ImplicitUsings>enable</ImplicitUsings>
     <ResolveAssemblyReferencesSilent>true</ResolveAssemblyReferencesSilent>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>

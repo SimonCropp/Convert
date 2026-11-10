@@ -1,10 +1,32 @@
-﻿<div class="options-host options-grid"><div class="option"><label for="option-scale">Scale</label>
-    <input id="option-scale" type="number" value="2" min="0.25" max="8" step="0.25" blazor:onchange="1" /><p class="option-hint">2 renders at twice the diagram's size.</p></div><div class="option option-flag"><input id="option-keep-transparency" type="checkbox" blazor:onchange="2" />
-    <label for="option-keep-transparency">Keep transparency</label></div><div class="option"><label for="option-background">Background</label>
-    <input id="option-background" type="color" value="#ffffff" blazor:onchange="3" /></div><details class="advanced-options"><summary>More options</summary>
-    <div class="options-grid"><div class="option"><label for="option-font-size">Font size</label>
-    <input id="option-font-size" type="number" value="14" min="6" max="48" step="1" blazor:onchange="4" /></div>
-    <div class="option"><label for="option-font-family">Font family</label>
-    <input id="option-font-family" type="text" value="Arial, sans-serif" blazor:onchange="5" /></div>
-    <div class="option"><label for="option-padding">Padding</label>
-    <input id="option-padding" type="number" value="20" min="0" max="200" step="1" blazor:onchange="6" /></div></div></details></div>
+﻿<div class="options-host options-grid">
+  <div class="option">
+    <label for="option-scale">Scale</label>
+    <input id="option-scale" type="number" value="2" min="0.25" max="8" step="0.25" blazor:onchange="1">
+    <p class="option-hint">2 renders at twice the diagram's size.</p>
+  </div>
+  <div class="option option-flag">
+    <input id="option-keep-transparency" type="checkbox" blazor:onchange="2">
+    <label for="option-keep-transparency">Keep transparency</label>
+  </div>
+  <div class="option">
+    <label for="option-background">Background</label>
+    <input id="option-background" type="color" value="#ffffff" blazor:onchange="3">
+  </div>
+  <details class="advanced-options">
+    <summary>More options</summary>
+    <div class="options-grid">
+      <div class="option">
+        <label for="option-font-size">Font size</label>
+        <input id="option-font-size" type="number" value="14" min="6" max="48" step="1" blazor:onchange="4">
+      </div>
+      <div class="option">
+        <label for="option-font-family">Font family</label>
+        <input id="option-font-family" type="text" value="Arial, sans-serif" blazor:onchange="5">
+      </div>
+      <div class="option">
+        <label for="option-padding">Padding</label>
+        <input id="option-padding" type="number" value="20" min="0" max="200" step="1" blazor:onchange="6">
+      </div>
+    </div>
+  </details>
+</div>

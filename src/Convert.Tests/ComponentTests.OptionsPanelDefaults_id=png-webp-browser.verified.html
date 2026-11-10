@@ -1,4 +1,16 @@
-﻿<div class="options-host options-grid"><div class="option"><label for="option-scale">Scale</label>
-    <input id="option-scale" type="number" value="1" min="0.1" max="8" step="0.25" blazor:onchange="1" /><p class="option-hint">1 keeps the source size; 2 doubles it.</p></div><div class="option"><label for="option-quality">Quality</label>
-    <input id="option-quality" type="number" value="92" min="1" max="100" step="1" blazor:onchange="2" /><p class="option-hint">1–100; higher is larger and sharper.</p></div><div class="option option-flag"><input id="option-keep-transparency" type="checkbox" checked blazor:onchange="3" />
-    <label for="option-keep-transparency">Keep transparency</label></div></div>
+﻿<div class="options-host options-grid">
+  <div class="option">
+    <label for="option-scale">Scale</label>
+    <input id="option-scale" type="number" value="1" min="0.1" max="8" step="0.25" blazor:onchange="1">
+    <p class="option-hint">1 keeps the source size; 2 doubles it.</p>
+  </div>
+  <div class="option">
+    <label for="option-quality">Quality</label>
+    <input id="option-quality" type="number" value="92" min="1" max="100" step="1" blazor:onchange="2">
+    <p class="option-hint">1–100; higher is larger and sharper.</p>
+  </div>
+  <div class="option option-flag">
+    <input id="option-keep-transparency" type="checkbox" checked="" blazor:onchange="3">
+    <label for="option-keep-transparency">Keep transparency</label>
+  </div>
+</div>

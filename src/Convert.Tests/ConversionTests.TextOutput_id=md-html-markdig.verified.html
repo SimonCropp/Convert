@@ -1,63 +1,68 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<style>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
 body { font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; line-height: 1.55; max-width: 46rem; margin: 1.5rem auto; padding: 0 1rem; color: #222; }
 pre, code { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.9em; }
 pre { background: #f5f5f5; padding: 0.75rem; overflow: auto; border-radius: 4px; }
 table { border-collapse: collapse; } th, td { border: 1px solid #ccc; padding: 0.3rem 0.6rem; }
 blockquote { margin-left: 0; padding-left: 1rem; border-left: 3px solid #ccc; color: #555; }
 img { max-width: 100%; }
-</style>
-</head>
-<body>
-<h1 id="convert">Convert</h1>
-<p>Convert, edit and render files <strong>entirely in the browser</strong>. Nothing you open leaves your device.</p>
-<h2 id="what-it-does">What it does</h2>
-<ol>
-<li>Drop a file, or paste some text.</li>
-<li>Pick a format to convert to.</li>
-<li>Pick a tool when more than one can do it, and set its options.</li>
-<li>Preview the result and download it.</li>
-</ol>
-<h2 id="formats">Formats</h2>
-<table>
-<thead>
-<tr>
-<th>Source</th>
-<th>Targets</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Word, Excel, PowerPoint</td>
-<td>PDF, PNG, HTML, Markdown, text</td>
-</tr>
-<tr>
-<td>Markdown</td>
-<td>HTML, Word</td>
-</tr>
-<tr>
-<td>Mermaid</td>
-<td>SVG, PNG</td>
-</tr>
-<tr>
-<td>GeoJSON, KML, GPX, …</td>
-<td>each other, PNG, SVG</td>
-</tr>
-</tbody>
-</table>
-<blockquote>
-<p>Every conversion runs in WebAssembly, on your machine.</p>
-</blockquote>
-<ul class="contains-task-list">
-<li class="task-list-item"><input disabled="disabled" type="checkbox" checked="checked" /> Single-hop conversions</li>
-<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Chained conversions</li>
-</ul>
-<pre><code class="language-csharp">var html = Markdown.ToHtml(&quot;# Hello&quot;);
-</code></pre>
 
-</body>
+    </style>
+  </head>
+  <body>
+    <h1 id="convert">Convert</h1>
+    <p>Convert and render files
+      <strong>entirely in the browser</strong>. Nothing you open leaves your device.</p>
+    <h2 id="what-it-does">What it does</h2>
+    <ol>
+      <li>Drop a file, or paste some text.</li>
+      <li>Pick a format to convert to.</li>
+      <li>Pick a tool when more than one can do it, and set its options.</li>
+      <li>Preview the result and download it.</li>
+    </ol>
+    <h2 id="formats">Formats</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Source</th>
+          <th>Targets</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Word, Excel, PowerPoint</td>
+          <td>PDF, PNG, HTML, Markdown, text</td>
+        </tr>
+        <tr>
+          <td>Markdown</td>
+          <td>HTML, Word</td>
+        </tr>
+        <tr>
+          <td>Mermaid</td>
+          <td>SVG, PNG</td>
+        </tr>
+        <tr>
+          <td>GeoJSON, KML, GPX, …</td>
+          <td>each other, PNG, SVG</td>
+        </tr>
+      </tbody>
+    </table>
+    <blockquote>
+      <p>Every conversion runs in WebAssembly, on your machine.</p>
+    </blockquote>
+    <ul class="contains-task-list">
+      <li class="task-list-item">
+        <input disabled="disabled" type="checkbox" checked="checked">
+        Single-hop conversions</li>
+      <li class="task-list-item">
+        <input disabled="disabled" type="checkbox">
+        Chained conversions</li>
+    </ul>
+    <pre><code class="language-csharp">var html = Markdown.ToHtml("# Hello");
+</code></pre>
+  </body>
 </html>

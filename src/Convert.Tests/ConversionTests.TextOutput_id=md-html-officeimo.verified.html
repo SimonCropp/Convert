@@ -1,2 +1,48 @@
-﻿<article class="markdown-body"><h1 id="convert">Convert</h1><p>Convert, edit and render files <strong>entirely in the browser</strong>. Nothing you open leaves your device.</p><h2 id="what-it-does">What it does</h2><ol><li>Drop a file, or paste some text.</li><li>Pick a format to convert to.</li><li>Pick a tool when more than one can do it, and set its options.</li><li>Preview the result and download it.</li></ol><h2 id="formats">Formats</h2><table><thead><tr><th>Source</th><th>Targets</th></tr></thead><tbody><tr><td>Word, Excel, PowerPoint</td><td>PDF, PNG, HTML, Markdown, text</td></tr><tr><td>Markdown</td><td>HTML, Word</td></tr><tr><td>Mermaid</td><td>SVG, PNG</td></tr><tr><td>GeoJSON, KML, GPX, …</td><td>each other, PNG, SVG</td></tr></tbody></table><blockquote><p>Every conversion runs in WebAssembly, on your machine.</p></blockquote><ul><li>[x] Single-hop conversions</li><li>[ ] Chained conversions</li></ul><pre><code class="language-csharp">var html = Markdown.ToHtml(&quot;# Hello&quot;);
-</code></pre></article>
+﻿<article class="markdown-body">
+  <h1 id="convert">Convert</h1>
+  <p>Convert and render files
+    <strong>entirely in the browser</strong>. Nothing you open leaves your device.</p>
+  <h2 id="what-it-does">What it does</h2>
+  <ol>
+    <li>Drop a file, or paste some text.</li>
+    <li>Pick a format to convert to.</li>
+    <li>Pick a tool when more than one can do it, and set its options.</li>
+    <li>Preview the result and download it.</li>
+  </ol>
+  <h2 id="formats">Formats</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Source</th>
+        <th>Targets</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Word, Excel, PowerPoint</td>
+        <td>PDF, PNG, HTML, Markdown, text</td>
+      </tr>
+      <tr>
+        <td>Markdown</td>
+        <td>HTML, Word</td>
+      </tr>
+      <tr>
+        <td>Mermaid</td>
+        <td>SVG, PNG</td>
+      </tr>
+      <tr>
+        <td>GeoJSON, KML, GPX, …</td>
+        <td>each other, PNG, SVG</td>
+      </tr>
+    </tbody>
+  </table>
+  <blockquote>
+    <p>Every conversion runs in WebAssembly, on your machine.</p>
+  </blockquote>
+  <ul>
+    <li>[x] Single-hop conversions</li>
+    <li>[ ] Chained conversions</li>
+  </ul>
+  <pre><code class="language-csharp">var html = Markdown.ToHtml("# Hello");
+</code></pre>
+</article>

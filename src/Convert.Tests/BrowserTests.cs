@@ -10,7 +10,7 @@ public class BrowserTests
     static int port;
     static IPlaywright? playwright;
     static IBrowser? browser;
-    static readonly HashSet<string> lazyNames = [.. Fixtures.Registry.AllAssemblies.Select(_ => _.Replace(".wasm", ""))];
+    static HashSet<string> lazyNames = [.. Fixtures.Registry.AllAssemblies.Select(_ => _.Replace(".wasm", ""))];
 
     static string Url => $"http://localhost:{port}/";
 

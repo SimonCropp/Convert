@@ -1,3 +1,15 @@
-﻿<div class="options-host options-grid"><div class="option"><label for="option-pdf-profile">PDF profile</label>
-    <select id="option-pdf-profile" blazor:onchange="1"><option value="0" selected>Standard PDF 1.7</option><option value="1">Archive (PDF/A-2b)</option><option value="2">Accessible (PDF/UA-1)</option></select></div><div class="option option-flag"><input id="option-quick-preview" type="checkbox" blazor:onchange="2" />
-    <label for="option-quick-preview">Quick preview</label><p class="option-hint">Up to 250 rows per sheet. Workbooks over 50,000 cells are always previewed this way.</p></div></div>
+﻿<div class="options-host options-grid">
+  <div class="option">
+    <label for="option-pdf-profile">PDF profile</label>
+    <select id="option-pdf-profile" blazor:onchange="1">
+      <option value="0" selected="">Standard PDF 1.7</option>
+      <option value="1">Archive (PDF/A-2b)</option>
+      <option value="2">Accessible (PDF/UA-1)</option>
+    </select>
+  </div>
+  <div class="option option-flag">
+    <input id="option-quick-preview" type="checkbox" blazor:onchange="2">
+    <label for="option-quick-preview">Quick preview</label>
+    <p class="option-hint">Up to 250 rows per sheet. Workbooks over 50,000 cells are always previewed this way.</p>
+  </div>
+</div>

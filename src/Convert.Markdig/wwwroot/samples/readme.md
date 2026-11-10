@@ -1,6 +1,6 @@
 # Convert
 
-Convert, edit and render files **entirely in the browser**. Nothing you open leaves your device.
+Convert and render files **entirely in the browser**. Nothing you open leaves your device.
 
 ## What it does
 

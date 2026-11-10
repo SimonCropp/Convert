@@ -1,4 +1,18 @@
-﻿<div class="options-host options-grid"><div class="option"><label for="option-resolution">Resolution</label>
-    <select id="option-resolution" blazor:onchange="1"><option value="0">96 DPI — screen</option><option value="1" selected>150 DPI — default</option><option value="2">300 DPI — print</option></select></div>
-<div class="option"><label for="option-page-area">Page area</label>
-    <select id="option-page-area" blazor:onchange="2"><option value="0" selected>Whole page — default</option><option value="1">Content only — margins cropped</option><option value="2">Content with header and footer</option></select></div></div>
+﻿<div class="options-host options-grid">
+  <div class="option">
+    <label for="option-resolution">Resolution</label>
+    <select id="option-resolution" blazor:onchange="1">
+      <option value="0">96 DPI — screen</option>
+      <option value="1" selected="">150 DPI — default</option>
+      <option value="2">300 DPI — print</option>
+    </select>
+  </div>
+  <div class="option">
+    <label for="option-page-area">Page area</label>
+    <select id="option-page-area" blazor:onchange="2">
+      <option value="0" selected="">Whole page — default</option>
+      <option value="1">Content only — margins cropped</option>
+      <option value="2">Content with header and footer</option>
+    </select>
+  </div>
+</div>
