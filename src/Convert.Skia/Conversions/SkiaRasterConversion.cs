@@ -1,6 +1,4 @@
-﻿namespace Convert;
-
-/// <summary>A raster image decoded and re-encoded by Skia.</summary>
+﻿/// <summary>A raster image decoded and re-encoded by Skia.</summary>
 sealed class SkiaRasterConversion(FileType source, FileType target) : Conversion<RasterOptions>
 {
     public override string Id => $"{source.Id}-{target.Id}-skia";

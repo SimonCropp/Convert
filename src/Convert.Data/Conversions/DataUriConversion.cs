@@ -1,5 +1,3 @@
-namespace Convert;
-
 /// <summary>A file as a <c>data:</c> URL, for pasting into HTML or CSS.</summary>
 sealed class DataUriConversion(FileType source) : Conversion<NoOptions>
 {

@@ -1,6 +1,4 @@
-﻿namespace Convert;
-
-sealed class MarkdownToDocx : Conversion<NoOptions>
+﻿sealed class MarkdownToDocx : Conversion<NoOptions>
 {
     public override string Id => "md-docx-officeimo";
     public override FileType Source => FileTypes.Markdown;

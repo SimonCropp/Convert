@@ -1,5 +1,3 @@
-namespace Convert;
-
 /// <summary>
 /// Reads with one format and writes with another. Each format is its own class, so a route's first call
 /// resolves only its two formats' libraries (Mono resolves a method's locals when it first runs it).

@@ -1,6 +1,4 @@
-﻿namespace Convert;
-
-sealed class HtmlToMarkdown : Conversion<NoOptions>
+﻿sealed class HtmlToMarkdown : Conversion<NoOptions>
 {
     public override string Id => "html-md-officeimo";
     public override FileType Source => FileTypes.Html;

@@ -1,5 +1,3 @@
-namespace Convert;
-
 /// <summary>
 /// Builds a pre-filled GitHub "new issue" URL for an unexpected exception, surfaced as a link the user
 /// can choose to follow.

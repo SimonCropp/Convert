@@ -1,5 +1,3 @@
-namespace Convert;
-
 /// <summary>
 /// The faces every OfficeIMO render embeds: Morph's bundled Aptos, fetched by URL (the files ship with
 /// the app anyway, and a URL needs no Morph assembly). Fetched once; a failure is retried next time.

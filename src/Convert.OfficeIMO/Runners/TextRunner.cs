@@ -1,7 +1,5 @@
 using OfficeIMO.Word;
 
-namespace Convert;
-
 /// <summary>Plain text to Word: one paragraph per line.</summary>
 static class TextRunner
 {

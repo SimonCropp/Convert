@@ -1,5 +1,3 @@
-namespace Convert;
-
 /// <summary>Packs a multi-part result into one download.</summary>
 public static class ZipParts
 {

@@ -1,5 +1,3 @@
-namespace Convert;
-
 /// <summary>
 /// Raster images through ImageSharp, a managed codec set: every format it reads to every format it
 /// writes, and a preview for the formats a browser cannot show.

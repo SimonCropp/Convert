@@ -1,5 +1,3 @@
-namespace Convert;
-
 /// <summary>
 /// Options every raster encoder shares (the browser's canvas, ImageSharp, Skia): size, quality and what
 /// fills transparent pixels. The conversion sets <see cref="Lossy"/> and <see cref="SupportsAlpha"/> from

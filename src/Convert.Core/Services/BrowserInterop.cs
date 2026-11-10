@@ -1,5 +1,3 @@
-namespace Convert;
-
 /// <summary>
 /// Core's JavaScript surface: <c>_content/Convert.Core/convert.js</c>, imported as an ES module on first
 /// use. <c>byte[]</c> crosses to JavaScript as a <c>Uint8Array</c>.

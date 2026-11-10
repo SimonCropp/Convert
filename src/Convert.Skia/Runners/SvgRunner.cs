@@ -1,8 +1,6 @@
 using Svg.Skia;
 using Svg.Skia.TypefaceProviders;
 
-namespace Convert;
-
 /// <summary>
 /// SVG routes, through Svg.Skia (and Mermaid to PDF, in the Naiad pack). Kept apart from
 /// <see cref="SkiaRunner"/> so raster routes never load Svg.*.

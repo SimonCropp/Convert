@@ -1,5 +1,3 @@
-namespace Convert;
-
 /// <summary>
 /// Tells GeoJSON from TopoJSON in a <c>.json</c> file by the root object's <c>type</c>. BCL only.
 /// </summary>

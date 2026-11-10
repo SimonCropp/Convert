@@ -1,5 +1,3 @@
-namespace Convert;
-
 /// <summary>
 /// XML to and from the tree, by the common convention: the root element is the one key of the top
 /// object, attributes are <c>@name</c> keys, text beside child elements or attributes is <c>#text</c>, and

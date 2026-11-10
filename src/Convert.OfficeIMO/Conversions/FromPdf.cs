@@ -1,6 +1,4 @@
-﻿namespace Convert;
-
-/// <summary>PDF to docx/xlsx/pptx/html/png/txt/md.</summary>
+﻿/// <summary>PDF to docx/xlsx/pptx/html/png/txt/md.</summary>
 sealed class FromPdf(FileType target, IReadOnlyList<string> assemblies, string summary) : Conversion
 {
     public override string Id => $"pdf-{target.Id}-officeimo";

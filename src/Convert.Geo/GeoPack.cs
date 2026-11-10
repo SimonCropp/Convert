@@ -1,5 +1,3 @@
-namespace Convert;
-
 /// <summary>Geospatial formats through GeoConvert: each to every other, plus PNG and SVG maps.</summary>
 public sealed class GeoPack : IPack
 {

@@ -1,5 +1,3 @@
-namespace Convert;
-
 sealed class HtmlToDocx : Conversion<HtmlDocxOptions>
 {
     public override string Id => "html-docx-openxmlhtml";

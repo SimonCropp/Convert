@@ -1,5 +1,3 @@
-namespace Convert;
-
 /// <summary>
 /// Carries a small source file in the URL fragment (<c>#name=…&amp;data=…</c>, the bytes deflated and
 /// base64url-encoded) so a link reopens it. The fragment never reaches the server, so only the browser's

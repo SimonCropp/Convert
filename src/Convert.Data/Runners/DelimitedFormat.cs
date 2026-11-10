@@ -1,5 +1,3 @@
-namespace Convert;
-
 /// <summary>
 /// CSV and TSV to and from the tree: a list of objects keyed by the header row. Written, nested objects
 /// flatten to dotted columns and lists are JSON text.

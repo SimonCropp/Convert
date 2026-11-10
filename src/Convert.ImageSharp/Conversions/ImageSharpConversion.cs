@@ -1,5 +1,3 @@
-namespace Convert;
-
 /// <summary>An image decoded and re-encoded by ImageSharp.</summary>
 sealed class ImageSharpConversion(FileType source, FileType target) : Conversion<RasterOptions>
 {

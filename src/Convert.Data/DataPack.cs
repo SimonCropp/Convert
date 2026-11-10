@@ -1,5 +1,3 @@
-namespace Convert;
-
 /// <summary>
 /// Structured data: JSON, YAML, TOML, XML, CSV and TSV, each to every other, through one tree. YAML and
 /// TOML routes load their library; the rest are the .NET runtime's own JSON and XML. Also images to a

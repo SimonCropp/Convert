@@ -1,5 +1,3 @@
-namespace Convert;
-
 /// <summary>SVG to an ICO holding each common size, each drawn sharp from the vector.</summary>
 sealed class SvgIcoConversion : Conversion<NoOptions>
 {

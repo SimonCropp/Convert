@@ -1,5 +1,3 @@
-namespace Convert;
-
 /// <summary>
 /// The wizard's state: the source file, the chosen target and tool, its options and the results. The
 /// page and the Core components bind to it and re-render on <see cref="Changed"/>.

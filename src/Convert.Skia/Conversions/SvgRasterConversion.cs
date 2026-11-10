@@ -1,6 +1,4 @@
-﻿namespace Convert;
-
-/// <summary>SVG drawn by Svg.Skia and encoded by Skia.</summary>
+﻿/// <summary>SVG drawn by Svg.Skia and encoded by Skia.</summary>
 sealed class SvgRasterConversion(FileType target) : Conversion<RasterOptions>
 {
     public override string Id => $"svg-{target.Id}-skia";

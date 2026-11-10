@@ -1,5 +1,3 @@
-namespace Convert;
-
 /// <summary>One data format read into a tree and written out as another.</summary>
 sealed class DataConversion(FileType source, FileType target) : Conversion<DataOptions>
 {
@@ -8,12 +6,23 @@ sealed class DataConversion(FileType source, FileType target) : Conversion<DataO
     public override FileType Target => target;
 
     // The library the route loads; TOML's when both are YAML and TOML.
-    public override Tool Tool =>
-        Uses(FileTypes.Toml)
-            ? DataPack.Tomlyn
-            : Uses(FileTypes.Yaml)
-                ? DataPack.YamlDotNet
-                : DataPack.DotNet;
+    public override Tool Tool
+    {
+        get
+        {
+            if (Uses(FileTypes.Toml))
+            {
+                return DataPack.Tomlyn;
+            }
+
+            if (Uses(FileTypes.Yaml))
+            {
+                return DataPack.YamlDotNet;
+            }
+
+            return DataPack.DotNet;
+        }
+    }
 
     public override string Summary =>
         Uses(FileTypes.Toml) && Uses(FileTypes.Yaml)

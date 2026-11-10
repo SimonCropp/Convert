@@ -1,3 +1,6 @@
+global using System.Data;
+global using System.Globalization;
+global using Convert;
 global using IconifyBundle;
 global using Microsoft.AspNetCore.Components;
 global using Microsoft.Extensions.DependencyInjection;

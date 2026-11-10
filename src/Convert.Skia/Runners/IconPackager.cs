@@ -1,7 +1,3 @@
-using System.IO.Compression;
-
-namespace Convert;
-
 /// <summary>
 /// Icon files from square PNGs, BCL only: an ICO is a directory of PNG images (Vista onwards), and a
 /// favicon set is a zip of the icons a site links, with its manifest and the HTML that links them.

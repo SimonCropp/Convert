@@ -1,5 +1,3 @@
-namespace Convert;
-
 public sealed class DataOptions
 {
     /// <summary>

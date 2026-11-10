@@ -1,5 +1,3 @@
-namespace Convert;
-
 /// <summary>One geospatial format to another: read to features, write the features.</summary>
 sealed class GeoConversion(FileType source, FileType target) : Conversion
 {

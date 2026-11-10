@@ -1,5 +1,3 @@
-namespace Convert;
-
 /// <summary>docx/xlsx/pptx to png/pdf/html/md/txt through Morph's ConversionService.</summary>
 sealed class MorphConversion(FileType source, FileType target) : Conversion
 {

@@ -2,8 +2,6 @@ using YamlDotNet.Core;
 using YamlDotNet.Core.Events;
 using YamlDotNet.RepresentationModel;
 
-namespace Convert;
-
 /// <summary>
 /// YAML through YamlDotNet's representation model (no reflection). Plain scalars resolve by the YAML 1.2
 /// core schema; several documents in one file read as a list of them.

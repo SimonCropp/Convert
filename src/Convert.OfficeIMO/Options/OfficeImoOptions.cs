@@ -1,5 +1,3 @@
-namespace Convert;
-
 public enum PdfProfile
 {
     /// <summary>PDF 1.7 with embedded fonts.</summary>

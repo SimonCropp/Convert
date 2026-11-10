@@ -1,5 +1,3 @@
-namespace Convert;
-
 /// <summary>Base of every conversion options panel. Panels bind controls to <see cref="Options"/>.</summary>
 public abstract class OptionsPanel<TOptions> : ComponentBase
 {

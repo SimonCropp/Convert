@@ -1,8 +1,4 @@
-using System.Globalization;
-using System.Data;
 using OfficeIMO.Excel;
-
-namespace Convert;
 
 /// <summary>Worksheets to and from CSV and TSV, through OfficeIMO.Excel. Loads OfficeIMO.Excel and OpenXml only.</summary>
 static class SheetRunner

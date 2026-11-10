@@ -1,5 +1,3 @@
-namespace Convert;
-
 /// <summary>Markdown to HTML with Markdig, and the rendered Markdown preview.</summary>
 public sealed class MarkdigPack : IPack
 {

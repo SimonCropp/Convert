@@ -1,5 +1,3 @@
-namespace Convert;
-
 /// <summary>
 /// The routes OfficeIMO proves in the browser: Office, Publisher, HTML, Markdown and text to PDF; PDF to
 /// Office, HTML, PNG, text and Markdown; Markdown to and from HTML and Word; text to Word; and worksheets

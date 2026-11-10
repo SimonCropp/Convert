@@ -1,5 +1,3 @@
-namespace Convert;
-
 /// <summary>
 /// What the browser does on its own: PDF preview in its built-in viewer, and image conversions through
 /// a canvas. Browsers expose no API to rasterise a PDF, so PDF to PNG is OfficeIMO's.

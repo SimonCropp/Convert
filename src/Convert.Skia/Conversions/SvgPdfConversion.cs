@@ -1,5 +1,3 @@
-namespace Convert;
-
 // After the browser's canvas (no download) and ImageSharp (managed) wherever they serve the same pair.
 
 /// <summary>SVG to vector PDF: Svg.Skia's drawing replayed into Skia's PDF backend.</summary>

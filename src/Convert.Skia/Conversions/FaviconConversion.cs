@@ -1,5 +1,3 @@
-namespace Convert;
-
 /// <summary>An SVG or raster image to the set of icons a website links, zipped with the HTML to paste.</summary>
 sealed class FaviconConversion(FileType source) : Conversion<NoOptions>
 {

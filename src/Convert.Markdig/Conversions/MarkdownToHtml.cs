@@ -1,5 +1,3 @@
-namespace Convert;
-
 sealed class MarkdownToHtml : Conversion<MarkdownHtmlOptions>
 {
     public override string Id => "md-html-markdig";

@@ -1,5 +1,3 @@
-namespace Convert;
-
 /// <summary>
 /// Wraps the built container so a component can inject a service a pack registered with
 /// <see cref="PackServices"/> after startup. Morph's components <c>@inject MorphInterop</c>; registering

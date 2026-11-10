@@ -1,5 +1,3 @@
-namespace Convert;
-
 /// <summary>
 /// One edge of the conversion graph: a source type, a target type and the tool that gets there.
 /// Subclasses hold metadata only and delegate <see cref="RunAsync"/> to a runner class, so loading the

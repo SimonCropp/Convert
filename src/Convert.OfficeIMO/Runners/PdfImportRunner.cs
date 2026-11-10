@@ -1,5 +1,3 @@
-namespace Convert;
-
 /// <summary>PDF to docx/xlsx/pptx/html/png/txt/md, after OfficeIMO's own browser converter.</summary>
 static class PdfImportRunner
 {

@@ -1,5 +1,3 @@
-namespace Convert;
-
 /// <summary>
 /// Whether a CSV holds geometry GeoConvert can read: a WKT column, or longitude and latitude columns.
 /// A CSV without them is a plain table, so the map preview and geo targets don't apply. BCL only.

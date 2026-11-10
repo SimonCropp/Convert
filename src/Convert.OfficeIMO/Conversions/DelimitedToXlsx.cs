@@ -1,5 +1,3 @@
-namespace Convert;
-
 /// <summary>CSV or TSV to a one-sheet workbook.</summary>
 sealed class DelimitedToXlsx(FileType source) : Conversion<NoOptions>
 {

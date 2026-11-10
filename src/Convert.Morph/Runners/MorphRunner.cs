@@ -1,7 +1,5 @@
 using Morph;
 
-namespace Convert;
-
 /// <summary>The conversions' only route into Morph.</summary>
 static class MorphRunner
 {

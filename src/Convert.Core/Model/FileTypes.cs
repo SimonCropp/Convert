@@ -1,5 +1,3 @@
-namespace Convert;
-
 /// <summary>
 /// Every format any pack reads or writes. Owned by Core so two packs that emit the same format agree on
 /// its identity; a pack <em>registers</em> the types it reads (see <see cref="ConversionRegistry.Add(FileType)"/>).

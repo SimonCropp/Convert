@@ -1,7 +1,3 @@
-using System.Text.Encodings.Web;
-
-namespace Convert;
-
 static class JsonFormat
 {
     static readonly JsonDocumentOptions reading = new()

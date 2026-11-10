@@ -1,10 +1,3 @@
-using System.Text.Encodings.Web;
-using System.Text.Json;
-using System.Xml;
-using System.Xml.Linq;
-
-namespace Convert;
-
 /// <summary>
 /// Lays out text output for reading: JSON, XML (and so SVG, KML, GPX) and HTML. BCL only, so any pack
 /// can use it without a lazy assembly. Input that does not parse is returned unchanged: formatting never

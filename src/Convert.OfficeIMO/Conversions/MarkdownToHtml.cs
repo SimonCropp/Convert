@@ -1,6 +1,4 @@
-﻿namespace Convert;
-
-sealed class MarkdownToHtml : Conversion<PrettyPrintOptions>
+﻿sealed class MarkdownToHtml : Conversion<PrettyPrintOptions>
 {
     public override string Id => "md-html-officeimo";
     public override FileType Source => FileTypes.Markdown;

@@ -1,5 +1,3 @@
-namespace Convert;
-
 /// <summary>Each worksheet to its own CSV or TSV file.</summary>
 sealed class XlsxToDelimited(FileType target) : Conversion<NoOptions>
 {

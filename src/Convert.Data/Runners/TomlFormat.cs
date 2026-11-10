@@ -1,5 +1,3 @@
-namespace Convert;
-
 /// <summary>
 /// TOML through Tomlyn's model types. TOML has no null and its root is always a table, so null values
 /// are dropped and anything other than an object goes under a key.

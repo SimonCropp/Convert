@@ -10,8 +10,6 @@ using OfficeIMO.Publisher.Pdf;
 using OfficeIMO.Word;
 using OfficeIMO.Word.Pdf;
 
-namespace Convert;
-
 /// <summary>
 /// docx/xlsx/pptx/pub/html/md/txt to PDF, after OfficeIMO's own browser converter.
 ///

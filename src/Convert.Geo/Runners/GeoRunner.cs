@@ -1,7 +1,3 @@
-using System.Xml;
-
-namespace Convert;
-
 /// <summary>The only place GeoConvert's namespace is used. Stream overloads only: no filesystem here.</summary>
 static class GeoRunner
 {
@@ -31,9 +27,12 @@ static class GeoRunner
         var features = Read(document, progress);
         progress.Report(new("Drawing", $"{features.Count:N0} features"));
         var render = Map(options);
-        return target == FileTypes.Svg
-            ? Encoding.UTF8.GetBytes(MapRenderer.RenderSvg(features, render))
-            : MapRenderer.RenderPng([features], render);
+        if (target == FileTypes.Svg)
+        {
+            return Encoding.UTF8.GetBytes(MapRenderer.RenderSvg(features, render));
+        }
+
+        return MapRenderer.RenderPng([features], render);
     }
 
     /// <summary>The preview: a small SVG, or a PNG when there are too many features for a DOM.</summary>

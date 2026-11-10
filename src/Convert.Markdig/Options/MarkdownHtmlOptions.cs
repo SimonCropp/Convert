@@ -1,5 +1,3 @@
-namespace Convert;
-
 public sealed class MarkdownHtmlOptions
 {
     /// <summary>Markdig's advanced extension set (tables, footnotes, task lists, auto-links, …).</summary>

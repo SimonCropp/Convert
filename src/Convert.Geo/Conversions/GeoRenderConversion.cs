@@ -1,6 +1,4 @@
-﻿namespace Convert;
-
-/// <summary>A geospatial file drawn as a map.</summary>
+﻿/// <summary>A geospatial file drawn as a map.</summary>
 sealed class GeoRenderConversion(FileType source, FileType target) : Conversion<GeoRenderOptions>
 {
     public override string Id => $"{source.Id}-{target.Id}-geoconvert";

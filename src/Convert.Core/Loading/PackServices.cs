@@ -1,5 +1,3 @@
-namespace Convert;
-
 /// <summary>
 /// Services a pack registers after its assemblies load. Microsoft.Extensions.DependencyInjection takes
 /// no registrations after <c>Build()</c>, and registering a heavy type in <c>Program.cs</c> would load

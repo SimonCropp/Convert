@@ -1,5 +1,3 @@
-namespace Convert;
-
 sealed class TextToDocx : Conversion<NoOptions>
 {
     public override string Id => "txt-docx-officeimo";

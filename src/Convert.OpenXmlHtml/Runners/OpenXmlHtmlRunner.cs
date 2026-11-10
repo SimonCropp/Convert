@@ -1,5 +1,3 @@
-namespace Convert;
-
 /// <summary>The only place OpenXmlHtml's namespace is used.</summary>
 static class OpenXmlHtmlRunner
 {

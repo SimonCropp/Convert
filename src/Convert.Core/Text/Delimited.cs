@@ -1,5 +1,3 @@
-namespace Convert;
-
 /// <summary>
 /// RFC 4180 delimited text (CSV, and TSV with a tab): quoted fields may hold the delimiter, quotes
 /// (doubled) and line breaks. BCL only, shared by the data and spreadsheet routes and the table preview.

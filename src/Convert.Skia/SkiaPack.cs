@@ -1,5 +1,3 @@
-namespace Convert;
-
 /// <summary>
 /// Raster images and SVG through Skia (SkiaSharp, and Svg.Skia for SVG): every format Skia decodes to
 /// PNG, JPEG and WebP (the formats it encodes) and to PDF, SVG to all four and to ICO, and any of them

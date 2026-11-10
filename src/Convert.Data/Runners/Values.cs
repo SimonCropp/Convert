@@ -1,5 +1,3 @@
-namespace Convert;
-
 /// <summary>Leaf values of the tree: typing text, and text for a value.</summary>
 static class Values
 {

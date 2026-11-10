@@ -1,6 +1,12 @@
+global using System.Globalization;
 global using System.IO.Compression;
 global using System.Net;
 global using System.Net.Http;
+global using System.Text.Encodings.Web;
+global using System.Text.Json;
+global using System.Xml;
+global using System.Xml.Linq;
+global using Convert;
 global using IconifyBundle;
 global using Microsoft.AspNetCore.Components;
 global using Microsoft.AspNetCore.Components.Forms;

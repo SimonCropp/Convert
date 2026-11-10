@@ -1,6 +1,4 @@
-﻿namespace Convert;
-
-public enum ThemeType
+﻿public enum ThemeType
 {
     Light,
     Dark

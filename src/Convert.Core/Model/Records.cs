@@ -1,5 +1,3 @@
-namespace Convert;
-
 /// <summary>The library behind a conversion, credited on the tool picker.</summary>
 public sealed record Tool(string Id, string DisplayName, string Description, string ProjectUrl);
 

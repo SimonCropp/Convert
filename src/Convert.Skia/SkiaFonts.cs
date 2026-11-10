@@ -1,5 +1,3 @@
-namespace Convert;
-
 /// <summary>
 /// The faces SVG text is drawn with. Skia in the browser has no system fonts, so every family maps onto
 /// Morph's bundled Aptos, fetched by URL (the files ship with the app anyway). Fetched once; a failure is

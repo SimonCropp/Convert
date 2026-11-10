@@ -1,5 +1,3 @@
-namespace Convert;
-
 /// <summary>An image drawn on a canvas and re-encoded: svg/png/jpeg/webp to png/jpeg/webp.</summary>
 sealed class CanvasConversion(FileType source, FileType target, CanvasBridge canvas) : Conversion<RasterOptions>
 {
@@ -8,10 +6,18 @@ sealed class CanvasConversion(FileType source, FileType target, CanvasBridge can
     public override FileType Target => target;
     public override Tool Tool => BrowserPack.Tool;
 
-    public override string Summary =>
-        source == FileTypes.Svg
-            ? "Drawn by the browser's SVG renderer, at any scale."
-            : "Re-encoded by the browser's own image codecs.";
+    public override string Summary
+    {
+        get
+        {
+            if (source == FileTypes.Svg)
+            {
+                return "Drawn by the browser's SVG renderer, at any scale.";
+            }
+
+            return "Re-encoded by the browser's own image codecs.";
+        }
+    }
 
     public override string? Expect
     {

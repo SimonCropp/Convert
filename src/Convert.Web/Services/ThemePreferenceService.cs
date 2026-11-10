@@ -1,5 +1,3 @@
-namespace Convert;
-
 public sealed class ThemePreferenceService(IJSRuntime jsRuntime)
 {
     const string themeKey = "selectedTheme";

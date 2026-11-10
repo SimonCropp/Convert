@@ -1,5 +1,3 @@
-namespace Convert;
-
 /// <summary>The formats and previews every browser handles with the DOM alone.</summary>
 public sealed class CorePack : IPack
 {

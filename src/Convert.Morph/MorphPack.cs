@@ -1,5 +1,3 @@
-namespace Convert;
-
 /// <summary>Word, Excel and PowerPoint through Morph: the viewer, the docx editor and 15 conversions.</summary>
 public sealed class MorphPack : IPack
 {

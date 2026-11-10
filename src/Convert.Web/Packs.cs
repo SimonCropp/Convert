@@ -1,5 +1,3 @@
-namespace Convert;
-
 /// <summary>Every pack the app ships, in the order their samples and tools are listed.</summary>
 public static class Packs
 {
