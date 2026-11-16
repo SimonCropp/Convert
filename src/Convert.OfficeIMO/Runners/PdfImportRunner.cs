@@ -109,7 +109,7 @@ static class PdfImportRunner
 
     static ConversionOutput Png(PdfDocument pdf, Document document, int dpi, OfficeImoFonts.FontSet fonts, Cancel cancel)
     {
-        var images = pdf.ExportImages(
+        var images = pdf.ToImages(
             new()
             {
                 FailOnLoss = false,
