@@ -41,8 +41,8 @@
     -->
     <PackageVersion Include="SkiaSharp" Version="4.155.0" Pinned="true" />
     <PackageVersion Include="SkiaSharp.NativeAssets.WebAssembly" Version="4.155.0" Pinned="true" />
-    <PackageVersion Include="HarfBuzzSharp" Version="14.4.0" />
-    <PackageVersion Include="HarfBuzzSharp.NativeAssets.WebAssembly" Version="14.4.0" />
+    <PackageVersion Include="HarfBuzzSharp" Version="14.4.0.101" />
+    <PackageVersion Include="HarfBuzzSharp.NativeAssets.WebAssembly" Version="14.4.0.101" />
     <PackageVersion Include="Svg.Skia" Version="5.2.3" />
     <PackageVersion Include="YamlDotNet" Version="18.1.0" />
     <PackageVersion Include="Tomlyn" Version="2.11.1" />
