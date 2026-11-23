@@ -16,9 +16,10 @@ public sealed class OfficeImoPack : IPack
     const string word = "OfficeIMO.Word.wasm";
     const string excel = "OfficeIMO.Excel.wasm";
     const string powerPoint = "OfficeIMO.PowerPoint.wasm";
-    const string markdown = "OfficeIMO.Markdown.wasm";
     const string htmlCore = "OfficeIMO.Html.Core.wasm";
 
+    // Yaml and Toml read front matter.
+    static readonly string[] markdown = ["OfficeIMO.Markdown.wasm", "OfficeIMO.Yaml.wasm", "OfficeIMO.Toml.wasm"];
     static readonly string[] openXml = ["DocumentFormat.OpenXml.wasm", "DocumentFormat.OpenXml.Framework.wasm", "System.IO.Packaging.wasm"];
     static readonly string[] html = ["OfficeIMO.Html.wasm", htmlCore, "OfficeIMO.Html.AngleSharp.wasm", "AngleSharp.wasm", "AngleSharp.Css.wasm"];
 
@@ -27,9 +28,9 @@ public sealed class OfficeImoPack : IPack
     internal static IReadOnlyList<string> PowerPointPdf { get; } = [core, powerPoint, .. openXml, pdf, "OfficeIMO.PowerPoint.Pdf.wasm"];
     internal static IReadOnlyList<string> PublisherPdf { get; } = [core, "OfficeIMO.Publisher.wasm", pdf, "OfficeIMO.Publisher.Pdf.wasm"];
     internal static IReadOnlyList<string> HtmlPdf { get; } = [core, .. html, pdf, "OfficeIMO.Html.Pdf.wasm"];
-    internal static IReadOnlyList<string> MarkdownHtml { get; } = [core, markdown, "OfficeIMO.MarkdownRenderer.wasm", "OfficeIMO.Markdown.Html.wasm", .. html];
-    internal static IReadOnlyList<string> HtmlMarkdown { get; } = [core, markdown, "OfficeIMO.Markdown.Html.wasm", .. html];
-    internal static IReadOnlyList<string> MarkdownWord { get; } = [core, word, .. openXml, markdown, "OfficeIMO.Word.Markdown.wasm"];
+    internal static IReadOnlyList<string> MarkdownHtml { get; } = [core, .. markdown, "OfficeIMO.MarkdownRenderer.wasm", "OfficeIMO.Markdown.Html.wasm", .. html];
+    internal static IReadOnlyList<string> HtmlMarkdown { get; } = [core, .. markdown, "OfficeIMO.Markdown.Html.wasm", .. html];
+    internal static IReadOnlyList<string> MarkdownWord { get; } = [core, word, .. openXml, .. markdown, "OfficeIMO.Word.Markdown.wasm"];
     internal static IReadOnlyList<string> PdfWord { get; } = [core, word, .. openXml, pdf, "OfficeIMO.Pdf.Word.wasm"];
     internal static IReadOnlyList<string> PdfExcel { get; } = [core, excel, .. openXml, pdf, "OfficeIMO.Pdf.Excel.wasm"];
     internal static IReadOnlyList<string> PdfPowerPoint { get; } = [core, powerPoint, .. openXml, pdf, "OfficeIMO.Pdf.PowerPoint.wasm"];

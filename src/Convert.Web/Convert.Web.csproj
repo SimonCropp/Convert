@@ -140,6 +140,8 @@
     <BlazorWebAssemblyLazyLoad Include="OfficeIMO.PowerPoint.wasm" />
     <BlazorWebAssemblyLazyLoad Include="OfficeIMO.Publisher.wasm" />
     <BlazorWebAssemblyLazyLoad Include="OfficeIMO.Markdown.wasm" />
+    <BlazorWebAssemblyLazyLoad Include="OfficeIMO.Yaml.wasm" />
+    <BlazorWebAssemblyLazyLoad Include="OfficeIMO.Toml.wasm" />
     <BlazorWebAssemblyLazyLoad Include="OfficeIMO.Html.wasm" />
     <BlazorWebAssemblyLazyLoad Include="OfficeIMO.Html.Core.wasm" />
     <BlazorWebAssemblyLazyLoad Include="OfficeIMO.Html.AngleSharp.wasm" />
