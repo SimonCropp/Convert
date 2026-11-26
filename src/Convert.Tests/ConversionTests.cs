@@ -87,6 +87,17 @@ public class ConversionTests
         await Assert.That(async () => await conversion.RunAsync(source, conversion.CreateOptions(), new Progress<ConversionProgress>(), Cancel.None))
             .Throws<UserInputException>();
     }
+
+    // OfficeIMO's diagnostics read as their messages, without the font-embedding byte counts.
+    [Test]
+    public async Task OfficeImoNotesAreMessages()
+    {
+        var conversion = Registry.Conversions.Single(_ => _.Id == "docx-pdf-officeimo");
+        var output = await conversion.RunAsync(await Inputs.ForAsync(FileTypes.Docx), conversion.CreateOptions(), new Progress<ConversionProgress>(), Cancel.None);
+        await Assert.That(output.Notes).Contains(_ => _.Contains("'Century Gothic' was substituted", StringComparison.Ordinal));
+        await Assert.That(output.Notes).DoesNotContain(_ => _.StartsWith("OfficeIMO.", StringComparison.Ordinal));
+        await Assert.That(output.Notes).DoesNotContain(_ => _.Contains("font-stream bytes", StringComparison.Ordinal));
+    }
 }
 
 /// <summary>A real input for each type: a published sample, or a conversion of one.</summary>

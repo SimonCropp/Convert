@@ -177,11 +177,24 @@ static class WordRunner
     }
 }
 
-/// <summary>OfficeIMO diagnostics as result notes. Names only OfficeIMO.Core, which every route loads.</summary>
+/// <summary>
+/// OfficeIMO diagnostics as result notes: each message once, leaving out what neither warns nor reports a
+/// loss (the bytes each embedded font costs). The message alone: the diagnostic has no readable
+/// <c>ToString</c>, and its location is mostly an internal name. Names only OfficeIMO.Core, which every
+/// route loads.
+/// </summary>
 static class Reports
 {
     public static List<string> Notes(OfficeConversionReport? report) =>
-        report is null ? [] : [.. report.Diagnostics.Select(_ => _.ToString() ?? _.Message).Distinct()];
+        report is null
+            ? []
+            :
+            [
+                .. report.Diagnostics
+                    .Where(_ => _.Severity != OfficeDiagnosticSeverity.Information || _.LossKind != OfficeConversionLossKind.None)
+                    .Select(_ => _.Message)
+                    .Distinct()
+            ];
 }
 
 /// <summary>The PDF writer settings, per profile, with the Aptos faces embedded for every family.</summary>
