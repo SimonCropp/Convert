@@ -9,6 +9,8 @@
        HarfBuzz: it is a native archive in OfficeIMO's repo, not a package dependency. -->
   <ItemGroup>
     <ProjectReference Include="..\Convert.Core\Convert.Core.csproj" />
+    <!-- Markdown to Word: Mermaid fences drawn by Naiad (and Skia, through it) as pictures. -->
+    <ProjectReference Include="..\Convert.Naiad\Convert.Naiad.csproj" />
     <PackageReference Include="OfficeIMO.Word.Pdf" />
     <PackageReference Include="OfficeIMO.Excel.Pdf" />
     <PackageReference Include="OfficeIMO.PowerPoint.Pdf" />

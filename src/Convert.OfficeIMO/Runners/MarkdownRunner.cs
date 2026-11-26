@@ -26,17 +26,26 @@ static class MarkdownRunner
         return (converted.ToMarkdown(), Reports.Notes(report));
     }
 
-    public static byte[] ToDocx(string markdown)
+    /// <param name="drawMermaid">Whether Naiad was loaded for this file, to draw its Mermaid fences.</param>
+    public static async Task<(byte[] Bytes, IReadOnlyList<string> Notes)> ToDocxAsync(string markdown, bool drawMermaid, IProgress<ConversionProgress> progress, Cancel cancel)
     {
         Guard(markdown);
         var document = MarkdownDocument.Parse(markdown);
+        var notes = new List<string>();
+        if (drawMermaid)
+        {
+            await MermaidBlocks.DrawAsync(document, notes, progress, cancel);
+        }
+
+        progress.Report(new("Writing", "Word"));
         using var word = document.ToWord(
             new()
             {
                 FailOnLoss = false,
                 PreferNarrativeSingleLineDefinitions = true
-            });
-        return word.ToBytes();
+            },
+            cancel);
+        return (word.ToBytes(), notes);
     }
 
     static void Guard(string text)

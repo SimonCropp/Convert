@@ -42,6 +42,11 @@ public class LazyLoadTests
     static IEnumerable<(string Entry, IReadOnlyList<string> Assemblies)> Entries =>
     [
         .. Registry.Conversions.Select(_ => ($"conversion {_.Id}", _.Assemblies)),
+        // What a conversion that loads less for some files loads for the least of them, an empty one.
+        .. Registry.Conversions
+            .Select(_ => (Conversion: _, Least: _.AssembliesFor(new($"empty{_.Source.Extension}", [], _.Source))))
+            .Where(_ => !ReferenceEquals(_.Least, _.Conversion.Assemblies))
+            .Select(_ => ($"conversion {_.Conversion.Id} for an empty file", _.Least)),
         .. Registry.Previews.Select(_ => ($"preview {_.Type.Id} {_.Component.Name}", _.Assemblies)),
         .. Registry.Editors.Select(_ => ($"editor {_.Type.Id} {_.Component.Name}", _.Assemblies))
     ];

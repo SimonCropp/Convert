@@ -31,6 +31,8 @@ public sealed class OfficeImoPack : IPack
     internal static IReadOnlyList<string> MarkdownHtml { get; } = [core, .. markdown, "OfficeIMO.MarkdownRenderer.wasm", "OfficeIMO.Markdown.Html.wasm", .. html];
     internal static IReadOnlyList<string> HtmlMarkdown { get; } = [core, .. markdown, "OfficeIMO.Markdown.Html.wasm", .. html];
     internal static IReadOnlyList<string> MarkdownWord { get; } = [core, word, .. openXml, .. markdown, "OfficeIMO.Word.Markdown.wasm"];
+    // A file with Mermaid fences also loads Naiad, which draws them as pictures through Skia.
+    internal static IReadOnlyList<string> MarkdownWordDiagrams { get; } = [.. MarkdownWord, .. MermaidImage.Assemblies];
     internal static IReadOnlyList<string> PdfWord { get; } = [core, word, .. openXml, pdf, "OfficeIMO.Pdf.Word.wasm"];
     internal static IReadOnlyList<string> PdfExcel { get; } = [core, excel, .. openXml, pdf, "OfficeIMO.Pdf.Excel.wasm"];
     internal static IReadOnlyList<string> PdfPowerPoint { get; } = [core, powerPoint, .. openXml, pdf, "OfficeIMO.Pdf.PowerPoint.wasm"];
@@ -73,6 +75,11 @@ public sealed class OfficeImoPack : IPack
         registry.Add(new XlsxToDelimited(FileTypes.Tsv));
     }
 
-    public void Loaded(IServiceProvider services) =>
-        OfficeImoFonts.Initialize(services.GetRequiredService<HttpClient>());
+    // Markdown to Word draws Mermaid with Skia, which reads the Aptos faces through its own loader.
+    public void Loaded(IServiceProvider services)
+    {
+        var http = services.GetRequiredService<HttpClient>();
+        OfficeImoFonts.Initialize(http);
+        SkiaFonts.Initialize(http);
+    }
 }

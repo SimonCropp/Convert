@@ -139,7 +139,7 @@ public sealed class ConvertSession(ConversionRegistry registry, IToolLoader load
 
         try
         {
-            await loader.EnsureAsync(conversion.Assemblies, conversion.Pack);
+            await loader.EnsureAsync(conversion.AssembliesFor(source), conversion.Pack);
             Report(new("Converting", conversion.Tool.DisplayName));
             // Hands the thread back first so the progress state paints before the compute starts.
             var output = await Task.Run(() => conversion.RunAsync(source, conversionOptions, new ProgressSink(this), cancel), cancel);

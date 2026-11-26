@@ -23,6 +23,13 @@ public abstract class Conversion
     /// <summary>The transitive closure of lazy <c>.wasm</c> names this conversion needs.</summary>
     public abstract IReadOnlyList<string> Assemblies { get; }
 
+    /// <summary>
+    /// The part of <see cref="Assemblies"/> a run on <paramref name="source"/> loads: all of it, unless some
+    /// of it serves only some files (Mermaid diagrams in Markdown). Decided from the bytes alone, BCL only,
+    /// like <see cref="Accepts"/>; <see cref="RunAsync"/> must not touch what it leaves out.
+    /// </summary>
+    public virtual IReadOnlyList<string> AssembliesFor(Document source) => Assemblies;
+
     /// <summary>An <see cref="OptionsPanel{TOptions}"/> in the pack assembly, or null for no options.</summary>
     public virtual Type? OptionsComponent => null;
 
