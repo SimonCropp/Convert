@@ -9,11 +9,17 @@ static class MarkdownRunner
 {
     const int maxTextChars = 500_000;
 
-    public static string ToHtml(string markdown)
+    /// <param name="mermaid">Draws Mermaid fences, when Naiad was loaded for this file.</param>
+    public static string ToHtml(string markdown, MarkdownFencedCodeBlockRenderer? mermaid = null)
     {
         Guard(markdown);
         var options = MarkdownRendererPresets.CreateStrictMinimalPortable();
         options.MarkdownOverflowHandling = OverflowHandling.Throw;
+        if (mermaid is not null)
+        {
+            options.FencedCodeBlockRenderers.Add(mermaid);
+        }
+
         return MarkdownRenderer.RenderBodyHtml(markdown, options);
     }
 

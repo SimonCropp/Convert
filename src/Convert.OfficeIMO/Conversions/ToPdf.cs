@@ -10,6 +10,10 @@ sealed class ToPdf(FileType source, IReadOnlyList<string> assemblies, string sum
     public override IReadOnlyList<string> Assemblies => assemblies;
     public override Type OptionsComponent => typeof(OfficeImoPdfOptionsPanel);
 
+    // Markdown declares Naiad, to draw Mermaid fences, and loads it only for a file with one.
+    public override IReadOnlyList<string> AssembliesFor(Document document) =>
+        source == FileTypes.Markdown && !MermaidFences.Any(document.Text) ? OfficeImoPack.MarkdownPdf : assemblies;
+
     // Morph serves Office to PDF first; OfficeIMO is the alternative.
     public override int Priority => 10;
 
@@ -19,8 +23,13 @@ sealed class ToPdf(FileType source, IReadOnlyList<string> assemblies, string sum
     {
         progress.Report(new("Loading fonts"));
         var fonts = await OfficeImoFonts.EnsureAsync();
+        // Skia draws the diagrams with its own copy of the faces.
+        var diagramFonts = DrawsMermaid(document) ? await SkiaFonts.EnsureAsync() : null;
         progress.Report(new("Converting", $"{source.ShortName} to PDF"));
-        var (bytes, notes) = WordRunner.ToPdf(document, options, fonts, cancel);
+        var (bytes, notes) = WordRunner.ToPdf(document, options, fonts, diagramFonts, cancel);
         return new([new(FileTypes.Pdf.FileNameFor(document.FileName), bytes, FileTypes.Pdf)], notes);
     }
+
+    bool DrawsMermaid(Document document) =>
+        source == FileTypes.Markdown && MermaidFences.Any(document.Text);
 }

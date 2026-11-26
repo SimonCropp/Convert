@@ -23,9 +23,11 @@ static class WordRunner
     const long maxPackageBytes = 25L * 1024 * 1024;
     const int maxPreviewRowsPerSheet = 250;
 
-    public static (byte[] Bytes, IReadOnlyList<string> Notes) ToPdf(Document document, OfficeImoPdfOptions options, OfficeImoFonts.FontSet fonts, Cancel cancel)
+    /// <param name="diagramFonts">The faces Skia draws Mermaid fences with, when Naiad was loaded for a Markdown file.</param>
+    public static (byte[] Bytes, IReadOnlyList<string> Notes) ToPdf(Document document, OfficeImoPdfOptions options, OfficeImoFonts.FontSet fonts, SkiaFonts.Faces? diagramFonts, Cancel cancel)
     {
         var pdfOptions = PdfProfiles.Create(options.Profile, fonts);
+        var notes = new List<string>();
         OfficeConversionReport report;
         using var pdf = document.Type.Id switch
         {
@@ -34,7 +36,7 @@ static class WordRunner
             "pptx" => PowerPoint(document, pdfOptions, out report, cancel),
             "pub" => Publisher(document, pdfOptions, fonts, out report, cancel),
             "html" => Html(document, pdfOptions, fonts, out report, cancel),
-            "md" => Markdown(document, pdfOptions, fonts, out report, cancel),
+            "md" => Markdown(document, pdfOptions, fonts, diagramFonts, notes, out report, cancel),
             "txt" => PlainText(document, pdfOptions, fonts, out report, cancel),
             _ => throw new NotSupportedException($"OfficeIMO does not convert {document.Type.DisplayName} to PDF here.")
         };
@@ -45,7 +47,7 @@ static class WordRunner
                 AllowLoss = true
             },
             cancel);
-        return (bytes, Reports.Notes(report));
+        return (bytes, [.. notes, .. Reports.Notes(report)]);
     }
 
     static PdfDocument Word(Document document, PdfCreateOptions pdfOptions, out OfficeConversionReport report, Cancel cancel)
@@ -137,8 +139,11 @@ static class WordRunner
     }
 
     // Markdown and plain text go through the HTML layout: OfficeIMO's plain-text importer is internal.
-    static PdfDocument Markdown(Document document, PdfCreateOptions pdfOptions, OfficeImoFonts.FontSet fonts, out OfficeConversionReport report, Cancel cancel) =>
-        Html($"<html><body>{MarkdownRunner.ToHtml(document.Text)}</body></html>", pdfOptions, fonts, out report, cancel);
+    static PdfDocument Markdown(Document document, PdfCreateOptions pdfOptions, OfficeImoFonts.FontSet fonts, SkiaFonts.Faces? diagramFonts, List<string> notes, out OfficeConversionReport report, Cancel cancel)
+    {
+        var mermaid = diagramFonts is null ? null : MermaidBlocks.HtmlRenderer(diagramFonts, notes);
+        return Html($"<html><body>{MarkdownRunner.ToHtml(document.Text, mermaid)}</body></html>", pdfOptions, fonts, out report, cancel);
+    }
 
     static PdfDocument PlainText(Document document, PdfCreateOptions pdfOptions, OfficeImoFonts.FontSet fonts, out OfficeConversionReport report, Cancel cancel) =>
         Html($"<html><body><pre style=\"white-space: pre-wrap; font-family: inherit\">{WebUtility.HtmlEncode(document.Text)}</pre></body></html>", pdfOptions, fonts, out report, cancel);

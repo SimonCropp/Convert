@@ -1,5 +1,8 @@
-/// <summary>Markdown to Word draws Mermaid fences with Naiad, as pictures, instead of OfficeIMO's code panel.</summary>
-public class MarkdownDocxTests
+/// <summary>
+/// Markdown to Word and to PDF draw Mermaid fences with Naiad, as pictures, instead of OfficeIMO's code
+/// block, and load Naiad only for a file that has one.
+/// </summary>
+public class MarkdownMermaidTests
 {
     const string markdown =
         """
@@ -24,15 +27,22 @@ public class MarkdownDocxTests
         ```
         """;
 
-    [Test]
-    public async Task MermaidFencesArePictures()
+    static Conversion Find(string id) =>
+        Fixtures.Registry.Conversions.Single(_ => _.Id == id);
+
+    static Task<ConversionOutput> RunAsync(string id, Document source)
     {
-        var conversion = Fixtures.Registry.Conversions.Single(_ => _.Id == "md-docx-officeimo");
-        var output = await conversion.RunAsync(
-            Document.FromText("diagrams.md", markdown, FileTypes.Markdown),
-            conversion.CreateOptions(),
-            new Progress<ConversionProgress>(),
-            Cancel.None);
+        var conversion = Find(id);
+        return conversion.RunAsync(source, conversion.CreateOptions(), new Progress<ConversionProgress>(), Cancel.None);
+    }
+
+    static Task<ConversionOutput> RunAsync(string id) =>
+        RunAsync(id, Document.FromText("diagrams.md", markdown, FileTypes.Markdown));
+
+    [Test]
+    public async Task WordPictures()
+    {
+        var output = await RunAsync("md-docx-officeimo");
 
         using var zip = new ZipArchive(new MemoryStream(output.Parts[0].Bytes));
         // OfficeIMO keeps pictures in /media, not Word's /word/media.
@@ -59,14 +69,36 @@ public class MarkdownDocxTests
         await Assert.That((double) extent).IsBetween(smallest - 9525, smallest + 9525);
     }
 
+    [Test]
+    public async Task PdfPictures()
+    {
+        var output = await RunAsync("md-pdf-officeimo");
+        var pdf = output.Parts[0];
+        // Image dictionaries are written uncompressed. Each picture is an RGB image whose transparency is a
+        // second, soft-mask image.
+        var pictures = Regex.Count(Encoding.Latin1.GetString(pdf.Bytes), @"/SMask\s+\d+\s+0\s+R");
+        var text = (await RunAsync("pdf-txt-officeimo", pdf)).Parts[0].Text;
+
+        // The two diagrams Naiad draws are images; the one it cannot parse stays code, with a note.
+        await Assert.That(pictures).IsEqualTo(2);
+        await Assert.That(text).DoesNotContain("Start");
+        await Assert.That(text).DoesNotContain("Yes");
+        await Assert.That(text).Contains("unclosed");
+        await Assert.That(output.Notes.Count(_ => _.StartsWith("Mermaid diagram", StringComparison.Ordinal))).IsEqualTo(1);
+        await Assert.That(output.Notes).Contains(_ => _.StartsWith("Mermaid diagram 3 is kept as code", StringComparison.Ordinal));
+    }
+
     // Naiad and Skia load only for a file with a fence to draw, in a list or a quote too.
     [Test]
-    [Arguments("# Plain\n\nNo diagrams, though Mermaid is mentioned.\n\n```csharp\nvar x = 1;\n```", false)]
-    [Arguments("```mermaid\nflowchart LR\n  A --> B\n```", true)]
-    [Arguments("> - ~~~ Mermaid\n>   pie\n>   ~~~", true)]
-    public async Task NaiadLoadsOnlyForDiagrams(string text, bool diagrams)
+    [Arguments("md-docx-officeimo", "# Plain\n\nNo diagrams, though Mermaid is mentioned.\n\n```csharp\nvar x = 1;\n```", false)]
+    [Arguments("md-docx-officeimo", "```mermaid\nflowchart LR\n  A --> B\n```", true)]
+    [Arguments("md-docx-officeimo", "> - ~~~ Mermaid\n>   pie\n>   ~~~", true)]
+    [Arguments("md-pdf-officeimo", "# Plain\n\nNo diagrams, though Mermaid is mentioned.\n\n```csharp\nvar x = 1;\n```", false)]
+    [Arguments("md-pdf-officeimo", "```mermaid\nflowchart LR\n  A --> B\n```", true)]
+    [Arguments("md-pdf-officeimo", "> - ~~~ Mermaid\n>   pie\n>   ~~~", true)]
+    public async Task NaiadLoadsOnlyForDiagrams(string id, string text, bool diagrams)
     {
-        var conversion = Fixtures.Registry.Conversions.Single(_ => _.Id == "md-docx-officeimo");
+        var conversion = Find(id);
         var assemblies = conversion.AssembliesFor(Document.FromText("file.md", text, FileTypes.Markdown));
         await Assert.That(assemblies.Contains("Naiad.wasm")).IsEqualTo(diagrams);
         await Assert.That(assemblies.Contains("SkiaSharp.wasm")).IsEqualTo(diagrams);
@@ -76,12 +108,14 @@ public class MarkdownDocxTests
 
     // The wizard asks the loader for the file's own list, and a file without diagrams converts with it.
     [Test]
-    public async Task WizardLoadsWithoutNaiadForPlainMarkdown()
+    [Arguments("md-docx-officeimo")]
+    [Arguments("md-pdf-officeimo")]
+    public async Task WizardLoadsWithoutNaiadForPlainMarkdown(string id)
     {
         var loader = new StubToolLoader();
         using var session = new ConvertSession(Fixtures.Registry, loader);
         await session.LoadTextAsync(FileTypes.Markdown, "# Plain\n\n- one\n- two");
-        session.SelectConversion(Fixtures.Registry.Conversions.Single(_ => _.Id == "md-docx-officeimo"));
+        session.SelectConversion(Find(id));
         await session.ConvertAsync();
 
         await Assert.That(session.Error).IsNull();

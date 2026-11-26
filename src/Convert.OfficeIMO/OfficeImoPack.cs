@@ -39,6 +39,8 @@ public sealed class OfficeImoPack : IPack
     internal static IReadOnlyList<string> PdfHtml { get; } = [core, pdf, .. html, "OfficeIMO.Html.Pdf.wasm"];
     internal static IReadOnlyList<string> PdfPng { get; } = [core, pdf];
     internal static IReadOnlyList<string> MarkdownPdf { get; } = [.. MarkdownHtml.Concat(HtmlPdf).Distinct()];
+    // Likewise to PDF.
+    internal static IReadOnlyList<string> MarkdownPdfDiagrams { get; } = [.. MarkdownPdf, .. MermaidImage.Assemblies];
     internal static IReadOnlyList<string> TextWord { get; } = [core, word, .. openXml];
     internal static IReadOnlyList<string> ExcelData { get; } = [core, excel, .. openXml];
 
@@ -53,7 +55,7 @@ public sealed class OfficeImoPack : IPack
         registry.Add(new ToPdf(FileTypes.Pptx, PowerPointPdf, "One page per slide, with a fidelity report."));
         registry.Add(new ToPdf(FileTypes.Pub, PublisherPdf, "Publisher pages at their own size, with a fidelity report."));
         registry.Add(new ToPdf(FileTypes.Html, HtmlPdf, "HTML and CSS laid out as paged PDF."));
-        registry.Add(new ToPdf(FileTypes.Markdown, MarkdownPdf, "Headings, lists, tables and code laid out as paged PDF."));
+        registry.Add(new ToPdf(FileTypes.Markdown, MarkdownPdfDiagrams, "Headings, lists, tables and code laid out as paged PDF; Mermaid diagrams drawn by Naiad."));
         registry.Add(new ToPdf(FileTypes.Text, HtmlPdf, "The text as paged PDF, line breaks kept and long lines wrapped."));
 
         registry.Add(new MarkdownToHtml());
