@@ -15,8 +15,8 @@
     <!-- Tools wrapped by the packs. -->
     <PackageVersion Include="Markdig" Version="1.6.0" />
     <PackageVersion Include="OpenXmlHtml" Version="1.7.5" />
-    <PackageVersion Include="Morph.Blazor" Version="1.28.0" />
-    <PackageVersion Include="Naiad" Version="2.4.0" />
+    <PackageVersion Include="Morph.Blazor" Version="1.31.0" />
+    <PackageVersion Include="Naiad" Version="2.4.1" />
     <PackageVersion Include="GeoConvert" Version="2.1.0" />
     <PackageVersion Include="OfficeIMO.Word.Pdf" Version="3.6.2" />
     <PackageVersion Include="OfficeIMO.Excel.Pdf" Version="3.6.2" />
@@ -30,7 +30,7 @@
     <PackageVersion Include="OfficeIMO.Pdf.Excel" Version="3.6.2" />
     <PackageVersion Include="OfficeIMO.Pdf.PowerPoint" Version="3.6.2" />
     <PackageVersion Include="OfficeIMO.Pdf" Version="3.6.2" />
-    <PackageVersion Include="SixLabors.ImageSharp" Version="4.1.3" />
+    <PackageVersion Include="SixLabors.ImageSharp" Version="4.1.4" />
     <!--
       Skia, stable. 4.155's targets would link its emscripten 3.1.56 archive, which the .NET 11 SDK's
       emscripten 6.0.2 cannot; Convert.Web swaps in the package's 5.0.6 archive (UseSkiaSharpEmscripten5).
@@ -43,13 +43,13 @@
     <PackageVersion Include="SkiaSharp.NativeAssets.WebAssembly" Version="4.155.0" Pinned="true" />
     <PackageVersion Include="HarfBuzzSharp" Version="14.4.0.200" />
     <PackageVersion Include="HarfBuzzSharp.NativeAssets.WebAssembly" Version="14.4.0.200" />
-    <PackageVersion Include="Svg.Skia" Version="5.2.3" />
+    <PackageVersion Include="Svg.Skia" Version="5.2.4" />
     <PackageVersion Include="YamlDotNet" Version="18.1.0" />
     <PackageVersion Include="Tomlyn" Version="2.11.1" />
     <!-- Overlaps between packs, resolved to one version each. -->
     <PackageVersion Include="Krilla" Version="0.3.0" />
     <PackageVersion Include="DocumentFormat.OpenXml" Version="3.5.1" />
-    <PackageVersion Include="AngleSharp" Version="1.10.5" />
+    <PackageVersion Include="AngleSharp" Version="1.11.0" />
 
     <!-- Tests. -->
     <PackageVersion Include="Microsoft.AspNetCore.TestHost" Version="11.0.0" />
@@ -59,7 +59,7 @@
     <PackageVersion Include="Verify.Playwright" Version="3.3.0" />
     <PackageVersion Include="Microsoft.Playwright" Version="1.65.1" />
     <PackageVersion Include="TUnit" Version="1.87.12" />
-    <PackageVersion Include="Verify.TUnit" Version="33.7.2" />
+    <PackageVersion Include="Verify.TUnit" Version="33.7.3" />
     <PackageVersion Include="DiffEngine" Version="21.2.1" />
     <PackageVersion Include="ProjectFiles" Version="1.6.0" />
   </ItemGroup>
